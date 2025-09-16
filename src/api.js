@@ -17,7 +17,7 @@ const refreshAccessToken = async () => {
 
 // Création d'une instance Axios
 const api = axios.create({
-  baseURL: "https://backend-hqhy.onrender.com/api",
+  baseURL: "https://backend-hqhy.onrender.com",
 });
 
 // Intercepteur de requête : ajoute le token

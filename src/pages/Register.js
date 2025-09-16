@@ -1,6 +1,6 @@
 // pages/Register.jsx
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
 
@@ -69,7 +69,7 @@ const Register = () => {
     });
 
     try {
-      await axios.post('https://backend-hqhy.onrender.com/api/auth/register', data, {
+      await api.post('/api/auth/register', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Inscription réussie !');
