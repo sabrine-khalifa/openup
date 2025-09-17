@@ -115,7 +115,7 @@ Object.entries(formData).forEach(([key, value]) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("✅ Service créé avec succès !");
-      setTimeout(() => navigate("/serviceList"), 1500);
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
   console.error("Erreur détaillée :", error.response?.data || error.message);
   setMessage(`❌ ${error.response?.data?.erreur || "Erreur lors de la création."}`);
