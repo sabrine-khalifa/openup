@@ -11,7 +11,7 @@ const MessagerieList = ({ currentUserId }) => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const res = await api.get("/messages");
+        const res = await api.get("/api/messages");
         setConversations(res.data);
       } catch (err) {
         console.error("Erreur chargement conversations :", err);

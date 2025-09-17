@@ -17,7 +17,7 @@ const Messagerie = ({ currentUserId }) => {
 
     const fetchMessages = async () => {
       try {
-        const res = await api.get(`/messages/${otherId}`);
+        const res = await api.get(`/api/messages/${otherId}`);
         setMessages(res.data);
 
         if (res.data.length > 0) {
@@ -39,7 +39,7 @@ const Messagerie = ({ currentUserId }) => {
   const sendMessage = async () => {
     if (!text.trim() || !otherId) return;
     try {
-      const res = await api.post("/messages", {
+      const res = await api.post("/api/messages", {
         receiverId: otherId,
         content: text,
       });

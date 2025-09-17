@@ -29,13 +29,13 @@ const UserProfile = () => {
   ];
 
   useEffect(() => {
-    api.get(`/users/${id}`).then((res) => setUser(res.data));
-    api.get(`/services/serv/user/${id}`).then((res) => setServices(res.data));
-    api.get(`/reservations/user/${id}`).then((res) => setReservations(res.data));
+    api.get(`/api/users/${id}`).then((res) => setUser(res.data));
+    api.get(`/api/services/serv/user/${id}`).then((res) => setServices(res.data));
+    api.get(`/api/reservations/user/${id}`).then((res) => setReservations(res.data));
   }, [id]);
 
   useEffect(() => {
-    api.get(`/avis/user/${id}`).then((res) => setAvis(res.data));
+    api.get(`/api/avis/user/${id}`).then((res) => setAvis(res.data));
   }, [id]);
 
   if (!user) return <p className="text-center py-10">Chargement...</p>;

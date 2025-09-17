@@ -111,7 +111,7 @@ Object.entries(formData).forEach(([key, value]) => {
     images.forEach(img => data.append("image", img));
 
     try {
-      await api.post("/services", data, {
+      await api.post("/api/services", data, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("✅ Service créé avec succès !");

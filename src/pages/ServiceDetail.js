@@ -73,11 +73,11 @@ useEffect(() => {
     const fetchServiceAndAvis = async () => {
       try {
         // Charger le service
-        const resService = await api.get(`/services/${id}`);
+        const resService = await api.get(`/api/services/${id}`);
         setService(resService.data);
 
         // Charger les avis du service ✅
-        const resAvis = await api.get(`/avis/service/${id}`);
+        const resAvis = await api.get(`/api/avis/service/${id}`);
         setAvis(resAvis.data || []);
       } catch (err) {
         console.error("Erreur lors du chargement :", err);
@@ -96,7 +96,7 @@ useEffect(() => {
   try {
     setLoadingAvis(true);
     const res = await api.post(
-      `/avis/service/${service._id}`,
+      `/api/avis/service/${service._id}`,
       { 
         commentaire: newAvis,
         note: note // ✅ Envoie la note ou `null`
@@ -133,7 +133,7 @@ useEffect(() => {
       }
 
       const res = await api.post(
-        `/services/${service._id}/reserver`,
+        `/api/services/${service._id}/reserver`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

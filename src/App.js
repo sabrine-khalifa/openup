@@ -24,21 +24,22 @@ import EditService from "./pages/EditService";
 function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [token, setToken] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+
+   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
 
     const userId = storedUser ? JSON.parse(storedUser).id : null;
 
     if (storedToken && userId) {
-      setToken(storedToken);
       setCurrentUserId(userId);
-    } else {
-      // Optionnel : rediriger vers login si pas connecté
-      console.log("Pas connecté");
     }
+    setIsLoading(false); // Fin du chargement
   }, []);
+
+
 
   // Fonction pour vérifier si l'utilisateur est connecté
   const isAuthenticated = () => {

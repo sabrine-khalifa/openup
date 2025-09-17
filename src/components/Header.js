@@ -15,7 +15,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUnreadCount = async () => {
       try {
-        const res = await api.get("/messages/unread/count", {
+        const res = await api.get("/api/messages/unread/count", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUnreadCount(res.data.count);
