@@ -233,6 +233,8 @@ useEffect(() => {
                 className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col cursor-pointer"
                 onClick={() => navigate(`/service/${service._id}`)}
               >
+                    {console.log("Image du service:", service.images)}
+
                 {/* Image */}
                 {service.images && (
                   <img
