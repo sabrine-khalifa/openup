@@ -238,14 +238,17 @@ useEffect(() => {
                 {/* Image */}
                 {service.images && (
                   <img
-                    src={`https://backend-hqhy.onrender.com${
-                      Array.isArray(service.images)
-                        ? service.images[0]
-                        : service.images
-                    }`}
-                    alt={service.titre}
-                    className="rounded-t-xl h-40 w-full object-cover"
-                  />
+  src={`https://backend-hqhy.onrender.com${
+    Array.isArray(service.images) && service.images.length > 0
+      ? service.images[0]
+      : service.images || "/default-image.jpg"
+  }`}
+  alt={service.titre}
+  className="rounded-t-xl h-40 w-full object-cover"
+  onError={(e) => {
+    e.target.src = "/default-image.jpg"; // Image de secours si échec
+  }}
+/>
                 )}
 
                 <div className="p-4 flex flex-col flex-1">
