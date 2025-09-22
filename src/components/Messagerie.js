@@ -72,7 +72,7 @@ const Messagerie = ({ currentUserId }) => {
             {/* En-tête conversation */}
             <div className="flex items-center gap-3 mb-6 p-3 bg-white rounded-xl shadow-sm border">
               <img
-                src={otherUser.photo ? `https://backend-hqhy.onrender.com${otherUser.photo}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(otherUser.name)}&background=16A14A&color=fff&size=60`}
+                src={otherUser.photo ? otherUser.photo : `https://ui-avatars.com/api/?name=${encodeURIComponent(otherUser.name)}&background=16A14A&color=fff&size=60`}
                 alt={otherUser.name}
                 className="w-10 h-10 rounded-full object-cover border"
               />

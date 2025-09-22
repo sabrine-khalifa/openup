@@ -61,7 +61,7 @@ const UserProfile = () => {
 
   const getAuteurPhoto = (auteur) => {
   if (auteur?.photo) {
-    return `https://backend-hqhy.onrender.com${auteur.photo}`;
+    return auteur.photo;
   }
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(auteur?.name || "User")}&background=6b7280&color=fff&size=64`;
 };
@@ -83,7 +83,7 @@ const UserProfile = () => {
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 flex flex-col md:flex-row items-start gap-8">
           {/* Photo */}
           <img
-            src={`https://backend-hqhy.onrender.com${user.photo}`|| `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=16A14A&color=fff&size=120`}
+            src={user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=16A14A&color=fff&size=120`}
             alt={user.name}
             className="w-32 h-32 rounded-full object-cover border-4 border-[#16A14A]"
           />
@@ -181,7 +181,7 @@ const UserProfile = () => {
           {typeof services[0].images === "string" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <img
-                src={`https://backend-hqhy.onrender.com${services[0].images}`}
+                src={services[0].images}
                 alt={services[0].titre}
                 className="w-full h-64 object-cover rounded-lg"
               />
@@ -194,7 +194,7 @@ const UserProfile = () => {
               {services[0].images.map((img, idx) => (
                 <img
                   key={idx}
-                  src={`https://backend-hqhy.onrender.com${img}`}
+                  src={img}
                   alt={`${services[0].titre} - image ${idx + 1}`}
                   className="w-full h-64 object-cover rounded-lg"
                 />

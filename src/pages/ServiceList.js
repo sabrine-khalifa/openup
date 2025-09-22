@@ -238,11 +238,11 @@ useEffect(() => {
                 {/* Image */}
                 {service.images && (
                   <img
-  src={`https://backend-hqhy.onrender.com${
+  src={
     Array.isArray(service.images) && service.images.length > 0
       ? service.images[0]
       : service.images || "/default-image.jpg"
-  }`}
+  }
   alt={service.titre}
   className="rounded-t-xl h-40 w-full object-cover"
   onError={(e) => {
@@ -256,12 +256,16 @@ useEffect(() => {
                   <div className="flex items-center mb-2">
                     {/* ✅ Photo du créateur (ou avatar local) */}
                     <img
-                      src={`https://backend-hqhy.onrender.com${
-                        service.createur?.photo || "/default-avatar.png"
-                      }`}
-                      alt=""
-                      className="rounded-full w-9 h-9 mr-2"
-                    />
+  src={
+    service.createur?.photo
+      ? service.createur.photo
+      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          service.createur?.name || 'U'
+        )}&background=16A14A&color=fff&size=36`
+  }
+  alt=""
+  className="rounded-full w-9 h-9 mr-2"
+/>
                     <div>
                       <span className="font-medium text-sm">
                       {service.createur.name} {service.createur.prenom}

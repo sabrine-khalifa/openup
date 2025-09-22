@@ -202,7 +202,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
             {/* Images */}
             {service.images?.length > 0 && (
               <img
-                src={`https://backend-hqhy.onrender.com${service.images[0]}`}
+                src={service.images[0]}
                 alt={service.titre}
                 className="w-full h-80 object-cover rounded-lg mb-4"
               />
@@ -212,7 +212,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
                 {service.images.slice(1).map((img, idx) => (
                   <img
                     key={idx}
-                    src={`https://backend-hqhy.onrender.com${img}`}
+                    src={img}
                     alt="miniature"
                     className="w-20 h-20 object-cover rounded border"
                   />
@@ -239,12 +239,17 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
             {/* Créateur */}
             {service.createur && (
               <div className="flex items-center gap-2 mb-4">
-                <img
-                  onClick={() => navigate(`/UserProfile/${service.createur._id}`)}
-                  src={`https://backend-hqhy.onrender.com${service.createur.photo || "/default-avatar.png"}`}
-                  alt={service.createur.name && service.createur.prenom}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+               <img
+  src={
+    service.createur?.photo
+      ? service.createur.photo // ✅ URL complète Cloudinary
+      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          service.createur?.name || 'U'
+        )}&background=16A14A&color=fff&size=40`
+  }
+  alt={`${service.createur?.name} ${service.createur?.prenom}`}
+  className="w-10 h-10 rounded-full object-cover"
+/>
                 <div>
                   <div className="font-medium">
                     <h3>

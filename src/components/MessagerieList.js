@@ -78,7 +78,7 @@ const MessagerieList = ({ currentUserId }) => {
                   {/* Photo + Point vert */}
                   <div className="relative">
                     <img
-                      src={conv.user.photo ? `https://backend-hqhy.onrender.com${conv.user.photo}` : "/default-avatar.png"}
+                      src={conv.user.photo ? conv.user.photo : "/default-avatar.png"}
                       alt={conv.user.name}
                       className="w-12 h-12 rounded-full object-cover border border-gray-200"
                     />
