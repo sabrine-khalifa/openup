@@ -10,70 +10,24 @@ const Register = () => {
     prenom: '',
     email: '',
     password: '',
-    role: 'particulier',
-    photo: null,
-    metier: '',
-    domaine: '',
-    telephone: '',
-    langues: [],
-    nationalites: '',
-    video: '',
-    description: '',
-    valeurs: '',
-    lieuPrestation: '',
-    pmr: false,
-    typeCours: '',
-    publicCible: '',
-    liens: '',
+    role: 'particulier'
   });
 
   const navigate = useNavigate();
 
-  const domaines = [
-    'Bien-être', 'Éducation', 'Création', 'Tech', 'Artisanat',
-    'Conseil', 'Sport', 'Musique', 'Développement personnel'
-  ];
-  const publicCibleOptions = ['Débutants', 'Professionnels', 'Tous niveaux'];
-  const languesDisponibles = ['Français', 'Anglais', 'Arabe', 'Espagnol', 'Allemand'];
-
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({
-      ...form,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setForm({ ...form, photo: e.target.files[0] });
-  };
-
-  const handleLangueChange = (langue) => {
-    setForm((prev) => ({
-      ...prev,
-      langues: prev.langues.includes(langue)
-        ? prev.langues.filter((l) => l !== langue)
-        : [...prev.langues, langue],
-    }));
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    Object.keys(form).forEach((key) => {
-      if (Array.isArray(form[key])) {
-        form[key].forEach(item => data.append(key, item));
-      } else {
-        data.append(key, form[key] ?? '');
-      }
-    });
-
+    
     try {
-      await api.post('/api/auth/register', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      await api.post('/api/auth/register', form);
       alert('Inscription réussie !');
-      navigate('/login');
+      // Redirige vers un écran de complétion ou dashboard
+      navigate('/completer-profil');
     } catch (err) {
       alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
     }
@@ -88,7 +42,7 @@ const Register = () => {
 
       {/* Main */}
       <main className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Créer un compte
           </h2>
@@ -159,154 +113,7 @@ const Register = () => {
                 required
                 className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
               />
-              <input
-                type="tel"
-                name="telephone"
-                placeholder="Téléphone (optionnel)"
-                value={form.telephone}
-                onChange={handleChange}
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-              />
             </div>
-
-            {/* Photo */}
-            <div>
-              <label className="block mb-2 text-gray-700">
-                📁 Télécharger une photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </label>
-              {form.photo && <p className="text-sm text-gray-500">{form.photo.name}</p>}
-            </div>
-
-            {/* Champs Créateur */}
-            {form.role === 'createur' && (
-              <div className="bg-gray-50 p-6 rounded-xl space-y-4">
-                <h3 className="font-semibold text-gray-800">Informations Créateur</h3>
-
-                <input
-                  type="text"
-                  name="metier"
-                  placeholder="Métier (optionnel)"
-                  value={form.metier}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-
-                <select
-                  name="domaine"
-                  value={form.domaine}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Domaine d’activité</option>
-                  {domaines.map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-
-                <div>
-                  <p className="text-gray-700">Langues parlées :</p>
-                  <div className="flex flex-wrap gap-4 mt-2">
-                    {languesDisponibles.map(langue => (
-                      <label key={langue} className="flex items-center gap-1">
-                        <input
-                          type="checkbox"
-                          checked={form.langues.includes(langue)}
-                          onChange={() => handleLangueChange(langue)}
-                        /> {langue}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <input
-                  type="text"
-                  name="nationalites"
-                  placeholder="Nationalités"
-                  value={form.nationalites}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-                <input
-                  type="url"
-                  name="video"
-                  placeholder="Lien vidéo (optionnel)"
-                  value={form.video}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-                <textarea
-                  name="description"
-                  placeholder="À propos de vous"
-                  value={form.description}
-                  onChange={handleChange}
-                  rows="3"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-                <textarea
-                  name="valeurs"
-                  placeholder="Vos valeurs (optionnel)"
-                  value={form.valeurs}
-                  onChange={handleChange}
-                  rows="2"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-
-                <select
-                  name="lieuPrestation"
-                  value={form.lieuPrestation}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Lieu de prestation</option>
-                  <option value="distanciel">Distanciel</option>
-                  <option value="presentiel">Présentiel</option>
-                  <option value="hybride">Hybride</option>
-                </select>
-
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" name="pmr" checked={form.pmr} onChange={handleChange} />
-                  Accessible PMR
-                </label>
-
-                <select
-                  name="typeCours"
-                  value={form.typeCours}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Type de cours</option>
-                  <option value="individuel">Individuel</option>
-                  <option value="collectif">Collectif</option>
-                </select>
-
-                <select
-                  name="publicCible"
-                  value={form.publicCible || ""}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Public cible</option>
-                  {publicCibleOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
-
-                <input
-                  type="text"
-                  name="liens"
-                  placeholder="Liens (site, réseaux sociaux)"
-                  value={form.liens}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
-              </div>
-            )}
 
             <button
               type="submit"
