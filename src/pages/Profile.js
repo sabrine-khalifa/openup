@@ -22,7 +22,7 @@ const Profile = () => {
 
     if (!userData || !token) return navigate("/login");
 
-    const userId = userData.id;
+    const userId = userData.id.trim();
 
     // Charger le profil
     axios.get(`https://backend-hqhy.onrender.com/api/users/${userId}`, {
