@@ -221,14 +221,14 @@ const Profile = () => {
           <button
             onClick={() => { setActiveTab("portefeuille"); setEditMode(false); }}
             className={`pb-2 font-medium transition ${activeTab === "portefeuille" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : "text-gray-600 hover:text-[#16A14A]"}`
-          >
+          } >
             Portefeuille
           </button>
 
           <button
             onClick={() => { setActiveTab("avis"); setEditMode(false); }}
             className={`pb-2 font-medium transition ${activeTab === "avis" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : "text-gray-600 hover:text-[#16A14A]"}`
-          >
+          } >
             Avis
           </button>
 
