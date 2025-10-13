@@ -20,6 +20,7 @@ import UserProfile from "./pages/UserProfile";
 import Messagerie from "./components/Messagerie";
 import MessagerieList from "./components/MessagerieList";
 import EditService from "./pages/EditService";
+import CompleterProfil from "./pages/CompleterProfil";
 
 function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -61,6 +62,8 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+                <Route path="/completer-profil" element={<CompleterProfil />} />
+
         <Route
           path="/dashboard"
           element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" />}

@@ -184,12 +184,13 @@ const userId = (userData.id || userData._id || "").trim();
             </div>
           </div>
 
-            <button
-              onClick={() => setEditMode(true)}
-              className="mt-4 md:mt-0 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium transition"
-            >
-              📝 Compléter mon profil
-            </button>
+        <button
+  onClick={() => navigate("/completer-profil")}
+  className="mt-4 md:mt-0 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium transition"
+>
+  Compléter mon profil
+</button>
+
           
         </div>
 
@@ -234,14 +235,7 @@ const userId = (userData.id || userData._id || "").trim();
             Avis
           </button>
 
-            <button
-              onClick={() => { setActiveTab("completer"); setEditMode(true); }}
-              className={`pb-2 font-medium transition ${
-                activeTab === "completer" ? "border-b-2 border-yellow-500 text-yellow-500" : "text-gray-600 hover:text-yellow-500"
-              }`}
-            >
-              📝 Compléter mon profil
-            </button>
+           
         </div>
 
         {/* Contenu */}
@@ -522,136 +516,7 @@ const userId = (userData.id || userData._id || "").trim();
           </div>
         )}
 
-       {activeTab === "completer" && (
-  <div className="bg-white p-8 rounded-xl shadow">
-    <h2 className="text-2xl font-bold mb-6">
-      {user.role === "particulier"
-        ? "Informations supplémentaires"
-        : "Complétez votre profil de créateur"}
-    </h2>
 
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Photo */}
-      <div>
-        <label className="block mb-2 text-gray-700">Photo de profil</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setForm({ ...form, photo: e.target.files[0] })}
-          className="w-full border border-gray-300 rounded-lg px-4 py-3"
-        />
-        {form.photo && <p className="text-sm text-gray-500">{form.photo.name}</p>}
-      </div>
-
-      {/* Téléphone */}
-      <input
-        type="tel"
-        name="telephone"
-        placeholder="Téléphone (optionnel)"
-        value={form.telephone || ''}
-        onChange={handleChange}
-        className="w-full border border-gray-300 rounded-lg px-4 py-3"
-      />
-
-      {/* Champs uniquement pour les créateurs */}
-      {user.role === "createur" && (
-        <>
-          <input
-            type="text"
-            name="metier"
-            placeholder="Métier"
-            value={form.metier || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-          <select
-            name="domaine"
-            value={form.domaine || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          >
-            <option value="">Domaine d’activité</option>
-            {['Bien-être', 'Éducation', 'Création', 'Tech'].map((d) => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
-          <textarea
-            name="description"
-            placeholder="À propos de vous"
-            value={form.description || ''}
-            onChange={handleChange}
-            rows="3"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-          <input
-            type="text"
-            name="valeurs"
-            placeholder="Vos valeurs (optionnel)"
-            value={form.valeurs || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-          <select
-            name="lieuPrestation"
-            value={form.lieuPrestation || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          >
-            <option value="">Lieu de prestation</option>
-            <option value="distanciel">Distanciel</option>
-            <option value="presentiel">Présentiel</option>
-            <option value="hybride">Hybride</option>
-          </select>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="pmr"
-              checked={form.pmr || false}
-              onChange={handleChange}
-            />
-            Accessible PMR
-          </label>
-          <select
-            name="typeCours"
-            value={form.typeCours || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          >
-            <option value="">Type de cours</option>
-            <option value="individuel">Individuel</option>
-            <option value="collectif">Collectif</option>
-          </select>
-          <select
-            name="publicCible"
-            value={form.publicCible || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          >
-            <option value="">Public cible</option>
-            <option value="Débutants">Débutants</option>
-            <option value="Professionnels">Professionnels</option>
-            <option value="Tous niveaux">Tous niveaux</option>
-          </select>
-          <input
-            type="url"
-            name="liens"
-            placeholder="Liens (site, réseaux sociaux)"
-            value={form.liens || ''}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3"
-          />
-        </>
-      )}
-
-      <button
-        type="submit"
-        className="w-full bg-[#16A14A] text-white py-3 rounded-lg font-semibold"
-      >
-        Enregistrer
-      </button>
-    </form>
-  </div>
-)}
         {/* Autres onglets : services, réserves, etc. */}
         {/* ... (garde le reste inchangé) */}
       </main>
