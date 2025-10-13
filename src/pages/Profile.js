@@ -24,32 +24,40 @@ const Profile = () => {
 const userId = (userData.id || userData._id || "").trim();
 
     // Charger le profil
-    axios.get(`https://backend-hqhy.onrender.com/api/users/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      const userData = res.data;
+   axios
+  .get(`https://backend-hqhy.onrender.com/api/users/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  .then((res) => {
+    setUser(res.data);
+  })
+  .catch((err) => {
+    console.error("Erreur de chargement utilisateur :", err);
+  });
+
 
       // Charger les avis
       axios.get(`https://backend-hqhy.onrender.com/api/avis/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
-      }).then((resAvis) => {
-        const avis = resAvis.data;
-        setAvis(avis);
+      })   .then((resAvis) => {
+    const avis = resAvis.data;
+    setAvis(avis);
 
-        const avisAvecNote = avis.filter((a) => {
-          const n = typeof a.note === "string" ? parseFloat(a.note) : a.note;
-          return typeof n === "number" && !isNaN(n) && n >= 1 && n <= 5;
-        });
-
-        const noteMoyenne = avisAvecNote.length > 0
-          ? (avisAvecNote.map(a => typeof a.note === "string" ? parseFloat(a.note) : a.note)
-              .reduce((acc, n) => acc + n, 0) / avisAvecNote.length).toFixed(1)
-          : null;
-
-        setUser({ ...userData, note: noteMoyenne, nombreAvis: avis.length });
-        setForm({ ...userData }); // Initialiser le formulaire
-      });
+    const avisAvecNote = avis.filter((a) => {
+      const n = typeof a.note === "string" ? parseFloat(a.note) : a.note;
+      return typeof n === "number" && !isNaN(n) && n >= 1 && n <= 5;
     });
+
+    const noteMoyenne = avisAvecNote.length > 0
+      ? (avisAvecNote.map(a => typeof a.note === "string" ? parseFloat(a.note) : a.note)
+          .reduce((acc, n) => acc + n, 0) / avisAvecNote.length).toFixed(1)
+      : null;
+
+    setUser({ ...userData, note: noteMoyenne, nombreAvis: avis.length });
+    setForm({ ...userData }); // Initialiser le formulaire
+  })
+  .catch((err) => console.error("Erreur de chargement des avis :", err));
+
 
     if (userData.role === "createur") {
       axios.get(`https://backend-hqhy.onrender.com/api/services/serv/user/${userId}`, {
@@ -226,8 +234,6 @@ const userId = (userData.id || userData._id || "").trim();
             Avis
           </button>
 
-          {/* Bouton Compléter uniquement si pas complet et non en mode édition */
-          !isProfileComplete() && (
             <button
               onClick={() => { setActiveTab("completer"); setEditMode(true); }}
               className={`pb-2 font-medium transition ${
@@ -236,7 +242,6 @@ const userId = (userData.id || userData._id || "").trim();
             >
               📝 Compléter mon profil
             </button>
-          )}
         </div>
 
         {/* Contenu */}
