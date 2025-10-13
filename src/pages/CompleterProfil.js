@@ -101,39 +101,31 @@ const CompleterProfil = () => {
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Compléter votre profil
+  Bonjour {form.prenom} 👋 Complétez votre profil
           </h2>
+          <p className="text-gray-600 mb-6">
+  Veuillez ajouter les informations suivantes.
+</p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Infos de base */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Nom"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="border border-gray-300 rounded-lg px-4 py-3"
-              />
-              <input
-                type="text"
-                name="prenom"
-                placeholder="Prénom"
-                value={form.prenom}
-                onChange={handleChange}
-                required
-                className="border border-gray-300 rounded-lg px-4 py-3"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="border border-gray-300 rounded-lg px-4 py-3"
-              />
+              
+              
+               <div className="grid grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-700">Nom</label>
+      <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.name}</p>
+    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700">Prénom</label>
+      <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.prenom}</p>
+    </div>
+  </div>
+  <div>
+    <label className="block text-sm font-medium text-gray-700">Email</label>
+    <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.email}</p>
+  </div>
               <input
                 type="tel"
                 name="telephone"

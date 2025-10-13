@@ -186,7 +186,8 @@ const userId = (userData.id || userData._id || "").trim();
 
         <button
   onClick={() => navigate("/completer-profil")}
-  className="mt-4 md:mt-0 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg font-medium transition"
+            className="mt-4 md:mt-0 bg-[#16A14A] hover:bg-[#1a9d53] text-white px-6 py-2 rounded-lg font-medium transition"
+
 >
   Compléter mon profil
 </button>
