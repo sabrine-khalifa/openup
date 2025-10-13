@@ -27,7 +27,10 @@ const Register = () => {
       await api.post('/api/auth/register', form);
       alert('Inscription réussie !');
       // Redirige vers un écran de complétion ou dashboard
-      navigate('/completer-profil');
+      navigate('/completer-profil', {
+    state: { user: form } // ← Envoie les données ici
+  });
+
     } catch (err) {
       alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
     }

@@ -86,7 +86,7 @@ const CompleterProfil = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Profil complété avec succès !');
-      navigate('/dashboard');
+      navigate('/Profile');
     } catch (err) {
       alert(err.response?.data?.msg || 'Erreur lors de la complétion du profil');
     }
@@ -104,7 +104,7 @@ const CompleterProfil = () => {
   Bonjour {form.prenom} 👋 Complétez votre profil
           </h2>
           <p className="text-gray-600 mb-6">
-  Veuillez ajouter les informations suivantes.
+  Veuillez compléter les informations suivantes pour finaliser votre profil.
 </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
