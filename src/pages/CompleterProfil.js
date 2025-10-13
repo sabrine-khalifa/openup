@@ -1,35 +1,35 @@
-
-// pages/Register.jsx
-import { useState } from 'react';
+// pages/CompleterProfil.jsx
+import { useState, useEffect } from 'react';
 import api from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../images/logo.png';
 
-const Register = () => {
-  const [form, setForm] = useState({
-    name: '',
-    prenom: '',
-    email: '',
-    password: '',
-    role: 'particulier',
-    photo: null,
-    telephone: '',
-    // Champs créateur
-    metier: '',
-    domaine: '',
-    langues: [],
-    nationalites: '',
-    video: '',
-    description: '',
-    valeurs: '',
-    lieuPrestation: '',
-    pmr: false,
-    typeCours: '',
-    publicCible: '',
-    liens: '',
-  });
-
+const CompleterProfil = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const userData = location.state?.user || {}; // données passées depuis l'inscription
+
+  const [form, setForm] = useState({
+    name: userData.name || '',
+    prenom: userData.prenom || '',
+    email: userData.email || '',
+    telephone: userData.telephone || '',
+    photo: userData.photo || null,
+    role: userData.role || 'particulier',
+    // Champs créateur
+    metier: userData.metier || '',
+    domaine: userData.domaine || '',
+    langues: userData.langues || [],
+    nationalites: userData.nationalites || '',
+    video: userData.video || '',
+    description: userData.description || '',
+    valeurs: userData.valeurs || '',
+    lieuPrestation: userData.lieuPrestation || '',
+    pmr: userData.pmr || false,
+    typeCours: userData.typeCours || '',
+    publicCible: userData.publicCible || '',
+    liens: userData.liens || '',
+  });
 
   const domaines = [
     'Bien-être', 'Éducation', 'Création', 'Tech', 'Artisanat',
@@ -62,19 +62,16 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation spécifique
     if (!form.photo || !form.telephone) {
       alert("Veuillez compléter votre photo et téléphone.");
       return;
     }
 
-    // Pour créateur, certains champs peuvent être obligatoires (ex: description, domaine)
     if (form.role === 'createur' && (!form.description || !form.domaine)) {
       alert("Veuillez compléter votre description et domaine d'activité.");
       return;
     }
 
-    // Création du FormData pour l'envoi
     const data = new FormData();
     Object.keys(form).forEach((key) => {
       if (Array.isArray(form[key])) {
@@ -85,59 +82,29 @@ const Register = () => {
     });
 
     try {
-      await api.post('/api/auth/register', data, {
+      await api.put('/api/user/completer-profil', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      alert('Inscription réussie !');
-      navigate('/login');
+      alert('Profil complété avec succès !');
+      navigate('/dashboard');
     } catch (err) {
-      alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
+      alert(err.response?.data?.msg || 'Erreur lors de la complétion du profil');
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
       <header className="p-4 text-center border-b bg-white">
         <img src={logo} alt="Logo" className="h-10 mx-auto" />
       </header>
 
-      {/* Main */}
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Créer un compte
+            Compléter votre profil
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-
-            {/* Rôle */}
-            <div className="text-center">
-              <h3 className="font-medium text-gray-700 mb-3">Je suis :</h3>
-              <div className="flex justify-center gap-6 mb-6">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="role"
-                    value="particulier"
-                    checked={form.role === 'particulier'}
-                    onChange={handleChange}
-                  />
-                  Particulier
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="role"
-                    value="createur"
-                    checked={form.role === 'createur'}
-                    onChange={handleChange}
-                  />
-                  Créateur
-                </label>
-              </div>
-            </div>
-
             {/* Infos de base */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
@@ -147,7 +114,7 @@ const Register = () => {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="text"
@@ -156,7 +123,7 @@ const Register = () => {
                 value={form.prenom}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="email"
@@ -165,16 +132,7 @@ const Register = () => {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Mot de passe"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="tel"
@@ -183,7 +141,7 @@ const Register = () => {
                 value={form.telephone}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
             </div>
 
@@ -327,19 +285,9 @@ const Register = () => {
               type="submit"
               className="w-full bg-[#16A14A] hover:bg-[#1a9d53] text-white py-3 rounded-lg font-semibold transition"
             >
-              S'inscrire
+              Compléter le profil
             </button>
           </form>
-
-          <p className="text-center text-gray-600 mt-6">
-            Déjà inscrit ?{' '}
-            <span
-              onClick={() => navigate('/login')}
-              className="text-[#16A14A] font-medium hover:underline cursor-pointer"
-            >
-              Se connecter
-            </span>
-          </p>
         </div>
       </main>
 
@@ -350,4 +298,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CompleterProfil;
