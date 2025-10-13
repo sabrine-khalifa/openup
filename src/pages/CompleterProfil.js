@@ -59,38 +59,33 @@ const CompleterProfil = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!userId) return alert("Utilisateur non connecté");
 
-    if (!form.photo || !form.telephone) {
-      alert("Veuillez compléter votre photo et téléphone.");
-      return;
+  const data = new FormData();
+  Object.keys(form).forEach((key) => {
+    if (Array.isArray(form[key])) {
+      form[key].forEach(item => data.append(key, item));
+    } else {
+      data.append(key, form[key] ?? '');
     }
+  });
 
-    if (form.role === 'createur' && (!form.description || !form.domaine)) {
-      alert("Veuillez compléter votre description et domaine d'activité.");
-      return;
-    }
-
-    const data = new FormData();
-    Object.keys(form).forEach((key) => {
-      if (Array.isArray(form[key])) {
-        form[key].forEach(item => data.append(key, item));
-      } else {
-        data.append(key, form[key] ?? '');
-      }
+  try {
+    await api.put(`/api/auth/${userId}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
 
-    try {
-      await api.put('/api/user/completer-profil', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      alert('Profil complété avec succès !');
-      navigate('/Profile');
-    } catch (err) {
-      alert(err.response?.data?.msg || 'Erreur lors de la complétion du profil');
-    }
-  };
+    alert("Profil complété avec succès !");
+    navigate("/profil"); // redirige vers la page profil
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.msg || "Erreur lors de la complétion du profil");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
