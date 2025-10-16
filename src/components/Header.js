@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from "../api";
-// components/Header.jsx
 import { Link } from "react-router-dom";
-import logo from '../images/logo.png'; // ou le bon chemin
+import { FaCoins, FaEnvelope, FaUserCircle } from 'react-icons/fa'; // icônes React Icons
+// import logo from '../images/logo.png'; // si tu veux garder le logo
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
@@ -11,7 +11,6 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  // Charger le nombre de messages non lus
   useEffect(() => {
     const fetchUnreadCount = async () => {
       try {
@@ -31,10 +30,7 @@ const Header = () => {
     }
   }, [token]);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = '/login';
@@ -43,30 +39,29 @@ const Header = () => {
   return (
     <header style={styles.header}>
       <div style={styles.leftSection}>
-      {/*  <img src={logo} alt="Logo OpenUp" style={{ height: "40px", marginRight: "10px" }} /> */}
         <span style={styles.logoText}>OpenUp</span>
       </div>
 
       <div style={styles.rightSection}>
-        <span style={styles.item}>Crédits : <strong>{credits}</strong></span>
-
-        {/* Lien vers messagerie */}
+        {/* Icône Crédits */}
         <div style={styles.item}>
-          <Link to="/messagerie">
-            <span style={styles.icon}>✉️</span> Messagerie
-          </Link>
-          {unreadCount > 0 && (
-            <span style={badgeStyle}>
-              {unreadCount}
-            </span>
-          )}
+          <FaCoins size={20} />
+          <span style={{ fontWeight: 'bold' }}>{credits}</span>
         </div>
 
-        <div style={styles.profileSection}>
-          <span onClick={toggleDropdown} style={styles.profileName}>
-            Profil ⏷
-          </span>
+        {/* Icône Messagerie */}
+        <div style={styles.item}>
+          <Link to="/messagerie" style={{ color: 'inherit' }}>
+            <FaEnvelope size={20} />
+            {unreadCount > 0 && (
+              <span style={badgeStyle}>{unreadCount}</span>
+            )}
+          </Link>
+        </div>
 
+        {/* Icône Profil */}
+        <div style={styles.profileSection}>
+          <FaUserCircle size={24} onClick={toggleDropdown} style={{ cursor: 'pointer', color: '#16A14A' }} />
           {dropdownOpen && (
             <ul style={styles.dropdownMenu}>
               <li style={styles.dropdownItem}><Link to="/profile">Voir profil</Link></li>
@@ -83,7 +78,7 @@ const Header = () => {
 const badgeStyle = {
   position: 'absolute',
   top: '-8px',
-  right: '-16px',
+  right: '-8px',
   backgroundColor: '#e53e3e',
   color: 'white',
   fontSize: '12px',
@@ -107,40 +102,11 @@ const styles = {
     borderBottom: '1px solid #eee',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
-  leftSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    fontFamily: 'Lexend, sans-serif',
-  },
-  logoText: {
-    color: '#16A14A',
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-  },
-  rightSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1.5rem',
-  },
-  item: {
-    cursor: 'pointer',
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-  },
-  icon: {
-    fontSize: '1.2rem',
-  },
-  profileSection: {
-    position: 'relative',
-    cursor: 'pointer',
-  },
-  profileName: {
-    fontWeight: 'bold',
-    color: '#16A14A',
-  },
+  leftSection: { display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Lexend, sans-serif' },
+  logoText: { color: '#16A14A', fontSize: '1.5rem', fontWeight: 'bold' },
+  rightSection: { display: 'flex', alignItems: 'center', gap: '1.5rem' },
+  item: { cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center', gap: '5px' },
+  profileSection: { position: 'relative', cursor: 'pointer' },
   dropdownMenu: {
     position: 'absolute',
     top: '100%',
@@ -155,11 +121,7 @@ const styles = {
     borderRadius: '6px',
     boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
   },
-  dropdownItem: {
-    padding: '8px 10px',
-    cursor: 'pointer',
-    fontSize: '0.9rem',
-  },
+  dropdownItem: { padding: '8px 10px', cursor: 'pointer', fontSize: '0.9rem' },
 };
 
 export default Header;
