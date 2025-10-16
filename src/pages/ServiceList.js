@@ -174,14 +174,7 @@ useEffect(() => {
  
 
   setFiltered(results);
-}, [search, categorie, services]);
-
-
-
-
- 
-
-
+  }, [search, categorie, categoriePerso, services]);
 
 
   useEffect(() => {
@@ -237,6 +230,9 @@ useEffect(() => {
         padding: "0.5rem 1rem",
       }}
     >
+      <option value="" disabled>
+                Catégories
+              </option>
       {categoriesDisponibles.map((cat, i) => (
         <option
           key={i}
