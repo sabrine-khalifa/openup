@@ -212,40 +212,59 @@ useEffect(() => {
             )}
           </div>
 
-          {/* Recherche et filtre */}
-          <div className="flex gap-4 mb-6">
-            <input
-              type="text"
-              placeholder="🔍 Rechercher un service ou une création..."
-              className="flex-1 border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-main)]"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <select
-              value={categorie}
-              onChange={(e) => setCategorie(e.target.value)}
-              className="border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-main)]"
-              style={{
-                backgroundColor: "white", // Vert principal
-                color: "#16A14A", // Texte blanc
-                border: "1px solid #ccc",
-                borderRadius: "0.375rem",
-                padding: "0.5rem 1rem",
-              }}
-            >
-              <option value="">Catégories</option>
-              {categoriesDisponibles.map((cat, i) => (
-                <option
-                  key={i}
-                  value={cat.nom}
-                  style={{ backgroundColor: " #16A14A ", color: "white" }}
-                >
-                  {" "}
-                  {cat.nom}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Recherche et filtre */}
+<div className="flex flex-col gap-4 mb-6">
+  <div className="flex gap-4">
+    <input
+      type="text"
+      placeholder="🔍 Rechercher un service ou une création..."
+      className="flex-1 border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-main)]"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+
+    {/* Sélection multiple */}
+    <select
+      multiple
+      value={categorie} // maintenant c'est un tableau
+      onChange={(e) =>
+        setCategorie(Array.from(e.target.selectedOptions, (option) => option.value))
+      }
+      className="border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-main)]"
+      style={{
+        backgroundColor: "white",
+        color: "#16A14A",
+        border: "1px solid #ccc",
+        borderRadius: "0.375rem",
+        padding: "0.5rem 1rem",
+      }}
+    >
+      {categoriesDisponibles.map((cat, i) => (
+        <option
+          key={i}
+          value={cat.nom}
+          style={{ backgroundColor: "#16A14A", color: "white" }}
+        >
+          {cat.nom}
+        </option>
+      ))}
+      <option value="Autres" style={{ backgroundColor: "#16A14A", color: "white" }}>
+        Autres
+      </option>
+    </select>
+  </div>
+
+  {/* Champ texte pour "Autres" */}
+  {categorie.includes("Autres") && (
+    <input
+      type="text"
+      placeholder="Entrez votre catégorie..."
+      className="border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[var(--green-main)]"
+      value={categoriePerso || ""}
+      onChange={(e) => setCategoriePerso(e.target.value)}
+    />
+  )}
+</div>
 
           {/* Liste des services */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
