@@ -1,39 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import api from "../api";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import api from '../api';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaCoins, FaEnvelope, FaUserCircle } from 'react-icons/fa';
-import { FiChevronDown } from 'react-icons/fi'; // flèche vers le bas
+import { FiChevronDown } from 'react-icons/fi';
 
 const Header = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const credits = userData?.credits || 0;
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const userData = JSON.parse(localStorage.getItem('user')) || {};
+  const credits = userData.credits || 0;
+  const token = localStorage.getItem('token');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const dropdownRef = useRef(null);
 
+  // Fermer le dropdown si clic à l’extérieur
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Récupérer le nombre de messages non lus
+  useEffect(() => {
+    if (!token) return;
+
     const fetchUnreadCount = async () => {
       try {
-        const res = await api.get("/api/messages/unread/count", {
+        const res = await api.get('/api/messages/unread/count', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUnreadCount(res.data.count);
+        setUnreadCount(res.data?.count || 0);
       } catch (err) {
-        console.error("Erreur chargement messages non lus :", err);
+        console.error('Erreur lors du chargement des messages non lus :', err);
+        setUnreadCount(0);
       }
     };
 
-    if (token) {
-      fetchUnreadCount();
-      const interval = setInterval(fetchUnreadCount, 3000);
-      return () => clearInterval(interval);
-    }
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 3000);
+    return () => clearInterval(interval);
   }, [token]);
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = '/login';
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -43,40 +59,63 @@ const Header = () => {
       </div>
 
       <div style={styles.rightSection}>
-        {/* Icône Crédits */}
+        {/* Crédits */}
         <div style={styles.item}>
-          <FaCoins size={20} />
-          <span style={{ fontWeight: 'bold' }}>{credits}</span>
+          <FaCoins size={20} aria-label="Crédits disponibles" />
+          <span style={styles.creditText}>{credits}</span>
         </div>
 
-        {/* Icône Messagerie */}
+        {/* Messagerie */}
         <div style={styles.item}>
-          <Link to="/messagerie" style={{ color: 'inherit', position: 'relative' }}>
+          <Link to="/messagerie" style={styles.linkStyle} aria-label={`Messagerie${unreadCount > 0 ? `, ${unreadCount} messages non lus` : ''}`}>
             <FaEnvelope size={20} />
             {unreadCount > 0 && <span style={badgeStyle}>{unreadCount}</span>}
           </Link>
         </div>
 
-        {/* Icône Profil avec flèche */}
-        <div style={styles.profileSection} onClick={toggleDropdown}>
-          <div style={styles.profileButton}>
-            <FaUserCircle size={24} style={{ color: '#16A14A' }} />
+        {/* Profil */}
+        <div style={styles.profileSection} ref={dropdownRef}>
+          <button
+            type="button"
+            onClick={toggleDropdown}
+            aria-expanded={dropdownOpen}
+            aria-haspopup="true"
+            style={styles.profileButton}
+          >
+            <FaUserCircle size={24} color="#16A14A" aria-hidden="true" />
             <FiChevronDown
               size={16}
+              color="#16A14A"
               style={{
                 marginLeft: '4px',
-                color: '#16A14A',
-                transition: 'transform 0.2s',
-                transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+                transition: 'transform 0.2s ease',
+                transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
               }}
+              aria-hidden="true"
             />
-          </div>
+          </button>
 
           {dropdownOpen && (
-            <ul style={styles.dropdownMenu}>
-              <li style={styles.dropdownItem}><Link to="/profile">Voir profil</Link></li>
-              <li style={styles.dropdownItem}><Link to="/modifier-profil">Modifier le profil</Link></li>
-              <li style={styles.dropdownItem} onClick={handleLogout}>Se déconnecter</li>
+            <ul style={styles.dropdownMenu} role="menu">
+              <li style={styles.dropdownItem}>
+                <Link to="/profile" style={styles.dropdownLink} role="menuitem">
+                  Voir profil
+                </Link>
+              </li>
+              <li style={styles.dropdownItem}>
+                <Link to="/modifier-profil" style={styles.dropdownLink} role="menuitem">
+                  Modifier le profil
+                </Link>
+              </li>
+              <li
+                style={styles.dropdownItem}
+                onClick={handleLogout}
+                onKeyDown={(e) => e.key === 'Enter' && handleLogout()}
+                role="menuitem"
+                tabIndex={0}
+              >
+                Se déconnecter
+              </li>
             </ul>
           )}
         </div>
@@ -85,6 +124,7 @@ const Header = () => {
   );
 };
 
+// Styles
 const badgeStyle = {
   position: 'absolute',
   top: '-8px',
@@ -99,7 +139,7 @@ const badgeStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  boxShadow: '0 0 4px rgba(0,0,0,0.3)'
+  boxShadow: '0 0 4px rgba(0,0,0,0.3)',
 };
 
 const styles = {
@@ -111,28 +151,84 @@ const styles = {
     alignItems: 'center',
     borderBottom: '1px solid #eee',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1001,
   },
-  leftSection: { display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Lexend, sans-serif' },
-  logoText: { color: '#16A14A', fontSize: '1.5rem', fontWeight: 'bold' },
-  rightSection: { display: 'flex', alignItems: 'center', gap: '1.5rem' },
-  item: { cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center', gap: '5px' },
-  profileSection: { position: 'relative', cursor: 'pointer' },
-  profileButton: { display: 'flex', alignItems: 'center', gap: '4px' },
+  leftSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    fontFamily: 'Lexend, sans-serif',
+  },
+  logoText: {
+    color: '#16A14A',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+  },
+  rightSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1.5rem',
+  },
+  item: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+  },
+  creditText: {
+    fontWeight: 'bold',
+  },
+  linkStyle: {
+    color: 'inherit',
+    textDecoration: 'none',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  profileSection: {
+    position: 'relative',
+    cursor: 'pointer',
+  },
+  profileButton: {
+    background: 'none',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    cursor: 'pointer',
+    padding: 0,
+    color: 'inherit',
+    fontSize: 'inherit',
+  },
   dropdownMenu: {
     position: 'absolute',
     top: '100%',
     right: 0,
     backgroundColor: '#fff',
     border: '1px solid #ddd',
-    padding: '10px',
-    listStyle: 'none',
-    margin: 0,
-    zIndex: 1000,
-    width: '150px',
     borderRadius: '6px',
     boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    listStyle: 'none',
+    margin: 0,
+    padding: '6px 0',
+    zIndex: 1000,
+    minWidth: '160px',
   },
-  dropdownItem: { padding: '8px 10px', cursor: 'pointer', fontSize: '0.9rem' },
+  dropdownItem: {
+    padding: '8px 16px',
+    cursor: 'pointer',
+    fontSize: '0.95rem',
+    outline: 'none',
+  },
+  dropdownLink: {
+    color: 'inherit',
+    textDecoration: 'none',
+    display: 'block',
+    width: '100%',
+    height: '100%',
+  },
 };
 
 export default Header;
