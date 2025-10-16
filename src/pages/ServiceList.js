@@ -6,6 +6,8 @@ const ServiceList = () => {
   const [search, setSearch] = useState("");
   const [categorie, setCategorie] = useState("");
   const [categories, setCategories] = useState([]);
+  const [categoriePerso, setCategoriePerso] = useState(""); // catégorie personnalisée
+
   const [filtered, setFiltered] = useState([]);
   const [notes, setNotes] = useState({});
   const [user, setUser] = useState(null); // Pour stocker les infos utilisateur
@@ -148,32 +150,28 @@ useEffect(() => {
   const lowerSearch = search.toLowerCase();
 
   const results = services.filter((s) => {
-    const matchSearch = s.titre?.toLowerCase().includes(lowerSearch);
+  const matchSearch = s.titre?.toLowerCase().includes(search.toLowerCase());
 
-    // ✅ Normaliser `categories` en tableau
-    const serviceCategories = Array.isArray(s.categories)
-      ? s.categories
-      : s.categories
-      ? [s.categories]
-      : [];
+  const serviceCategories = Array.isArray(s.categories)
+    ? s.categories
+    : s.categories
+    ? [s.categories]
+    : [];
 
-    const matchCategorie =
-      categorie === "" ||
-      serviceCategories.some(
-        (cat) =>
-          cat &&
-          cat.trim().toLowerCase() === categorie.trim().toLowerCase()
-      );
+  const allSelectedCats = [...categorie];
+  if (categoriePerso.trim()) allSelectedCats.push(categoriePerso.trim());
 
-    return matchSearch && matchCategorie;
-  });
+  const matchCategorie =
+    allSelectedCats.length === 0 || // aucune sélection → tout correspond
+    serviceCategories.some((cat) =>
+      allSelectedCats.some(
+        (sel) => sel.trim().toLowerCase() === cat.trim().toLowerCase()
+      )
+    );
 
-  console.log("Catégorie choisie :", categorie);
-  console.log("Services filtrés :", results);
-  console.log(
-    "Catégories depuis la BDD :",
-    services.map((s) => s.categories)
-  );
+  return matchSearch && matchCategorie;
+});
+ 
 
   setFiltered(results);
 }, [search, categorie, services]);
