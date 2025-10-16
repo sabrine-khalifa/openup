@@ -197,17 +197,84 @@ const ServiceList = () => {
         )}
 
         {/* Liste des services (en grille ou liste, selon vous) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((service) => (
-            <div key={service._id} className="bg-white p-4 rounded shadow cursor-pointer" onClick={() => navigate(`/service/${service._id}`)}>
-              <h3 className="font-bold">{service.titre}</h3>
-              <p className="text-sm text-gray-600">Par {service.createur?.name}</p>
-              <p className="mt-2 text-green-600 font-semibold">{service.creditsProposes} crédits</p>
-            </div>
-          ))}
+       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filtered.map((service) => (
+              <div
+                key={service._id}
+                className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col cursor-pointer"
+                onClick={() => navigate(`/service/${service._id}`)}
+              >
+                    {console.log("Image du service:", service.images)}
+
+                {/* Image */}
+                {service.images && (
+                  <img
+  src={
+    Array.isArray(service.images) && service.images.length > 0
+      ? service.images[0]
+      : service.images || "/default-image.jpg"
+  }
+  alt={service.titre}
+  className="rounded-t-xl h-40 w-full object-cover"
+  onError={(e) => {
+    e.target.src = "/default-image.jpg"; // Image de secours si échec
+  }}
+/>
+                )}
+
+                <div className="p-4 flex flex-col flex-1">
+                  {/* Créateur + Note */}
+                  <div className="flex items-center mb-2">
+                    {/* ✅ Photo du créateur (ou avatar local) */}
+                    <img
+  src={
+    service.createur?.photo
+      ? service.createur.photo
+      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          service.createur?.name || 'U'
+        )}&background=16A14A&color=fff&size=36`
+  }
+  alt=""
+  className="rounded-full w-9 h-9 mr-2"
+/>
+                    <div>
+                      <span className="font-medium text-sm">
+                      {service.createur.name} {service.createur.prenom}
+
+                      </span>
+
+                      {/* ✅ Note (si existe) */}
+                      {notes[service._id] && (
+                        <div className="flex items-center text-yellow-500 text-xs mt-1">
+                          <span>⭐</span>
+                          <span className="text-gray-600 ml-1">
+                            {notes[service._id].note}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Titre */}
+                  <h3 className="text-md font-semibold mb-1">
+                    {service.titre}
+                  </h3>
+
+                  {/* ✅ Crédits */}
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="font-semibold text-green-600">
+                      {service.creditsProposes} crédits
+                    </span>
+                    <button className="w-20 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition text-sm">
+                      Réserver
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
