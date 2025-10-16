@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from "../api";
 import { Link } from "react-router-dom";
-import { FaCoins, FaEnvelope, FaUserCircle } from 'react-icons/fa'; // icônes React Icons
-// import logo from '../images/logo.png'; // si tu veux garder le logo
+import { FaCoins, FaEnvelope, FaUserCircle } from 'react-icons/fa';
+import { FiChevronDown } from 'react-icons/fi'; // flèche vers le bas
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
@@ -51,17 +51,27 @@ const Header = () => {
 
         {/* Icône Messagerie */}
         <div style={styles.item}>
-          <Link to="/messagerie" style={{ color: 'inherit' }}>
+          <Link to="/messagerie" style={{ color: 'inherit', position: 'relative' }}>
             <FaEnvelope size={20} />
-            {unreadCount > 0 && (
-              <span style={badgeStyle}>{unreadCount}</span>
-            )}
+            {unreadCount > 0 && <span style={badgeStyle}>{unreadCount}</span>}
           </Link>
         </div>
 
-        {/* Icône Profil */}
-        <div style={styles.profileSection}>
-          <FaUserCircle size={24} onClick={toggleDropdown} style={{ cursor: 'pointer', color: '#16A14A' }} />
+        {/* Icône Profil avec flèche */}
+        <div style={styles.profileSection} onClick={toggleDropdown}>
+          <div style={styles.profileButton}>
+            <FaUserCircle size={24} style={{ color: '#16A14A' }} />
+            <FiChevronDown
+              size={16}
+              style={{
+                marginLeft: '4px',
+                color: '#16A14A',
+                transition: 'transform 0.2s',
+                transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}
+            />
+          </div>
+
           {dropdownOpen && (
             <ul style={styles.dropdownMenu}>
               <li style={styles.dropdownItem}><Link to="/profile">Voir profil</Link></li>
@@ -107,6 +117,7 @@ const styles = {
   rightSection: { display: 'flex', alignItems: 'center', gap: '1.5rem' },
   item: { cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center', gap: '5px' },
   profileSection: { position: 'relative', cursor: 'pointer' },
+  profileButton: { display: 'flex', alignItems: 'center', gap: '4px' },
   dropdownMenu: {
     position: 'absolute',
     top: '100%',
