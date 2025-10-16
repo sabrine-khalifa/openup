@@ -61,7 +61,7 @@ const Messagerie = ({ currentUserId }) => {
         >
           ←
         </button>
-        <img src={logo} alt="Logo" className="h-8" />
+        { /* <img src={logo} alt="Logo" className="h-8" /> */}
         <h1 className=" w-full text-center text-lg font-semibold text-gray-800">Messagerie</h1>
       </header>
 

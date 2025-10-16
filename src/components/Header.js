@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <header style={styles.header}>
       <div style={styles.leftSection}>
-        <img src={logo} alt="Logo OpenUp" style={{ height: "40px", marginRight: "10px" }} />
+      {/*  <img src={logo} alt="Logo OpenUp" style={{ height: "40px", marginRight: "10px" }} /> */}
         <span style={styles.logoText}>OpenUp</span>
       </div>
 

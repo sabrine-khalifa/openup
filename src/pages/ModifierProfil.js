@@ -132,7 +132,7 @@ const ModifierProfil = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <img src={logo} alt="Logo" className="h-8" />
+       { /*<img src={logo} alt="Logo" className="h-8" /> */} 
         <button
           onClick={() => navigate("/profile")}
           className="text-[#16A14A] hover:underline"

@@ -30,7 +30,7 @@ const Login = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <header className="p-4 text-center border-b bg-white">
-        <img src={logo} alt="Logo" className="h-10 mx-auto" />
+        {/* <img src={logo} alt="Logo" className="h-10 mx-auto" /> */}
       </header>
 
       {/* Main */}
