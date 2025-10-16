@@ -291,7 +291,16 @@ const userId = (userData.id || userData._id || "").trim();
     <h3 className="text-xl font-semibold mb-4">Lien</h3>
     <ul className="space-y-2 text-gray-800">
       <li className="break-all">
-        <a href={user.liens} target="_blank" rel="noopener noreferrer">
+        <a
+          href={
+            user.liens.startsWith("http")
+              ? user.liens
+              : `https://${user.liens}` // ✅ Ajoute automatiquement https:// si absent
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
           {user.liens.includes("facebook.com") || user.liens.includes("fb.com")
             ? "Facebook"
             : user.liens.includes("instagram.com")
@@ -300,12 +309,14 @@ const userId = (userData.id || userData._id || "").trim();
             ? "LinkedIn"
             : user.liens.includes("http")
             ? "Site web"
-            : "Lien"} : {user.liens}
+            : "Lien"}{" "}
+          : {user.liens}
         </a>
       </li>
     </ul>
   </div>
 )}
+
   </div>
 )}
 

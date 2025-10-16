@@ -148,7 +148,7 @@ const EditService = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("✅ Service mis à jour avec succès !");
-      setTimeout(() => navigate("/serviceList"), 1500);
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (error) {
       console.error("Erreur :", error);
       setMessage("❌ Erreur lors de la mise à jour.");

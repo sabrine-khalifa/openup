@@ -347,6 +347,7 @@ const ModifierProfil = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 type="submit"
+                                onClick={() => navigate("/profile")}
                 className="bg-[#16A14A] hover:bg-[#1a9d53] text-white py-3 px-6 rounded-lg font-semibold transition"
               >
                 Enregistrer les modifications
