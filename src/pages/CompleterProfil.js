@@ -8,6 +8,7 @@ const CompleterProfil = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userData = location.state?.user || {}; // données passées depuis l'inscription
+  const userId = userData._id || localStorage.getItem("userId"); // ✅ correction ici
 
   const [form, setForm] = useState({
     name: userData.name || '',
