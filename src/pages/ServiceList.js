@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const ServiceList = () => {
   const [services, setServices] = useState([]);
   const [search, setSearch] = useState("");
-  const [categorie, setCategorie] = useState("Tous");
+  const [categorie, setCategorie] = useState("");
   const [categories, setCategories] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [notes, setNotes] = useState({});
@@ -12,20 +12,42 @@ const ServiceList = () => {
 
   const navigate = useNavigate();
 
-  const categoriesDisponibles = [
-    { nom: "Sport", couleur: "#212E53" },
-    { nom: "Musique & Son", couleur: "#FFBF66" },
-    { nom: "Art", couleur: "#F27438" },
-    { nom: "Architecture", couleur: "#E3CD8B" },
-    { nom: "Développement Personnel", couleur: "#9B59B6" },
-    { nom: "Illustration & Design", couleur: "#e76f51" },
-    { nom: "Vidéo & Montage", couleur: "#585B4C" },
-    { nom: "Santé", couleur: "#AFA4CE" },
-    { nom: "Artisanat", couleur: "#CA7C5C" },
-    { nom: "Décoration & Aménagement", couleur: "#C89F9C" },
-    { nom: "Formation, Transmission & Accompagnement", couleur: "#C8574D" },
-    { nom: "Informatique & Technologies", couleur: "#3498DB" },
-  ];
+ const categoriesDisponibles = [
+  { nom: "Animaux & monde vivant", couleur: "#8BC34A" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#FF7043" },
+  { nom: "Arts visuels", couleur: "#FFB74D" },
+  { nom: "Artisanat", couleur: "#CA7C5C" },
+  { nom: "Bien-être", couleur: "#4DB6AC" },
+  { nom: "Décoration & aménagement", couleur: "#C89F9C" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7CB342" },
+  { nom: "Écriture & littérature", couleur: "#F06292" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#FF8A65" },
+  { nom: "Finances personnelles & économie", couleur: "#FFD54F" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#A1887F" },
+  { nom: "Humanitaire & droits humains", couleur: "#90A4AE" },
+  { nom: "Inclusion & solidarité", couleur: "#4DD0E1" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#7986CB" },
+  { nom: "Management & organisation", couleur: "#F06292" },
+  { nom: "Marketing & communication", couleur: "#BA68C8" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#FFB74D" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#81C784" },
+  { nom: "Parentalité & famille", couleur: "#FF8A65" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#64B5F6" },
+  { nom: "Relations & développement social", couleur: "#AED581" },
+  { nom: "Santé", couleur: "#AFA4CE" },
+  { nom: "Sciences & technologies", couleur: "#4DB6AC" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#212E53" },
+  { nom: "Spiritualité", couleur: "#BA68C8" },
+  { nom: "Stylisme & mode", couleur: "#FF7043" },
+  { nom: "Thérapies alternatives", couleur: "#4DB6AC" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#FFD54F" }
+];
+
 
   // Charger les services
   useEffect(() => {
@@ -136,7 +158,7 @@ useEffect(() => {
       : [];
 
     const matchCategorie =
-      categorie === "Tous" ||
+      categorie === "" ||
       serviceCategories.some(
         (cat) =>
           cat &&
@@ -211,7 +233,7 @@ useEffect(() => {
                 padding: "0.5rem 1rem",
               }}
             >
-              <option value="Tous">Tous</option>
+              <option value="">Catégories</option>
               {categoriesDisponibles.map((cat, i) => (
                 <option
                   key={i}
