@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const ServiceList = () => {
   const [services, setServices] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]); // ✅ tableau de catégories sélectionnées
-  const [customCategory, setCustomCategory] = useState(""); // ✅ pour "Autres"
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [customCategory, setCustomCategory] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [notes, setNotes] = useState({});
   const [user, setUser] = useState(null);
@@ -16,9 +16,38 @@ const ServiceList = () => {
   const categoriesDisponibles = [
     { nom: "Animaux & monde vivant", couleur: "#8BC34A" },
     { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
-    // ... (vos catégories existantes)
+    { nom: "Arts vivants", couleur: "#FF7043" },
+    { nom: "Arts visuels", couleur: "#FFB74D" },
+    { nom: "Artisanat", couleur: "#CA7C5C" },
+    { nom: "Bien-être", couleur: "#4DB6AC" },
+    { nom: "Décoration & aménagement", couleur: "#C89F9C" },
+    { nom: "Développement personnel", couleur: "#9B59B6" },
+    { nom: "Écologie & durabilité", couleur: "#7CB342" },
+    { nom: "Écriture & littérature", couleur: "#F06292" },
+    { nom: "Entrepreneuriat & innovation", couleur: "#FF8A65" },
+    { nom: "Finances personnelles & économie", couleur: "#FFD54F" },
+    { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+    { nom: "Gastronomie & art culinaire", couleur: "#A1887F" },
+    { nom: "Humanitaire & droits humains", couleur: "#90A4AE" },
+    { nom: "Inclusion & solidarité", couleur: "#4DD0E1" },
+    { nom: "Informatique & numérique", couleur: "#3498DB" },
+    { nom: "Jeux & expériences interactives", couleur: "#7986CB" },
+    { nom: "Management & organisation", couleur: "#F06292" },
+    { nom: "Marketing & communication", couleur: "#BA68C8" },
+    { nom: "Médias, journalisme & storytelling", couleur: "#FFB74D" },
+    { nom: "Musique & son", couleur: "#FFBF66" },
+    { nom: "Nature, jardinage & permaculture", couleur: "#81C784" },
+    { nom: "Parentalité & famille", couleur: "#FF8A65" },
+    { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#64B5F6" },
+    { nom: "Relations & développement social", couleur: "#AED581" },
+    { nom: "Santé", couleur: "#AFA4CE" },
+    { nom: "Sciences & technologies", couleur: "#4DB6AC" },
+    { nom: "Sport, loisirs physiques & outdoor", couleur: "#212E53" },
+    { nom: "Spiritualité", couleur: "#BA68C8" },
+    { nom: "Stylisme & mode", couleur: "#FF7043" },
+    { nom: "Thérapies alternatives", couleur: "#4DB6AC" },
     { nom: "Voyage, tourisme & interculturalité", couleur: "#FFD54F" },
-    { nom: "Autres", couleur: "#9E9E9E" }, // ✅ Ajout explicite de "Autres"
+    { nom: "Autres", couleur: "#9E9E9E" },
   ];
 
   // Charger les services
@@ -42,7 +71,6 @@ const ServiceList = () => {
         const servicesDisponibles = servicesWithRemaining.filter((s) => s.placesRestantes > 0);
         setServices(servicesDisponibles);
         setFiltered(servicesDisponibles);
-
         servicesDisponibles.forEach((s) => loadNoteForService(s._id));
       } catch (error) {
         console.error("Erreur :", error);
@@ -91,30 +119,21 @@ const ServiceList = () => {
     }
   };
 
-  // 🔍 Filtre dynamique
+  // Filtre
   useEffect(() => {
     const lowerSearch = search.toLowerCase();
     const hasCustom = selectedCategories.includes("Autres") && customCategory.trim();
 
     const results = services.filter((s) => {
       const matchSearch = s.titre?.toLowerCase().includes(lowerSearch);
-
-      // Normaliser les catégories du service
       const serviceCats = Array.isArray(s.categories) ? s.categories : s.categories ? [s.categories] : [];
 
-      // Vérifier si AU MOINS UNE catégorie sélectionnée correspond
       const matchesSelected = selectedCategories.length === 0 || 
         selectedCategories.some((cat) => {
           if (cat === "Autres" && hasCustom) {
-            // Comparer avec la catégorie personnalisée
-            return serviceCats.some(sc => 
-              sc && sc.toLowerCase() === customCategory.trim().toLowerCase()
-            );
+            return serviceCats.some(sc => sc && sc.toLowerCase() === customCategory.trim().toLowerCase());
           }
-          // Sinon, comparaison normale
-          return serviceCats.some(sc => 
-            sc && sc.toLowerCase() === cat.toLowerCase()
-          );
+          return serviceCats.some(sc => sc && sc.toLowerCase() === cat.toLowerCase());
         });
 
       return matchSearch && matchesSelected;
@@ -123,13 +142,11 @@ const ServiceList = () => {
     setFiltered(results);
   }, [search, selectedCategories, customCategory, services]);
 
-  // Charger utilisateur
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setUser(userData);
   }, []);
 
-  // Gestion de la sélection/désélection
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -139,142 +156,158 @@ const ServiceList = () => {
   };
 
   return (
-    <div>
-      <div className="p-6 bg-[#f5f5f5] min-h-screen">
-        <div className="max-w-7xl mx-auto">
-          {/* En-tête */}
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-black">
-                Services et créations disponibles
-              </h2>
-              <p>Découvrez les talents de notre communauté de créateurs</p>
-            </div>
-            {user?.role === "createur" && (
+    <div className="p-6 bg-[#f5f5f5] min-h-screen">
+      <div className="max-w-6xl mx-auto">
+        {/* En-tête */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-black">Services disponibles</h1>
+            <p className="text-gray-600">Découvrez les talents de notre communauté</p>
+          </div>
+          {user?.role === "createur" && (
+            <button
+              onClick={() => navigate("/create-service")}
+              className="bg-[#16A14A] text-white px-4 py-2 rounded hover:bg-[#138a3f] transition"
+            >
+              + Ajouter un créneau
+            </button>
+          )}
+        </div>
+
+        {/* Barre de recherche + filtres */}
+        <div className="mb-6 space-y-4">
+          <input
+            type="text"
+            placeholder="🔍 Rechercher un service..."
+            className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {/* Catégories sous forme de tags cliquables */}
+          <div className="flex flex-wrap gap-2">
+            {categoriesDisponibles.map((cat) => (
               <button
-                onClick={() => navigate("/create-service")}
-                className="bg-[#16A14A] text-white px-4 py-2 rounded"
+                key={cat.nom}
+                type="button"
+                onClick={() => toggleCategory(cat.nom)}
+                className={`px-3 py-1.5 text-sm rounded-full transition ${
+                  selectedCategories.includes(cat.nom)
+                    ? "text-white"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+                style={{
+                  backgroundColor: selectedCategories.includes(cat.nom) ? cat.couleur : "white",
+                  color: selectedCategories.includes(cat.nom) ? "white" : cat.couleur,
+                }}
               >
-                + Ajouter un créneau
+                {cat.nom}
               </button>
-            )}
+            ))}
           </div>
 
-          {/* Recherche et filtres */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="🔍 Rechercher un service ou une création..."
-              className="w-full md:w-auto flex-1 border px-4 py-2 rounded mb-4 md:mb-0 md:mr-4 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-
-            {/* Filtres par catégories (boutons cliquables) */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {categoriesDisponibles.map((cat) => (
-                <button
-                  key={cat.nom}
-                  type="button"
-                  onClick={() => toggleCategory(cat.nom)}
-                  className={`px-3 py-1.5 text-sm rounded-full transition ${
-                    selectedCategories.includes(cat.nom)
-                      ? "bg-[#16A14A] text-white"
-                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                  }`}
-                  style={{
-                    backgroundColor: selectedCategories.includes(cat.nom)
-                      ? cat.couleur
-                      : "white",
-                    color: selectedCategories.includes(cat.nom) ? "white" : cat.couleur,
-                  }}
-                >
-                  {cat.nom}
-                </button>
-              ))}
+          {/* Champ "Autres" */}
+          {selectedCategories.includes("Autres") && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Votre catégorie personnalisée :
+              </label>
+              <input
+                type="text"
+                placeholder="Ex: Calligraphie, Robotique..."
+                className="w-full border px-3 py-1.5 rounded focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+              />
             </div>
+          )}
+        </div>
 
-            {/* Champ "Autres" si sélectionné */}
-            {selectedCategories.includes("Autres") && (
-              <div className="mt-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Spécifiez votre catégorie :
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ex: Photographie, Danse classique..."
-                  className="border px-3 py-1.5 rounded w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-                  value={customCategory}
-                  onChange={(e) => setCustomCategory(e.target.value)}
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Liste des services */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {filtered.map((service) => (
-              <div
+        {/* Liste des services */}
+        <ul className="space-y-4">
+          {filtered.length === 0 ? (
+            <li className="text-center py-8 text-gray-500">Aucun service trouvé.</li>
+          ) : (
+            filtered.map((service) => (
+              <li
                 key={service._id}
-                className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col cursor-pointer"
+                className="bg-white rounded-lg shadow hover:shadow-md transition p-4 cursor-pointer flex items-start gap-4"
                 onClick={() => navigate(`/service/${service._id}`)}
               >
-                {service.images && (
-                  <img
-                    src={
-                      Array.isArray(service.images) && service.images.length > 0
-                        ? service.images[0]
-                        : "/default-image.jpg"
-                    }
-                    alt={service.titre}
-                    className="rounded-t-xl h-40 w-full object-cover"
-                    onError={(e) => {
-                      e.target.src = "/default-image.jpg";
-                    }}
-                  />
-                )}
+                {/* Image miniature */}
+                <div className="flex-shrink-0 w-24 h-24 rounded overflow-hidden">
+                  {service.images && (
+                    <img
+                      src={
+                        Array.isArray(service.images) && service.images.length > 0
+                          ? service.images[0]
+                          : "/default-image.jpg"
+                      }
+                      alt={service.titre}
+                      className="w-full h-full object-cover"
+                      onError={(e) => (e.target.src = "/default-image.jpg")}
+                    />
+                  )}
+                </div>
 
-                <div className="p-4 flex flex-col flex-1">
-                  <div className="flex items-center mb-2">
+                {/* Contenu */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-lg text-gray-900 truncate">{service.titre}</h3>
+
+                  {/* Créateur + note */}
+                  <div className="flex items-center mt-1">
                     <img
                       src={
                         service.createur?.photo
                           ? service.createur.photo
                           : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                              service.createur?.name || "U"
-                            )}&background=16A14A&color=fff&size=36`
+                              (service.createur?.name || "") + " " + (service.createur?.prenom || "")
+                            ).slice(0, 50)}&background=16A14A&color=fff&size=24`
                       }
-                      alt=""
-                      className="rounded-full w-9 h-9 mr-2"
+                      alt="Créateur"
+                      className="w-6 h-6 rounded-full mr-2"
                     />
-                    <div>
-                      <span className="font-medium text-sm">
-                        {service.createur?.name} {service.createur?.prenom}
+                    <span className="text-sm text-gray-700">
+                      {service.createur?.name} {service.createur?.prenom}
+                    </span>
+
+                    {notes[service._id] && (
+                      <span className="ml-2 text-yellow-600 text-sm">
+                        ⭐ {notes[service._id].note}
                       </span>
-                      {notes[service._id] && (
-                        <div className="flex items-center text-yellow-500 text-xs mt-1">
-                          <span>⭐</span>
-                          <span className="text-gray-600 ml-1">{notes[service._id].note}</span>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
 
-                  <h3 className="text-md font-semibold mb-1">{service.titre}</h3>
+                  {/* Catégories du service */}
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {Array.isArray(service.categories)
+                      ? service.categories.map((cat, i) => (
+                          <span
+                            key={i}
+                            className="px-2 py-0.5 bg-gray-100 text-xs text-gray-600 rounded"
+                          >
+                            {cat}
+                          </span>
+                        ))
+                      : service.categories && (
+                          <span className="px-2 py-0.5 bg-gray-100 text-xs text-gray-600 rounded">
+                            {service.categories}
+                          </span>
+                        )}
+                  </div>
 
-                  <div className="flex items-center justify-between mt-3">
-                    <span className="font-semibold text-green-600">
-                      {service.creditsProposes} crédits
-                    </span>
-                    <button className="w-20 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition text-sm">
+                  {/* Crédits + bouton */}
+                  <div className="mt-3 flex justify-between items-center">
+                    <span className="font-semibold text-green-600">{service.creditsProposes} crédits</span>
+                    <button className="bg-green-600 text-white px-3 py-1.5 rounded text-sm hover:bg-green-700 transition">
                       Réserver
                     </button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              </li>
+            ))
+          )}
+        </ul>
       </div>
     </div>
   );
