@@ -234,17 +234,42 @@ useEffect(() => {
                 Catégories
               </option>
       {categoriesDisponibles.map((cat, i) => (
-        <option
-          key={i}
-          value={cat.nom}
-          style={{ backgroundColor: "#16A14A", color: "white" }}
-        >
-          {cat.nom}
-        </option>
+        <button
+      key={cat.nom}
+      type="button"
+      onClick={() => {
+        if (categorie.includes(cat.nom)) {
+          setCategorie(categorie.filter((c) => c !== cat.nom));
+        } else {
+          setCategorie([...categorie, cat.nom]);
+        }
+      }}
+      className={`px-3 py-1 rounded-full border ${
+        categorie.includes(cat.nom)
+          ? "bg-green-600 text-white border-green-600"
+          : "bg-white text-green-600 border-green-600"
+      } transition`}
+    >
+      {cat.nom}
+    </button>
       ))}
-      <option value="Autres" style={{ backgroundColor: "#16A14A", color: "white" }}>
-        Autres
-      </option>
+      <button
+    type="button"
+    onClick={() => {
+      if (categorie.includes("Autres")) {
+        setCategorie(categorie.filter((c) => c !== "Autres"));
+      } else {
+        setCategorie([...categorie, "Autres"]);
+      }
+    }}
+    className={`px-3 py-1 rounded-full border ${
+      categorie.includes("Autres")
+        ? "bg-green-600 text-white border-green-600"
+        : "bg-white text-green-600 border-green-600"
+    } transition`}
+  >
+    Autres
+  </button>
     </select>
   </div>
 
