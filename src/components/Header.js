@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import api from "../api";
 import { Link } from "react-router-dom";
 import creditsImg from '../images/credit.png';
@@ -11,6 +11,14 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const dropdownRef = useRef(null); // Ref pour le dropdown
+
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/login';
+  };
 
   // Charger le nombre de messages non lus
   useEffect(() => {
@@ -32,14 +40,17 @@ const Header = () => {
     }
   }, [token]);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // Fermer le dropdown si clic à l'extérieur
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/login';
-  };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownRef]);
 
   return (
     <header style={styles.header}>
@@ -64,9 +75,9 @@ const Header = () => {
         </div>
 
         {/* Profil avec image */}
-        <div style={styles.profileSection} onClick={toggleDropdown}>
+        <div style={styles.profileSection} ref={dropdownRef}>
           <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%', marginRight: '4px' }} />
-          <span style={styles.profileName}>⏷</span>
+          <span style={styles.profileName} onClick={toggleDropdown}>⏷</span>
 
           {dropdownOpen && (
             <ul style={styles.dropdownMenu}>
