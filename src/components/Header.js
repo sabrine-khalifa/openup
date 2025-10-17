@@ -72,3 +72,4 @@ import profilImg from '../images/profil.png';
     )}
   </div>
 </div>
+export default Header;
