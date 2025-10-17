@@ -62,6 +62,8 @@ const Header = () => {
         {/* Crédits avec image */}
         <div style={styles.item}>
           <img src={creditsImg} alt="Crédits" style={{ width: 20, height: 20 }} />
+                    <span>{credits}</span>
+
         </div>
 
         {/* Lien vers messagerie avec image */}
