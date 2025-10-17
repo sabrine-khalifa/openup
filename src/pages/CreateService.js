@@ -205,24 +205,48 @@ Object.entries(formData).forEach(([key, value]) => {
 
             {/* Catégories */}
  {/* Catégories */}
+{/* Catégories */}
 <div>
   <label className="block text-gray-700 font-medium mb-2">Catégories *</label>
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-    {categoriesDisponibles.map((cat) => (
-      <div key={cat.nom} className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          value={cat.nom}
-          checked={formData.categories.includes(cat.nom)}
-          onChange={() => handleCategoryToggle(cat.nom)}
-          className="w-4 h-4 border-gray-300 rounded focus:ring-[#16A14A]"
-        />
-        <span className="text-sm font-medium" style={{ color: cat.couleur }}>
-          {cat.nom}
-        </span>
-      </div>
-    ))}
+    {categoriesDisponibles.map((cat, index) => {
+      const catId = `category-${index}`;
+      return (
+        <div key={cat.nom} className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id={catId}
+            value={cat.nom}
+            checked={formData.categories.includes(cat.nom)}
+            onChange={() => handleCategoryToggle(cat.nom)}
+            className="w-4 h-4 border-gray-300 rounded focus:ring-[#16A14A]"
+          />
+          <label htmlFor={catId} className="text-sm text-gray-700">
+            {cat.nom}
+          </label>
+        </div>
+      );
+    })}
   </div>
+
+  {/* Champ texte pour "Autres" */}
+  {formData.categories.includes("Autres") && (
+    <div className="mt-2">
+      <label className="block text-gray-700 text-sm mb-1">
+        Précisez votre catégorie :
+      </label>
+      <input
+        type="text"
+        name="autreCategorie"
+        value={formData.autreCategorie || ""}
+        onChange={(e) =>
+          setFormData({ ...formData, autreCategorie: e.target.value })
+        }
+        placeholder="Entrez votre catégorie"
+        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+      />
+    </div>
+  )}
 
   {/* Message d'erreur si aucune catégorie sélectionnée */}
   {formData.categories.length === 0 && (
@@ -231,6 +255,7 @@ Object.entries(formData).forEach(([key, value]) => {
     </p>
   )}
 </div>
+
 
 
             {/* Type de prestation */}
