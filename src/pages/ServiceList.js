@@ -15,42 +15,42 @@ const ServiceList = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const categoriesDisponibles = [
-    "Animaux & monde vivant",
-    "Architecture & urbanisme",
-    "Arts vivants",
-    "Arts visuels",
-    "Artisanat",
-    "Bien-être",
-    "Décoration & aménagement",
-    "Développement personnel",
-    "Écologie & durabilité",
-    "Écriture & littérature",
-    "Entrepreneuriat & innovation",
-    "Finances personnelles & économie",
-    "Formation, enseignement & accompagnement",
-    "Gastronomie & art culinaire",
-    "Humanitaire & droits humains",
-    "Inclusion & solidarité",
-    "Informatique & numérique",
-    "Jeux & expériences interactives",
-    "Management & organisation",
-    "Marketing & communication",
-    "Médias, journalisme & storytelling",
-    "Musique & son",
-    "Nature, jardinage & permaculture",
-    "Parentalité & famille",
-    "Politique, citoyenneté & engagement sociétal",
-    "Relations & développement social",
-    "Santé",
-    "Sciences & technologies",
-    "Sport, loisirs physiques & outdoor",
-    "Spiritualité",
-    "Stylisme & mode",
-    "Thérapies alternatives",
-    "Voyage, tourisme & interculturalité",
-    "Autres" // ✅ Important
-  ];
+const categories = [
+  { nom: "Animaux & monde vivant", couleur: "#FF6B6B" },
+  { nom: "Architecture & urbanisme", couleur: "#6BCB77" },
+  { nom: "Arts vivants", couleur: "#4D96FF" },
+  { nom: "Arts visuels", couleur: "#FFD93D" },
+  { nom: "Artisanat", couleur: "#FF6F91" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#845EC2" },
+  { nom: "Développement personnel", couleur: "#00C9A7" },
+  { nom: "Écologie & durabilité", couleur: "#FF9671" },
+  { nom: "Écriture & littérature", couleur: "#FFC75F" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#F9F871" },
+  { nom: "Finances personnelles & économie", couleur: "#B39CD0" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#00C2FF" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFABAB" },
+  { nom: "Humanitaire & droits humains", couleur: "#8CFFDB" },
+  { nom: "Inclusion & solidarité", couleur: "#FF8C42" },
+  { nom: "Informatique & numérique", couleur: "#FF7F50" },
+  { nom: "Jeux & expériences interactives", couleur: "#008080" },
+  { nom: "Management & organisation", couleur: "#FFB347" },
+  { nom: "Marketing & communication", couleur: "#DFFF00" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#FF6347" },
+  { nom: "Musique & son", couleur: "#DA70D6" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#32CD32" },
+  { nom: "Parentalité & famille", couleur: "#FF69B4" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#7B68EE" },
+  { nom: "Relations & développement social", couleur: "#CD5C5C" },
+  { nom: "Santé", couleur: "#20B2AA" },
+  { nom: "Sciences & technologies", couleur: "#FFA07A" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#9370DB" },
+  { nom: "Spiritualité", couleur: "#3CB371" },
+  { nom: "Stylisme & mode", couleur: "#FF4500" },
+  { nom: "Thérapies alternatives", couleur: "#4682B4" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#F08080" },
+  { nom: "Autres", couleur: "#6A5ACD" }
+];
 
   // Fermer dropdown au clic extérieur
   useEffect(() => {
@@ -168,8 +168,8 @@ const ServiceList = () => {
                   <label key={cat} className="flex items-center px-4 py-2 hover:bg-gray-50 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={selectedCategories.includes(cat)}
-                      onChange={() => toggleCategory(cat)}
+                      checked={selectedCategories.includes(cat.nom)}
+                      onChange={() => toggleCategory(cat.nom)}
                       className="mr-2"
                     />
                     <span>{cat}</span>

@@ -6,19 +6,41 @@ import DatePicker from "react-multi-date-picker";
 import { useNavigate } from "react-router-dom";
 
 const categoriesDisponibles = [
-  { nom: "Bien-Être", couleur: "#27AE60" },
-  { nom: "Sport", couleur: "#212E53" },
-  { nom: "Musique & Son", couleur: "#FFBF66" },
-  { nom: "Art", couleur: "#F27438" },
-  { nom: "Architecture", couleur: "#E3CD8B" },
-  { nom: "Développement Personnel", couleur: "#9B59B6" },
-  { nom: "Illustration & Design", couleur: "#e76f51" },
-  { nom: "Vidéo & Montage", couleur: "#585B4C" },
-  { nom: "Santé", couleur: "#AFA4CE" },
-  { nom: "Artisanat", couleur: "#CA7C5C" },
-  { nom: "Décoration & Aménagement", couleur: "#C89F9C" },
-  { nom: "Formation, Transmission & Accompagnement", couleur: "#C8574D" },
-  { nom: "Informatique & Technologies", couleur: "#3498DB" },
+  { nom: "Animaux & monde vivant", couleur: "#FF6B6B" },
+  { nom: "Architecture & urbanisme", couleur: "#6BCB77" },
+  { nom: "Arts vivants", couleur: "#4D96FF" },
+  { nom: "Arts visuels", couleur: "#FFD93D" },
+  { nom: "Artisanat", couleur: "#FF6F91" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#845EC2" },
+  { nom: "Développement personnel", couleur: "#00C9A7" },
+  { nom: "Écologie & durabilité", couleur: "#FF9671" },
+  { nom: "Écriture & littérature", couleur: "#FFC75F" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#F9F871" },
+  { nom: "Finances personnelles & économie", couleur: "#B39CD0" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#00C2FF" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFABAB" },
+  { nom: "Humanitaire & droits humains", couleur: "#8CFFDB" },
+  { nom: "Inclusion & solidarité", couleur: "#FF8C42" },
+  { nom: "Informatique & numérique", couleur: "#FF7F50" },
+  { nom: "Jeux & expériences interactives", couleur: "#008080" },
+  { nom: "Management & organisation", couleur: "#FFB347" },
+  { nom: "Marketing & communication", couleur: "#DFFF00" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#FF6347" },
+  { nom: "Musique & son", couleur: "#DA70D6" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#32CD32" },
+  { nom: "Parentalité & famille", couleur: "#FF69B4" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#7B68EE" },
+  { nom: "Relations & développement social", couleur: "#CD5C5C" },
+  { nom: "Santé", couleur: "#20B2AA" },
+  { nom: "Sciences & technologies", couleur: "#FFA07A" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#9370DB" },
+  { nom: "Spiritualité", couleur: "#3CB371" },
+  { nom: "Stylisme & mode", couleur: "#FF4500" },
+  { nom: "Thérapies alternatives", couleur: "#4682B4" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#F08080" },
+  { nom: "Autres", couleur: "#6A5ACD" }
+
 ];
 
 
@@ -131,7 +153,7 @@ Object.entries(formData).forEach(([key, value]) => {
       {/* Bandeau jaune décoratif (UNIQUEMENT ici) */}
       <div className="bg-[#fff279] py-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-2xl font-bold text-[#16A14A]">Créer un nouveau service</h1>
+          <h1 className="text-2xl font-bold text-[#16A14A]"> Proposer un service ou une création </h1>
           <p className="text-gray-700 mt-1">Partagez votre savoir-faire avec la communauté</p>
         </div>
       </div>
