@@ -76,8 +76,9 @@ const Header = () => {
 
         {/* Profil avec image */}
         <div style={styles.profileSection} ref={dropdownRef}>
-          <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%', marginRight: '4px' }} />
-          <span style={styles.profileName} onClick={toggleDropdown}>⏷</span>
+          <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%', marginRight: '4px' }}   onClick={toggleDropdown}
+/>
+         {/*<span style={styles.profileName} onClick={toggleDropdown}>⏷</span>*/}
 
           {dropdownOpen && (
             <ul style={styles.dropdownMenu}>
