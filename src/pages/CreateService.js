@@ -204,49 +204,34 @@ Object.entries(formData).forEach(([key, value]) => {
             </div>
 
             {/* Catégories */}
- <div>
+ {/* Catégories */}
+<div>
   <label className="block text-gray-700 font-medium mb-2">Catégories *</label>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-    {[
-      "Développement personnel",
-      "Arts créatifs",
-      "Bien-être",
-      "Formation",
-      "Conseil",
-      "Artisanat",
-      "Musique",
-      "Écriture",
-      "Design",
-      "Autre",
-    ].map((cat) => (
-      <div key={cat} className="flex items-center gap-1">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    {categoriesDisponibles.map((cat) => (
+      <div key={cat.nom} className="flex items-center gap-2">
         <input
           type="checkbox"
-          name="categories"
-          value={cat}
-          onChange={(e) => {
-            const categories = formData.categories.includes(cat)
-              ? formData.categories.filter((c) => c !== cat)
-              : [...formData.categories, cat];
-            setFormData({ ...formData, categories });
-          }}
-          checked={formData.categories.includes(cat)}
+          value={cat.nom}
+          checked={formData.categories.includes(cat.nom)}
+          onChange={() => handleCategoryToggle(cat.nom)}
           className="w-4 h-4 border-gray-300 rounded focus:ring-[#16A14A]"
         />
-        <label htmlFor={`category-${cat}`} className="text-sm text-gray-700">
-          {cat}
-        </label>
+        <span className="text-sm font-medium" style={{ color: cat.couleur }}>
+          {cat.nom}
+        </span>
       </div>
     ))}
   </div>
 
-  {/* Message d'erreur */}
+  {/* Message d'erreur si aucune catégorie sélectionnée */}
   {formData.categories.length === 0 && (
     <p className="text-red-500 text-sm mt-1">
       Veuillez sélectionner au moins une catégorie
     </p>
   )}
 </div>
+
 
             {/* Type de prestation */}
             <div>

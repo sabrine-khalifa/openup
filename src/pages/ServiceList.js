@@ -164,8 +164,8 @@ const categories = [
 
             {dropdownOpen && (
               <div className="absolute z-10 mt-1 w-full md:w-64 bg-white border rounded shadow-lg max-h-60 overflow-y-auto">
-                {categoriesDisponibles.map((cat) => (
-                  <label key={cat} className="flex items-center px-4 py-2 hover:bg-gray-50 cursor-pointer">
+                {categories.map((cat) => (
+                  <label key={cat.nom} className="flex items-center px-4 py-2 hover:bg-gray-50 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={selectedCategories.includes(cat.nom)}
