@@ -51,14 +51,12 @@ const Header = () => {
         {/* Crédits avec image */}
         <div style={styles.item}>
           <img src={creditsImg} alt="Crédits" style={{ width: 20, height: 20 }} />
-          <span>Crédits : <strong>{credits}</strong></span>
         </div>
 
         {/* Lien vers messagerie avec image */}
         <div style={styles.item}>
           <Link to="/messagerie" style={styles.linkStyle}>
             <img src={messagerieImg} alt="Messagerie" style={{ width: 20, height: 20 }} />
-            <span>Messagerie</span>
           </Link>
           {unreadCount > 0 && (
             <span style={badgeStyle}>{unreadCount}</span>
@@ -68,7 +66,7 @@ const Header = () => {
         {/* Profil avec image */}
         <div style={styles.profileSection} onClick={toggleDropdown}>
           <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%', marginRight: '4px' }} />
-          <span style={styles.profileName}>Profil ⏷</span>
+          <span style={styles.profileName}>⏷</span>
 
           {dropdownOpen && (
             <ul style={styles.dropdownMenu}>
