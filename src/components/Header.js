@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../api';
 // Import des images depuis le dossier src/images
-import creditsImg from '../images/crédit.png';
+import creditsImg from '../images/credit.png';
 import messagerieImg from '../images/messagerie.png';
 import profilImg from '../images/profil.png';
 
