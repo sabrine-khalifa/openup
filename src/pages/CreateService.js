@@ -6,43 +6,40 @@ import DatePicker from "react-multi-date-picker";
 import { useNavigate } from "react-router-dom";
 
 const categoriesDisponibles = [
-  { nom: "Animaux & monde vivant", couleur: "#FF6B6B" },
-  { nom: "Architecture & urbanisme", couleur: "#6BCB77" },
-  { nom: "Arts vivants", couleur: "#4D96FF" },
-  { nom: "Arts visuels", couleur: "#FFD93D" },
-  { nom: "Artisanat", couleur: "#FF6F91" },
+  { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#F27438" },
+  { nom: "Arts visuels", couleur: "#F39C12" },
+  { nom: "Artisanat", couleur: "#CA7C5C" },
   { nom: "Bien-être", couleur: "#27AE60" },
-  { nom: "Décoration & aménagement", couleur: "#845EC2" },
-  { nom: "Développement personnel", couleur: "#00C9A7" },
-  { nom: "Écologie & durabilité", couleur: "#FF9671" },
-  { nom: "Écriture & littérature", couleur: "#FFC75F" },
-  { nom: "Entrepreneuriat & innovation", couleur: "#F9F871" },
-  { nom: "Finances personnelles & économie", couleur: "#B39CD0" },
-  { nom: "Formation, enseignement & accompagnement", couleur: "#00C2FF" },
-  { nom: "Gastronomie & art culinaire", couleur: "#FFABAB" },
-  { nom: "Humanitaire & droits humains", couleur: "#8CFFDB" },
-  { nom: "Inclusion & solidarité", couleur: "#FF8C42" },
-  { nom: "Informatique & numérique", couleur: "#FF7F50" },
-  { nom: "Jeux & expériences interactives", couleur: "#008080" },
-  { nom: "Management & organisation", couleur: "#FFB347" },
-  { nom: "Marketing & communication", couleur: "#DFFF00" },
-  { nom: "Médias, journalisme & storytelling", couleur: "#FF6347" },
-  { nom: "Musique & son", couleur: "#DA70D6" },
-  { nom: "Nature, jardinage & permaculture", couleur: "#32CD32" },
-  { nom: "Parentalité & famille", couleur: "#FF69B4" },
-  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#7B68EE" },
-  { nom: "Relations & développement social", couleur: "#CD5C5C" },
-  { nom: "Santé", couleur: "#20B2AA" },
-  { nom: "Sciences & technologies", couleur: "#FFA07A" },
-  { nom: "Sport, loisirs physiques & outdoor", couleur: "#9370DB" },
-  { nom: "Spiritualité", couleur: "#3CB371" },
-  { nom: "Stylisme & mode", couleur: "#FF4500" },
-  { nom: "Thérapies alternatives", couleur: "#4682B4" },
-  { nom: "Voyage, tourisme & interculturalité", couleur: "#F08080" },
-  { nom: "Autres", couleur: "#6A5ACD" }
-
+  { nom: "Décoration & aménagement", couleur: "#e76f51" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7AA95C" },
+  { nom: "Écriture & littérature", couleur: "#C89F9C" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#427AA1" },
+  { nom: "Finances personnelles & économie", couleur: "#E8EDDF" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFAE9D" },
+  { nom: "Humanitaire & droits humains", couleur: "#7C4C53" },
+  { nom: "Inclusion & solidarité", couleur: "#FF584D" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#0FAC71" },
+  { nom: "Management & organisation", couleur: "#9281C0" },
+  { nom: "Marketing, Communication & Événementiel", couleur: "#4A919E" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#A92831" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#B7CE66" },
+  { nom: "Parentalité & famille", couleur: "#EA5863" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#585B4C" },
+  { nom: "Relations & développement social", couleur: "#E74C3C" },
+  { nom: "Santé", couleur: "#EDCDFA" },
+  { nom: "Sciences & technologies", couleur: "#62B9CB" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#5CAFE7" },
+  { nom: "Spiritualité", couleur: "#FFE361" },
+  { nom: "Stylisme & mode", couleur: "#F0A1BF" },
+  { nom: "Thérapies alternatives", couleur: "#A4BD01" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" }
 ];
-
 
 const CreateService = () => {
   const navigate = useNavigate();
@@ -260,7 +257,7 @@ Object.entries(formData).forEach(([key, value]) => {
 
             {/* Type de prestation */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Type de prestation*</label>
+              <label className="block text-gray-700 font-medium mb-1">Type de prestation</label>
               <select
   name="typePrestation"
   value={formData.typePrestation}
@@ -281,14 +278,14 @@ Object.entries(formData).forEach(([key, value]) => {
     name="lieu"
     value={formData.lieu}
     onChange={handleChange}
-    placeholder="Ville, quartier, ou 'En ligne' si pertinent"
+    placeholder="Adresse "
     className="w-full border border-gray-300 px-4 py-3 rounded-lg"
   />
 </div>
 
 <div>
     <label className="block text-gray-700 font-medium mb-1">
-      Prix en crédits *
+      Valeur en crédits  *
     </label>
     <input
       type="number"
@@ -342,10 +339,23 @@ Object.entries(formData).forEach(([key, value]) => {
                 />
               </div>
             </div>
+             <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="pmr"
+                name="accessiblePMR"
+                checked={formData.accessiblePMR}
+                onChange={handleChange}
+                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+              />
+              <label htmlFor="pmr" className="text-gray-700 font-medium">
+                Date et heure de rdv à convenir ensemble 
+              </label>
+            </div>
 
             {/* Type de cours */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Type de cours</label>
+              <label className="block text-gray-700 font-medium mb-1">Type de séance  </label>
               <select
                 name="typeCours"
                 value={formData.typeCours}
@@ -361,16 +371,14 @@ Object.entries(formData).forEach(([key, value]) => {
             {/* Public cible */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Public cible</label>
-              <select
-                name="publicCible"
-                value={formData.publicCible}
-                onChange={handleChange}
-                className="w-full border border-gray-300 px-4 py-3 rounded-lg"
-              >
-                <option value="">Tous niveaux</option>
-                <option value="Débutants">Débutants</option>
-                <option value="Professionnels">Professionnels</option>
-              </select>
+              <input
+                  type="text"
+                  name="public cible"
+                  value={formData.publicCible}
+                  onChange={handleChange}
+                  placeholder="Débutants, Professionnels,Tous niveaux"
+                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
+                />
             </div>
 
             {/* Nombre de places + Crédits */}
@@ -387,34 +395,43 @@ Object.entries(formData).forEach(([key, value]) => {
                   required
                 />
               </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Crédits proposés</label>
-                <input
-                  type="number"
-                  name="creditsProposes"
-                  value={formData.creditsProposes}
-                  onChange={handleChange}
-                  placeholder="Ex: 50"
-                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
-                  required
-                />
-              </div>
+            
             </div>
 
             {/* PMR */}
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="pmr"
-                name="accessiblePMR"
-                checked={formData.accessiblePMR}
-                onChange={handleChange}
-                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
-              />
-              <label htmlFor="pmr" className="text-gray-700 font-medium">
-                Accessible PMR
-              </label>
-            </div>
+            {/* Case à cocher */}
+<div className="flex items-center gap-3">
+  <input
+    type="checkbox"
+    id="pmr"
+    name="accessiblePMR"
+    checked={formData.accessiblePMR}
+    onChange={handleChange}
+    className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
+  />
+  <label htmlFor="pmr" className="text-gray-700 font-medium">
+    Accessible PMR (Personne à mobilité réduite)
+  </label>
+</div>
+
+{/* Champ texte conditionnel */}
+{formData.accessiblePMR && (
+  <div className="mt-2">
+    <label htmlFor="pmrDetails" className="block text-gray-700 font-medium mb-1">
+      Précisez les besoins ou informations complémentaires
+    </label>
+    <input
+      type="text"
+      id="pmrDetails"
+      name="pmrDetails"
+      value={formData.pmrDetails || ""}
+      onChange={handleChange}
+      placeholder="Ex: besoin d'une rampe, accompagnement, etc."
+      className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+    />
+  </div>
+)}
+
 
             {/* Image */}
             <div>
