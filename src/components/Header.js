@@ -1,150 +1,174 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { FiChevronDown } from 'react-icons/fi';
-import api from '../api';
-
-// Import des images depuis le dossier src/images
+import React, { useState, useEffect } from 'react';
+import api from "../api";
+import { Link } from "react-router-dom";
 import creditsImg from '../images/credit.png';
 import messagerieImg from '../images/messagerie.png';
 import profilImg from '../images/profil.png';
 
 const Header = () => {
-  const [credits, setCredits] = useState(0);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const credits = userData?.credits || 0;
+  const token = localStorage.getItem("token");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  // Charger le nombre de messages non lus
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await api.get("/api/messages/unread/count", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUnreadCount(res.data.count);
+      } catch (err) {
+        console.error("Erreur chargement messages non lus :", err);
+      }
+    };
+
+    if (token) {
+      fetchUnreadCount();
+      const interval = setInterval(fetchUnreadCount, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [token]);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   const handleLogout = () => {
-    // Logique de déconnexion
-    console.log('Déconnexion...');
-  };
-
-  // Exemple : fetch des crédits et messages (adapter selon ton API)
-  useEffect(() => {
-    const fetchCredits = async () => {
-      try {
-        const res = await api.get('/user/credits');
-        setCredits(res.data.credits);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const fetchUnreadMessages = async () => {
-      try {
-        const res = await api.get('/messages/unread');
-        setUnreadCount(res.data.unread);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCredits();
-    fetchUnreadMessages();
-  }, []);
-
-  // Style CSS en JS
-  const styles = {
-    rightSection: { display: 'flex', alignItems: 'center' },
-    item: { marginRight: '16px', display: 'flex', alignItems: 'center' },
-    creditText: { marginLeft: '4px' },
-    linkStyle: { textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' },
-    profileSection: { position: 'relative' },
-    profileButton: { display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer' },
-    dropdownMenu: { 
-      position: 'absolute', 
-      top: '100%', 
-      right: 0, 
-      background: '#fff', 
-      boxShadow: '0 2px 8px rgba(0,0,0,0.2)', 
-      listStyle: 'none', 
-      padding: 0, 
-      margin: 0, 
-      zIndex: 1000 
-    },
-    dropdownItem: { padding: '8px 16px' },
-    dropdownLink: { textDecoration: 'none', color: 'inherit' },
-  };
-
-  const badgeStyle = {
-    marginLeft: '4px',
-    backgroundColor: 'red',
-    color: '#fff',
-    borderRadius: '50%',
-    padding: '2px 6px',
-    fontSize: '12px',
+    localStorage.clear();
+    window.location.href = '/login';
   };
 
   return (
-    <div style={styles.rightSection}>
-      {/* Crédits */}
-      <div style={styles.item}>
-        <img src={creditsImg} alt="Crédits disponibles" style={{ width: 20, height: 20 }} />
-        <span style={styles.creditText}>{credits}</span>
+    <header style={styles.header}>
+      <div style={styles.leftSection}>
+        <span style={styles.logoText}>OpenUp</span>
       </div>
 
-      {/* Messagerie */}
-      <div style={styles.item}>
-        <Link
-          to="/messagerie"
-          style={styles.linkStyle}
-          aria-label={`Messagerie${unreadCount > 0 ? `, ${unreadCount} messages non lus` : ''}`}
-        >
-          <img src={messagerieImg} alt="Messagerie" style={{ width: 20, height: 20 }} />
-          {unreadCount > 0 && <span style={badgeStyle}>{unreadCount}</span>}
-        </Link>
-      </div>
+      <div style={styles.rightSection}>
+        {/* Crédits avec image */}
+        <div style={styles.item}>
+          <img src={creditsImg} alt="Crédits" style={{ width: 20, height: 20 }} />
+          <span>Crédits : <strong>{credits}</strong></span>
+        </div>
 
-      {/* Profil */}
-      <div style={styles.profileSection} ref={dropdownRef}>
-        <button
-          type="button"
-          onClick={toggleDropdown}
-          aria-expanded={dropdownOpen}
-          aria-haspopup="true"
-          style={styles.profileButton}
-        >
-          <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%' }} />
-          <FiChevronDown
-            size={16}
-            color="#16A14A"
-            style={{
-              marginLeft: '4px',
-              transition: 'transform 0.2s ease',
-              transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-            }}
-            aria-hidden="true"
-          />
-        </button>
+        {/* Lien vers messagerie avec image */}
+        <div style={styles.item}>
+          <Link to="/messagerie" style={styles.linkStyle}>
+            <img src={messagerieImg} alt="Messagerie" style={{ width: 20, height: 20 }} />
+            <span>Messagerie</span>
+          </Link>
+          {unreadCount > 0 && (
+            <span style={badgeStyle}>{unreadCount}</span>
+          )}
+        </div>
 
-        {dropdownOpen && (
-          <ul style={styles.dropdownMenu} role="menu">
-            <li style={styles.dropdownItem}>
-              <Link to="/profile" style={styles.dropdownLink} role="menuitem">
-                Voir profil
-              </Link>
-            </li>
-            <li style={styles.dropdownItem}>
-              <Link to="/modifier-profil" style={styles.dropdownLink} role="menuitem">
-                Modifier le profil
-              </Link>
-            </li>
-            <li
-              style={styles.dropdownItem}
-              onClick={handleLogout}
-              onKeyDown={(e) => e.key === 'Enter' && handleLogout()}
-              role="menuitem"
-              tabIndex={0}
-            >
-              Se déconnecter
-            </li>
-          </ul>
-        )}
+        {/* Profil avec image */}
+        <div style={styles.profileSection} onClick={toggleDropdown}>
+          <img src={profilImg} alt="Profil" style={{ width: 24, height: 24, borderRadius: '50%', marginRight: '4px' }} />
+          <span style={styles.profileName}>Profil ⏷</span>
+
+          {dropdownOpen && (
+            <ul style={styles.dropdownMenu}>
+              <li style={styles.dropdownItem}><Link to="/profile">Voir profil</Link></li>
+              <li style={styles.dropdownItem}><Link to="/modifier-profil">Modifier le profil</Link></li>
+              <li style={styles.dropdownItem} onClick={handleLogout}>Se déconnecter</li>
+            </ul>
+          )}
+        </div>
       </div>
-    </div>
+    </header>
   );
+};
+
+const badgeStyle = {
+  position: 'absolute',
+  top: '-8px',
+  right: '-16px',
+  backgroundColor: '#e53e3e',
+  color: 'white',
+  fontSize: '12px',
+  fontWeight: 'bold',
+  borderRadius: '50%',
+  width: '18px',
+  height: '18px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  boxShadow: '0 0 4px rgba(0,0,0,0.3)'
+};
+
+const styles = {
+  header: {
+    backgroundColor: '#ffffff',
+    padding: '1rem 2rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: '1px solid #eee',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  },
+  leftSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    fontFamily: 'Lexend, sans-serif',
+  },
+  logoText: {
+    color: '#16A14A',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+  },
+  rightSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1.5rem',
+  },
+  item: {
+    cursor: 'pointer',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+  },
+  linkStyle: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    color: 'inherit',
+    gap: '4px',
+  },
+  profileSection: {
+    position: 'relative',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  profileName: {
+    fontWeight: 'bold',
+    color: '#16A14A',
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: '100%',
+    right: 0,
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    padding: '10px',
+    listStyle: 'none',
+    margin: 0,
+    zIndex: 1000,
+    width: '150px',
+    borderRadius: '6px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  },
+  dropdownItem: {
+    padding: '8px 10px',
+    cursor: 'pointer',
+    fontSize: '0.9rem',
+  },
 };
 
 export default Header;
