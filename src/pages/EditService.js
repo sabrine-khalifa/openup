@@ -62,7 +62,9 @@ const EditService = () => {
           typePrestation: service.typePrestation || "distanciel",
           nombrePlaces: service.nombrePlaces || "",
           creditsProposes: service.creditsProposes || "",
-          dateService: Array.isArray(service.dateService) ? service.dateService : [],
+          dateService: Array.isArray(service.dateService)
+  ? service.dateService.map(d => d.split("T")[0]) // ✅ garde uniquement la date
+  : [],
           heure: service.heure || "",
           duree: service.duree || "",
           typeCours: service.typeCours || "",
