@@ -117,7 +117,7 @@ Object.entries(formData).forEach(([key, value]) => {
   if (key === "dateService" && Array.isArray(value)) {
     value.forEach(dateStr => {
       if (dateStr) {
-        data.append("dateService", new Date(dateStr).toISOString()); // ✅ Format valide
+        data.append("dateService", dateStr); // ✅ Format valide
       }
     });
   } else if (Array.isArray(value)) {
