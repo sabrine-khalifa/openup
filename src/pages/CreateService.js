@@ -301,18 +301,18 @@ Object.entries(formData).forEach(([key, value]) => {
             {/* Dates */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
-              <DatePicker
-                multiple
-                value={formData.dateService}
-                onChange={(dates) =>
-                  setFormData({
-                    ...formData,
-                    dateService: dates.map(d => d.format("YYYY-MM-DD")),
-                  })
-                }
-                format="DD/MM/YYYY"
-                inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-              />
+            <DatePicker
+  multiple
+  value={formData.dateService.map(str => new Date(str))}
+  onChange={(dates) =>
+    setFormData({
+      ...formData,
+      dateService: dates.map(d => d.format("YYYY-MM-DD")),
+    })
+  }
+  format="DD/MM/YYYY"
+  inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+/>
             </div>
 
             {/* Heure + Durée */}
