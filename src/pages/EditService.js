@@ -322,7 +322,7 @@ const EditService = () => {
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
               <DatePicker
                 multiple
-                value={formData.dateService}
+                value={formData.dateService.map(str => new Date(str))}
                 onChange={(dates) =>
                   setFormData({
                     ...formData,
