@@ -405,7 +405,7 @@ const userId = (userData.id || userData._id || "").trim();
                     <div className="flex items-center justify-between mt-4">
                       <span className="text-green-600 font-semibold">{s.creditsProposes} crédits</span>
                       <button
-    className="w-20 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-sm"
+    className="w-20  bg-[#16A14A] hover:bg-[#1a9d53] text-white py-2 rounded-lg transition text-sm"
     onClick={(e) => {
       e.stopPropagation(); // empêche le onClick du parent qui navigue vers la page de détail
       navigate(`/editService/${s._id}`); // chemin vers la page de modification
