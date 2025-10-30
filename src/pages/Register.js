@@ -1,19 +1,27 @@
 // pages/Register.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api';
-import { useNavigate } from 'react-router-dom';
-import logo from '../images/logo.png';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const preselectedRole = location.state?.preselectedRole;
+
+  // Si on arrive sans rôle (ex: accès direct à /register), redirige vers le choix
+  useEffect(() => {
+    if (!preselectedRole || (preselectedRole !== 'particulier' && preselectedRole !== 'createur')) {
+      navigate('/');
+    }
+  }, [preselectedRole, navigate]);
+
   const [form, setForm] = useState({
     name: '',
     prenom: '',
     email: '',
     password: '',
-    role: 'particulier'
+    role: preselectedRole // ← rôle forcé par le bouton cliqué
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,15 +30,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       await api.post('/api/auth/register', form);
       alert('Inscription réussie !');
-      // Redirige vers un écran de complétion ou dashboard
-      navigate('/completer-profil', {
-    state: { user: form } // ← Envoie les données ici
-  });
-
+      navigate('/completer-profil', { state: { user: form } });
     } catch (err) {
       alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
     }
@@ -38,47 +41,20 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
       <header className="p-4 text-center border-b bg-white">
-        {/*<img src={logo} alt="Logo" className="h-10 mx-auto" />*/}
+        <button onClick={() => navigate(-1)} className="text-[#16A14A]">
+          ← Retour
+        </button>
       </header>
 
-      {/* Main */}
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Créer un compte
+            Inscription {form.role === 'createur' ? 'Créateur' : 'Particulier'}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Rôle */}
-            <div className="text-center">
-              <h3 className="font-medium text-gray-700 mb-3">Je suis :</h3>
-              <div className="flex justify-center gap-6 mb-6">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="role"
-                    value="particulier"
-                    checked={form.role === 'particulier'}
-                    onChange={handleChange}
-                  />
-                  Particulier
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="role"
-                    value="createur"
-                    checked={form.role === 'createur'}
-                    onChange={handleChange}
-                  />
-                  Créateur
-                </label>
-              </div>
-            </div>
-
-            {/* Informations de base */}
+            {/* Plus de choix de rôle ici ! */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -87,7 +63,7 @@ const Register = () => {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="text"
@@ -96,7 +72,7 @@ const Register = () => {
                 value={form.prenom}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="email"
@@ -105,7 +81,7 @@ const Register = () => {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
               <input
                 type="password"
@@ -114,7 +90,7 @@ const Register = () => {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+                className="border border-gray-300 rounded-lg px-4 py-3"
               />
             </div>
 
@@ -125,23 +101,8 @@ const Register = () => {
               S'inscrire
             </button>
           </form>
-
-          <p className="text-center text-gray-600 mt-6">
-            Déjà inscrit ?{' '}
-            <span
-              onClick={() => navigate('/login')}
-              className="text-[#16A14A] font-medium hover:underline cursor-pointer"
-            >
-              Se connecter
-            </span>
-          </p>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center py-4 text-gray-500 text-sm">
-        © {new Date().getFullYear()} OpenUp. Tous droits réservés.
-      </footer>
     </div>
   );
 };

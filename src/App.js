@@ -21,6 +21,7 @@ import Messagerie from "./components/Messagerie";
 import MessagerieList from "./components/MessagerieList";
 import EditService from "./pages/EditService";
 import CompleterProfil from "./pages/CompleterProfil";
+import ChooseRole from "./pages/ChooseRole";
 
 function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -95,7 +96,9 @@ function App() {
           }
         />
 
-                <Route path="/UserProfile/:id" element={<UserProfile />} />
+                <Route path="/ChooseRole" element={<ChooseRole />} />
+                                <Route path="/UserProfile/:id" element={<UserProfile />} />
+
 
         {/* Tu peux ajouter d'autres routes ici plus tard (create-service, profile, etc.) */}
       </Routes>

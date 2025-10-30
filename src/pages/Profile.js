@@ -484,51 +484,49 @@ const userId = (userData.id || userData._id || "").trim();
             <p className="text-gray-600 mt-2">Solde de crédits</p>
           </div>
         )}
-        {activeTab === "avis" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Avis reçus</h2>
-            {avis.length === 0 ? (
-              <p className="text-gray-500">Aucun avis.</p>
-            ) : (
-              <div className="space-y-4">
-                {avis.map(a => (
-                  <div key={a._id} className="bg-white p-4 rounded-xl shadow">
-                    <div className="flex items-center gap-3">
-                      <img
-  src={getAuteurPhoto(a.auteur)} 
-                        alt=""
-                        className="w-10 h-10 rounded-full"
-                      />
-                       <div className="flex-1">
-                        <div className="flex justify-between items-center">
-                          <div>
-                          <p className="font-medium">
-                            {a.auteur?.name} {a.auteur?.prenom}
-                          </p>
-                           {a.note && (
-                          <div className="flex items-center gap-1 text-yellow-500 text-sm">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i}>{i < a.note ? "★" : "☆"}</span>
-                            ))}
-                          </div>
-                        )}
-                        </div>
-                          <span className="text-sm text-gray-400">
-                            {new Date(a.createdAt).toLocaleDateString("fr-FR")}
-                          </span>
-                        </div>
+   {user.role === "createur" && activeTab === "avis" && (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Avis reçus</h2>
+    {avis.length === 0 ? (
+      <p className="text-gray-500">Aucun avis.</p>
+    ) : (
+      <div className="space-y-4">
+        {avis.map(a => (
+          <div key={a._id} className="bg-white p-4 rounded-xl shadow">
+            <div className="flex items-center gap-3">
+              <img
+                src={getAuteurPhoto(a.auteur)} 
+                alt=""
+                className="w-10 h-10 rounded-full"
+              />
+              <div className="flex-1">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">
+                      {a.auteur?.name} {a.auteur?.prenom}
+                    </p>
+                    {a.note && (
+                      <div className="flex items-center gap-1 text-yellow-500 text-sm">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i}>{i < a.note ? "★" : "☆"}</span>
+                        ))}
                       </div>
-                       
-                    </div>
-                    <p className="mt-2 text-gray-700">{a.commentaire}</p>
-                    <p className="text-sm text-gray-500 italic mt-1">Service : {a.service?.titre}</p>
+                    )}
                   </div>
-                ))}
+                  <span className="text-sm text-gray-400">
+                    {new Date(a.createdAt).toLocaleDateString("fr-FR")}
+                  </span>
+                </div>
               </div>
-            )}
+            </div>
+            <p className="mt-2 text-gray-700">{a.commentaire}</p>
+            <p className="text-sm text-gray-500 italic mt-1">Service : {a.service?.titre}</p>
           </div>
-        )}
-
+        ))}
+      </div>
+    )}
+  </div>
+)}
 
         {/* Autres onglets : services, réserves, etc. */}
         {/* ... (garde le reste inchangé) */}
