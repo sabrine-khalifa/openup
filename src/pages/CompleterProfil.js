@@ -98,7 +98,7 @@ try {
       localStorage.setItem('user', JSON.stringify(updatedUser));
 
       alert("Profil complété avec succès !");
-      navigate("/profil");
+      navigate("/profile");
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.msg || "Erreur lors de la complétion du profil");
