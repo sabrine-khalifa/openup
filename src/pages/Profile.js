@@ -53,10 +53,10 @@ const userId = (userData.id || userData._id || "").trim();
           .reduce((acc, n) => acc + n, 0) / avisAvecNote.length).toFixed(1)
       : null;
 
-    setUser(prev => ({
-    ...prev, note: noteMoyenne, nombreAvis: avis.length}));
-})
-.catch((err) => console.error("Erreur de chargement des avis :", err));
+    setUser({ ...userData, note: noteMoyenne, nombreAvis: avis.length });
+    setForm({ ...userData }); // Initialiser le formulaire
+  })
+  .catch((err) => console.error("Erreur de chargement des avis :", err));
 
 
     if (userData.role === "createur") {
