@@ -20,25 +20,26 @@ const CompleterProfil = () => {
 
   const userId = storedUser?.id; // ← utilise l'ID depuis localStorage
   const [form, setForm] = useState({
-    name: userData.name || '',
-    prenom: userData.prenom || '',
-    email: userData.email || '',
-    telephone: userData.telephone || '',
-    photo: userData.photo || null,
-    role: userData.role || 'particulier',
+    // Utiliser storedUser si disponible, sinon valeurs vides
+    name: storedUser?.name || '',
+    prenom: storedUser?.prenom || '',
+    email: storedUser?.email || '',
+    telephone: storedUser?.telephone || '',
+    photo: storedUser?.photo || null,
+    role: storedUser?.role || 'particulier',
     // Champs créateur
-    metier: userData.metier || '',
-    domaine: userData.domaine || '',
-    langues: userData.langues || [],
-    nationalites: userData.nationalites || '',
-    video: userData.video || '',
-    description: userData.description || '',
-    valeurs: userData.valeurs || '',
-    lieuPrestation: userData.lieuPrestation || '',
-    pmr: userData.pmr || false,
-    typeCours: userData.typeCours || '',
-    publicCible: userData.publicCible || '',
-    liens: userData.liens || '',
+    metier: storedUser?.metier || '',
+    domaine: storedUser?.domaine || '',
+    langues: Array.isArray(storedUser?.langues) ? storedUser.langues : [],
+    nationalites: storedUser?.nationalites || '',
+    video: storedUser?.video || '',
+    description: storedUser?.description || '',
+    valeurs: storedUser?.valeurs || '',
+    lieuPrestation: storedUser?.lieuPrestation || '',
+    pmr: storedUser?.pmr || false,
+    typeCours: storedUser?.typeCours || '',
+    publicCible: storedUser?.publicCible || '',
+    liens: storedUser?.liens || '',
   });
 
   const domaines = [
