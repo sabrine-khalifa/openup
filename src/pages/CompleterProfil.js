@@ -7,9 +7,18 @@ import logo from '../images/logo.png';
 const CompleterProfil = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = location.state?.user || {}; // données passées depuis l'inscription
-  const userId = userData._id || localStorage.getItem("userId"); // ✅ correction ici
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
 
+ // Vérifier connexion
+  useEffect(() => {
+    if (!storedUser || !token) {
+      alert('Veuillez vous connecter.');
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const userId = storedUser?.id; // ← utilise l'ID depuis localStorage
   const [form, setForm] = useState({
     name: userData.name || '',
     prenom: userData.prenom || '',
@@ -74,19 +83,30 @@ const CompleterProfil = () => {
     }
   });
 
-  try {
-    await api.put(`/api/auth/${userId}`, data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+try {
+      // ✅ Ajoutez le header d'authentification !
+      await api.put(`/api/auth/${userId}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${token}` // ← crucial !
+        },
+      });
 
-    alert("Profil complété avec succès !");
-    navigate("/profil"); // redirige vers la page profil
-  } catch (err) {
-    console.error(err);
-    alert(err.response?.data?.msg || "Erreur lors de la complétion du profil");
-  }
+      // Mettre à jour localStorage avec les nouvelles données
+      const updatedUser = { ...storedUser, ...form };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+
+      alert("Profil complété avec succès !");
+      navigate("/profil");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.msg || "Erreur lors de la complétion du profil");
+    }
+  
+  
 };
-
+ 
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -109,10 +129,7 @@ const CompleterProfil = () => {
               
               
 
-  <div>
-    <label className="block text-sm font-medium text-gray-700">Email</label>
-    <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.email}</p>
-  </div>
+  
               <input
                 type="tel"
                 name="telephone"
