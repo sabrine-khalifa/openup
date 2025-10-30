@@ -97,7 +97,7 @@ const CompleterProfil = () => {
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-  Bonjour {form.prenom} 👋 Complétez votre profil
+  Bonjour  {form.name}  👋 Complétez votre profil
           </h2>
           <p className="text-gray-600 mb-6">
   Veuillez compléter les informations suivantes pour finaliser votre profil.
@@ -108,16 +108,7 @@ const CompleterProfil = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               
               
-               <div className="grid grid-cols-2 gap-4">
-    <div>
-      <label className="block text-sm font-medium text-gray-700">Nom</label>
-      <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.name}</p>
-    </div>
-    <div>
-      <label className="block text-sm font-medium text-gray-700">Prénom</label>
-      <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.prenom}</p>
-    </div>
-  </div>
+
   <div>
     <label className="block text-sm font-medium text-gray-700">Email</label>
     <p className="px-4 py-3 bg-gray-100 rounded-lg">{form.email}</p>
