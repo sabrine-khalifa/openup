@@ -88,7 +88,7 @@ const Login = () => {
           <p className="text-center text-gray-600 mt-6">
             Pas encore de compte ?{' '}
             <span
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/ChooseRole')}
               className="text-[#16A14A] font-medium hover:underline cursor-pointer"
             >
               S’inscrire
