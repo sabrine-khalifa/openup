@@ -363,8 +363,9 @@ Object.entries(formData).forEach(([key, value]) => {
                 className="w-full border border-gray-300 px-4 py-3 rounded-lg"
               >
                 <option value="">Sélectionnez</option>
-                <option value="Individuel">Individuel</option>
-                <option value="collectif">Collectif</option>
+                <option value="Individuel">Individuelle</option>
+                <option value="collectif">Collective </option>
+                <option value="collectif">Individuelle & Collective </option>
               </select>
             </div>
 
@@ -373,7 +374,7 @@ Object.entries(formData).forEach(([key, value]) => {
               <label className="block text-gray-700 font-medium mb-1">Public cible</label>
               <input
                   type="text"
-                  name="public cible"
+                  name="publicCible"
                   value={formData.publicCible}
                   onChange={handleChange}
                   placeholder="Débutants, Professionnels,Tous niveaux"
