@@ -97,7 +97,9 @@ const ModifierProfil = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const userId = JSON.parse(localStorage.getItem("user"))?.id;
+   const userId = JSON.parse(localStorage.getItem("user"))?.id 
+            || JSON.parse(localStorage.getItem("user"))?._id;
+
 
     if (!token || !userId) {
       alert("Non authentifié");
