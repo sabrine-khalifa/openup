@@ -113,8 +113,14 @@ const CreateService = () => {
     const data = new FormData();
     
   // Envoi des données avec conversion des dates
-Object.entries(formData).forEach(([key, value]) => {
-  if (key === "dateService" && Array.isArray(value)) {
+  Object.entries(formData).forEach(([key, value]) => {
+  if (key === "prix") {
+    const prixNumber = Number(value); // conversion en nombre
+    if (isNaN(prixNumber) || prixNumber <= 0) {
+      throw new Error("Crédits invalides");
+    }
+    data.append("prix", prixNumber);
+  } else if(key === "dateService" && Array.isArray(value)) {
     value.forEach(dateStr => {
       if (dateStr) {
         data.append("dateService", dateStr); // ✅ Format valide
