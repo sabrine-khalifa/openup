@@ -33,8 +33,7 @@ const Register = () => {
     try {
       await api.post('/api/auth/register', form);
       alert('Inscription réussie !');
-      navigate('/login', { state: { user: form } });
-    } catch (err) {
+navigate('/confirmation', { state: { email: form.email } });    } catch (err) {
       alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
     }
   };
