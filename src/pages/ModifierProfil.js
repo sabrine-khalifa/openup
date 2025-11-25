@@ -123,8 +123,17 @@ const ModifierProfil = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      const storedUser = JSON.parse(localStorage.getItem("user"));
 
-      localStorage.setItem("user", JSON.stringify(res.data));
+localStorage.setItem(
+  "user",
+  JSON.stringify({
+    ...storedUser,   // garde _id, role, credits, etc.
+    ...res.data,     // mets à jour les champs modifiés
+  })
+);
+
+
       alert("Profil mis à jour !");
       navigate("/profile");
     } catch (error) {
