@@ -39,8 +39,10 @@ const ModifierProfil = () => {
     const token = localStorage.getItem("token");
 
     if (!userData || !token) return navigate("/login");
+    const userId = userData.id || userData._id;
 
-    const userId = userData.id;
+
+    
 
     axios.get(`https://backend-hqhy.onrender.com/api/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
