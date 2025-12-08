@@ -81,76 +81,75 @@ const CreateService = () => {
     setImages([...e.target.files]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setMessage("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setMessage("");
 
-    let token = localStorage.getItem("token");
-    const refreshToken = localStorage.getItem("refreshToken");
+  let token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
 
-    if (!token) {
-      setMessage("❌ Vous devez être connecté.");
-      setIsSubmitting(false);
-      return;
+  if (!token) {
+    setMessage("❌ Vous devez être connecté.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  try {
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    const now = Math.floor(Date.now() / 1000);
+    if (decoded.exp < now && refreshToken) {
+      const refreshRes = await api.post("/auth/refreshToken", { refreshToken });
+      token = refreshRes.data.accessToken;
+      localStorage.setItem("token", token);
     }
+  } catch (err) {
+    setMessage("❌ Session expirée. Veuillez vous reconnecter.");
+    setIsSubmitting(false);
+    return;
+  }
 
-    try {
-      const decoded = JSON.parse(atob(token.split('.')[1]));
-      const now = Math.floor(Date.now() / 1000);
-      if (decoded.exp < now && refreshToken) {
-        const refreshRes = await api.post("/auth/refreshToken", { refreshToken });
-        token = refreshRes.data.accessToken;
-        localStorage.setItem("token", token);
-      }
-    } catch (err) {
-      setMessage("❌ Session expirée. Veuillez vous reconnecter.");
-      setIsSubmitting(false);
-      return;
-    }
+  const userId = JSON.parse(localStorage.getItem("user"))?.id;
+  const data = new FormData();
 
-    const userId = JSON.parse(localStorage.getItem("user"))?.id;
-    const data = new FormData();
-    
-  // Envoi des données avec conversion des dates
-  Object.entries(formData).forEach(([key, value]) => {
-  if (key === "prix") {
-  const prixNumber = Number(value); // conversion en nombre
+  // --- Validation du prix avant de créer FormData ---
+  const prixNumber = Number(formData.prix);
   if (isNaN(prixNumber) || prixNumber <= 0) {
     setMessage("❌ Crédits invalides");
     setIsSubmitting(false);
-    return; // stoppe la fonction handleSubmit
+    return; // ✅ stoppe correctement handleSubmit
   }
-  data.append("prix", prixNumber);
 
-
-  } else if(key === "dateService" && Array.isArray(value)) {
-    value.forEach(dateStr => {
-      if (dateStr) {
-        data.append("dateService", dateStr); // ✅ Format valide
-      }
-    });
-  } else if (Array.isArray(value)) {
-    value.forEach(item => data.append(key, item));
-  } else {
-    data.append(key, value);
-  }
-});
-    data.append("createur", userId);
-    images.forEach(img => data.append("image", img));
-
-    try {
-      await api.post("/api/services", data, {
-        headers: { Authorization: `Bearer ${token}` },
+  // Ajout des champs dans FormData
+  Object.entries(formData).forEach(([key, value]) => {
+    if (key === "prix") {
+      data.append("prix", prixNumber);
+    } else if (key === "dateService" && Array.isArray(value)) {
+      value.forEach(dateStr => {
+        if (dateStr) data.append("dateService", dateStr);
       });
-      setMessage("✅ Service créé avec succès !");
-      setTimeout(() => navigate("/dashboard"), 1500);
-    } catch (error) {
-  console.error("Erreur détaillée :", error.response?.data || error.message);
-  setMessage(`❌ ${error.response?.data?.erreur || "Erreur lors de la création."}`);
-}
-    
-  };
+    } else if (Array.isArray(value)) {
+      value.forEach(item => data.append(key, item));
+    } else {
+      data.append(key, value);
+    }
+  });
+
+  data.append("createur", userId);
+  images.forEach(img => data.append("image", img));
+
+  try {
+    await api.post("/api/services", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setMessage("✅ Service créé avec succès !");
+    setTimeout(() => navigate("/dashboard"), 1500);
+  } catch (error) {
+    console.error("Erreur détaillée :", error.response?.data || error.message);
+    setMessage(`❌ ${error.response?.data?.erreur || "Erreur lors de la création."}`);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">
