@@ -80,7 +80,9 @@ const CreateService = () => {
     setImages([...e.target.files]);
   };
 
-const handleSubmit = async (e) => {
+
+
+  const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
   setMessage("");
@@ -111,18 +113,23 @@ const handleSubmit = async (e) => {
   const userId = JSON.parse(localStorage.getItem("user"))?.id;
   const data = new FormData();
 
-  // --- Validation du prix avant de créer FormData ---
-  console.log("Valeur brute de prix :", formData.prix, typeof formData.prix);
+  // ✅ Validation CORRECTE du prix (sans ReferenceError)
+  const rawPrix = formData.prix;
+  if (!rawPrix || rawPrix.trim() === "") {
+    setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
+    setIsSubmitting(false);
+    return;
+  }
 
-  console.log("Après conversion :", prixNumber, isNaN(prixNumber), Number.isInteger(prixNumber));
- if (!formData.prix || isNaN(Number(formData.prix)) || Number(formData.prix) < 1) {
-  setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
-  setIsSubmitting(false);
-  return;
-}
+  const prixNumber = parseInt(rawPrix, 10);
+  // ⚠️ Optionnel : log APRÈS la déclaration
+  // console.log("prixNumber =", prixNumber);
 
-const prixNumber = parseInt(formData.prix, 10);
-
+  if (isNaN(prixNumber) || prixNumber < 1) {
+    setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
+    setIsSubmitting(false);
+    return;
+  }
 
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
@@ -151,6 +158,7 @@ const prixNumber = parseInt(formData.prix, 10);
   } catch (error) {
     console.error("Erreur détaillée :", error.response?.data || error.message);
     setMessage(`❌ ${error.response?.data?.erreur || "Erreur lors de la création."}`);
+    setIsSubmitting(false); // ⚠️ Important : réactiver le bouton en cas d'erreur API
   }
 };
 
