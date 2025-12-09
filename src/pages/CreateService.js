@@ -43,21 +43,21 @@ const categoriesDisponibles = [
 
 const CreateService = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    titre: "",
-    description: "",
-    typePrestation: "distanciel",
-    nombrePlaces: "",
-    dateService: [],
-    heure: "",
-    duree: "",
-    typeCours: "",
-    publicCible: "",
-    accessiblePMR: false,
-    lieu: "",
-    categories: [],
-    prix: "",
-  });
+ const [formData, setFormData] = useState({
+  titre: "",
+  description: "",
+  typePrestation: "distanciel",
+  nombrePlaces: "",
+  dateService: [],
+  heure: "",
+  duree: "",
+  typeCours: "",
+  publicCible: "",
+  accessiblePMR: false,
+  lieu: "",
+  categories: [],
+  creditsProposes: "", // ✅
+});
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -114,27 +114,25 @@ const CreateService = () => {
   const data = new FormData();
 
   // ✅ Validation CORRECTE du prix (sans ReferenceError)
-  const rawPrix = formData.prix;
-  if (!rawPrix || rawPrix.trim() === "") {
-    setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
-    setIsSubmitting(false);
-    return;
-  }
+ 
 
-  const prixNumber = parseInt(rawPrix, 10);
-  // ⚠️ Optionnel : log APRÈS la déclaration
-  // console.log("prixNumber =", prixNumber);
+ const rawCredits = formData.creditsProposes;
+if (!rawCredits || rawCredits.trim() === "") {
+  setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
+  setIsSubmitting(false);
+  return;
+}
 
-  if (isNaN(prixNumber) || prixNumber < 1) {
-    setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
-    setIsSubmitting(false);
-    return;
-  }
-
+const creditsNumber = parseInt(rawCredits, 10);
+if (isNaN(creditsNumber) || creditsNumber < 1) {
+  setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
+  setIsSubmitting(false);
+  return;
+}
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
-    if (key === "prix") {
-      data.append("prix", prixNumber);
+    if (key === "creditsProposes") {
+      data.append("creditsProposes", creditsNumber);
     } else if (key === "dateService" && Array.isArray(value)) {
       value.forEach(dateStr => {
         if (dateStr) data.append("dateService", dateStr);
@@ -308,10 +306,10 @@ const CreateService = () => {
     <label className="block text-gray-700 font-medium mb-1">
       Valeur en crédits  *
     </label>
-    <input
+  <input
   type="number"
-  name="prix"
-  value={formData.prix}
+  name="creditsProposes"  // ✅
+  value={formData.creditsProposes || ""}
   onChange={handleChange}
   placeholder="Ex: 50 crédits"
   min="1"
