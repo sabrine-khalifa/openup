@@ -114,11 +114,11 @@ const handleSubmit = async (e) => {
 
   // --- Validation du prix avant de créer FormData ---
   const prixNumber = Number(formData.prix);
-  if (isNaN(prixNumber) || prixNumber <= 0) {
-    setMessage("❌ Crédits invalides");
-    setIsSubmitting(false);
-    return; // ✅ stoppe correctement handleSubmit
-  }
+  if (isNaN(prixNumber) || prixNumber <= 0 || !Number.isInteger(prixNumber)) {
+  setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
+  setIsSubmitting(false);
+  return;
+}
 
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
@@ -297,14 +297,16 @@ const handleSubmit = async (e) => {
       Valeur en crédits  *
     </label>
     <input
-      type="number"
-      name="prix"
-      value={formData.prix}
-      onChange={handleChange}
-      placeholder="Ex: 50 crédits"
-      className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-      required
-    />
+  type="number"
+  name="prix"
+  value={formData.prix}
+  onChange={handleChange}
+  placeholder="Ex: 50 crédits"
+  min="1"
+  step="1"
+  className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  required
+/>
     
   </div>
             {/* Dates */}
