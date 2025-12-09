@@ -48,7 +48,6 @@ const CreateService = () => {
     description: "",
     typePrestation: "distanciel",
     nombrePlaces: "",
-    creditsProposes: "",
     dateService: [],
     heure: "",
     duree: "",
