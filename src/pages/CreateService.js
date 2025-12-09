@@ -56,7 +56,9 @@ const CreateService = () => {
   accessiblePMR: false,
   lieu: "",
   categories: [],
-  creditsProposes: "", // ✅
+  creditsProposes: "", 
+    pmrDetails: "",
+
 });
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState("");
@@ -363,9 +365,9 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
              <div className="flex items-center gap-3">
               <input
                 type="checkbox"
-                id="pmr"
-                name="accessiblePMR"
-                checked={formData.accessiblePMR}
+                id="date-convenir"
+                name="dateAConvenir"
+                checked={formData.dateAConvenir}
                 onChange={handleChange}
                 className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
               />
@@ -425,7 +427,7 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
 <div className="flex items-center gap-3">
   <input
     type="checkbox"
-    id="pmr"
+    id="accessible-pmr"
     name="accessiblePMR"
     checked={formData.accessiblePMR}
     onChange={handleChange}
