@@ -115,13 +115,15 @@ const handleSubmit = async (e) => {
   // --- Validation du prix avant de créer FormData ---
   console.log("Valeur brute de prix :", formData.prix, typeof formData.prix);
 
-  const prixNumber = Number(formData.prix);
   console.log("Après conversion :", prixNumber, isNaN(prixNumber), Number.isInteger(prixNumber));
-  if (isNaN(prixNumber) || prixNumber <= 0 || !Number.isInteger(prixNumber)) {
+ if (!formData.prix || isNaN(Number(formData.prix)) || Number(formData.prix) < 1) {
   setMessage("❌ Crédits invalides. Veuillez saisir un nombre entier positif.");
   setIsSubmitting(false);
   return;
 }
+
+const prixNumber = parseInt(formData.prix, 10);
+
 
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
