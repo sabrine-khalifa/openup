@@ -387,7 +387,7 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
               >
                 <option value="">Sélectionnez</option>
                 <option value="Individuel">Individuelle</option>
-                <option value="collectif">Collective </option>
+                <option value="Collectif">Collective </option>
                 <option value="Groupe">Individuelle & Collective </option>
               </select>
             </div>
