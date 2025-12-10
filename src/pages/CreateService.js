@@ -371,7 +371,7 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
                 onChange={handleChange}
                 className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
               />
-              <label htmlFor="pmr" className="text-gray-700 font-medium">
+              <label htmlFor="date-convenir" className="text-gray-700 font-medium">
                 Date et heure de rdv à convenir ensemble 
               </label>
             </div>
@@ -388,7 +388,7 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
                 <option value="">Sélectionnez</option>
                 <option value="Individuel">Individuelle</option>
                 <option value="collectif">Collective </option>
-                <option value="collectif">Individuelle & Collective </option>
+                <option value="Groupe">Individuelle & Collective </option>
               </select>
             </div>
 
@@ -433,7 +433,7 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
     onChange={handleChange}
     className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
   />
-  <label htmlFor="pmr" className="text-gray-700 font-medium">
+  <label htmlFor="accessible-pmr" className="text-gray-700 font-medium">
     Accessible PMR (Personne à mobilité réduite)
   </label>
 </div>
