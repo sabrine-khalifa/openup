@@ -38,7 +38,8 @@ const categoriesDisponibles = [
   { nom: "Spiritualité", couleur: "#FFE361" },
   { nom: "Stylisme & mode", couleur: "#F0A1BF" },
   { nom: "Thérapies alternatives", couleur: "#A4BD01" },
-  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" }
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
+{ nom: "Autres", couleur: "#95a5a6" }
 ];
 
 const CreateService = () => {
@@ -81,8 +82,6 @@ const CreateService = () => {
   const handleImageChange = (e) => {
     setImages([...e.target.files]);
   };
-
-
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -131,6 +130,13 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
   setIsSubmitting(false);
   return;
 }
+// Ajouter "autreCategorie" au tableau des catégories si nécessaire
+let finalCategories = [...formData.categories];
+if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
+  finalCategories = finalCategories.filter(c => c !== "Autres"); // retire "Autres"
+  finalCategories.push(formData.autreCategorie.trim()); // ajoute la vraie valeur
+}
+
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
     if (key === "creditsProposes") {
@@ -145,6 +151,8 @@ if (isNaN(creditsNumber) || creditsNumber < 1) {
       data.append(key, value);
     }
   });
+  finalCategories.forEach(cat => data.append("categories", cat));
+
 
   data.append("createur", userId);
   images.forEach(img => data.append("image", img));
