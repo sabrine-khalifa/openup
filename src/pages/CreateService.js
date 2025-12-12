@@ -47,7 +47,7 @@ const CreateService = () => {
  const [formData, setFormData] = useState({
   titre: "",
   description: "",
-  typePrestation: "distanciel",
+  typePrestation: "",
   nombrePlaces: "",
   dateService: [],
   heure: "",
