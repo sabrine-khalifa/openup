@@ -344,11 +344,11 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
             {/* Formulaire pour poster un avis */}
            {/* Formulaire pour poster un avis */}
+           {/*
 <div className="bg-white p-6 rounded-lg shadow mb-6">
   <h2 className="text-lg font-semibold mb-3">Poster un avis</h2>
   <form onSubmit={handleSubmitAvis}>
     
-    {/* Sélection de note (optionnelle) */}
     <label className="block mb-1 text-sm text-gray-600">
       Note (optionnelle)
     </label>
@@ -372,7 +372,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
     </button>
   </form>
 </div>
-
+*/}
             {/* Liste des avis */}
             
           </div>
