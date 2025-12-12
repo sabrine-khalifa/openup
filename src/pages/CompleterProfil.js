@@ -29,7 +29,7 @@ const CompleterProfil = () => {
     role: storedUser?.role || 'particulier',
     // Champs créateur
     metier: storedUser?.metier || '',
-    domaine: storedUser?.domaine || '',
+    domaine: Array.isArray(storedUser?.domaine) ? storedUser.domaine : [],
     langues: Array.isArray(storedUser?.langues) ? storedUser.langues : [],
     nationalites: storedUser?.nationalites || '',
     video: storedUser?.video || '',
@@ -42,10 +42,42 @@ const CompleterProfil = () => {
     liens: storedUser?.liens || '',
   });
 
-  const domaines = [
-    'Bien-être', 'Éducation', 'Création', 'Tech', 'Artisanat',
-    'Conseil', 'Sport', 'Musique', 'Développement personnel'
-  ];
+ const domaines = [
+  "Animaux & monde vivant",
+  "Architecture & urbanisme",
+  "Artisanat",
+  "Arts visuels",
+  "Arts vivants",
+  "Bien-être",
+  "Décoration & aménagement",
+  "Développement personnel",
+  "Écologie & durabilité",
+  "Écriture & littérature",
+  "Entrepreneuriat & innovation",
+  "Finances personnelles & économie",
+  "Formation, enseignement & accompagnement",
+  "Gastronomie & art culinaire",
+  "Humanitaire & droits humains",
+  "Inclusion & solidarité",
+  "Informatique & numérique",
+  "Jeux & expériences interactives",
+  "Management & organisation",
+  "Marketing & communication",
+  "Médias, journalisme & storytelling",
+  "Musique & son",
+  "Nature, jardinage & permaculture",
+  "Parentalité & famille",
+  "Politique, citoyenneté & engagement sociétal",
+  "Relations & développement social",
+  "Santé",
+  "Sciences & technologies",
+  "Sport, loisirs physiques & outdoor",
+  "Spiritualité",
+  "Stylisme & mode",
+  "Thérapies alternatives",
+  "Voyage, tourisme & interculturalité"
+];
+
   const publicCibleOptions = ['Débutants', 'Professionnels', 'Tous niveaux'];
   const languesDisponibles = ['Français', 'Anglais', 'Arabe', 'Espagnol', 'Allemand'];
 
@@ -56,6 +88,14 @@ const CompleterProfil = () => {
       [name]: type === 'checkbox' ? checked : value,
     });
   };
+const handleDomaineChange = (value) => {
+  setForm((prev) => ({
+    ...prev,
+    domaine: prev.domaine.includes(value)
+      ? prev.domaine.filter((d) => d !== value)
+      : [...prev.domaine, value],
+  }));
+};
 
   const handleFileChange = (e) => {
     setForm({ ...form, photo: e.target.files[0] });
@@ -169,19 +209,22 @@ try {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 />
+<div>
+  <p className="text-gray-700 font-medium">Domaines d’activité :</p>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+    {domaines.map((d) => (
+      <label key={d} className="flex items-center gap-2 text-gray-700">
+        <input
+          type="checkbox"
+          checked={form.domaine.includes(d)}
+          onChange={() => handleDomaineChange(d)}
+        />
+        {d}
+      </label>
+    ))}
+  </div>
+</div>
 
-                <select
-                  name="domaine"
-                  value={form.domaine}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                  required
-                >
-                  <option value="">Domaine d’activité</option>
-                  {domaines.map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
 
                 <div>
                   <p className="text-gray-700">Langues parlées :</p>
