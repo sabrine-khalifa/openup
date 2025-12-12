@@ -164,12 +164,7 @@ const userId = (userData.id || userData._id || "").trim();
               {user.domaine && (
                 <span className="bg-[#16A14A] text-white px-3 py-1 rounded-full text-sm">{user.domaine}</span>
               )}
-              {user.typeCreateur && (
-                <span className={`px-3 py-1 rounded-full text-sm text-white ${
-                  user.typeCreateur === "Graine de Créateur" ? "bg-green-500" :
-                  user.typeCreateur === "Créateur en Herbe" ? "bg-yellow-500" : "bg-blue-500"
-                }`}>{user.typeCreateur}</span>
-              )}
+              
             </div>
 
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
