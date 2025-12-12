@@ -157,7 +157,7 @@ const userId = (userData.id || userData._id || "").trim();
           <img src={getAvatar()} alt={user.name} className="w-32 h-32 rounded-full object-cover border-4 border-[#16A14A]" />
           
           <div className="text-center md:text-left flex-1">
-            <h1 className="text-3xl font-bold text-gray-800">{user.name} {user.prenom}</h1>
+            <h1 className="text-3xl font-bold text-gray-800">{user.prenom} {user.name} </h1>
             {user.metier && <p className="text-lg text-gray-600">{user.metier}</p>}
             
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">

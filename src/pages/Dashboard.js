@@ -16,7 +16,7 @@ const Dashboard = () => {
       <main className="max-w-7xl mx-auto p-6">
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-green-600 mb-2">
-            Bienvenue, {userData.name} {userData.prenom} 👋
+            Bienvenue,  {userData.prenom} {userData.name}👋
           </h1>
           <p className="text-gray-600">
             Découvrez les talents de notre communauté d’échange non monétaire.
