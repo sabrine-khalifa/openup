@@ -78,8 +78,8 @@ const CompleterProfil = () => {
   "Voyage, tourisme & interculturalité"
 ];
 
-  const publicCibleOptions = ['Débutants', 'Professionnels', 'Tous niveaux'];
-  const languesDisponibles = ['Français', 'Anglais', 'Arabe', 'Espagnol', 'Allemand'];
+  
+  const languesDisponibles = ['Français', 'Anglais'];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -252,14 +252,14 @@ try {
                 <input
                   type="url"
                   name="video"
-                  placeholder="Lien vidéo"
+                  placeholder="Lien vidéo de présentation "
                   value={form.video}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 />
                 <textarea
                   name="description"
-                  placeholder="À propos de vous"
+                  placeholder="À propos"
                   value={form.description}
                   onChange={handleChange}
                   rows="3"
@@ -268,7 +268,7 @@ try {
                 />
                 <textarea
                   name="valeurs"
-                  placeholder="Vos valeurs"
+                  placeholder="Mes valeurs profondes "
                   value={form.valeurs}
                   onChange={handleChange}
                   rows="2"
@@ -287,7 +287,7 @@ try {
                 </select>
                 <label className="flex items-center gap-2">
                   <input type="checkbox" name="pmr" checked={form.pmr} onChange={handleChange} />
-                  Accessible PMR
+                  Accessible PMR (Personnes à mobilité réduite) 
                 </label>
                 <select
                   name="typeCours"
@@ -295,21 +295,23 @@ try {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
-                  <option value="">Type de cours</option>
-                  <option value="individuel">Individuel</option>
-                  <option value="collectif">Collectif</option>
+                  <option value="">Type de séance</option>
+                 
+                <option value="Individuel">Individuelle</option>
+                <option value="Collectif">Collective </option>
+                <option value="Groupe">Individuelle & Collective </option>
                 </select>
-                <select
+                <div>
+              <label className="block text-gray-700 font-medium mb-1">Public cible</label>
+              <input
+                  type="text"
                   name="publicCible"
-                  value={form.publicCible}
+                  value={formData.publicCible}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Public cible</option>
-                  {publicCibleOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
+                  placeholder="Débutants, Professionnels,Tous niveaux"
+                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
+                />
+            </div>
                 <input
                   type="text"
                   name="liens"
