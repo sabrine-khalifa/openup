@@ -139,18 +139,17 @@ if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
 
   // Ajout des champs dans FormData
   Object.entries(formData).forEach(([key, value]) => {
-    if (key === "creditsProposes") {
-      data.append("creditsProposes", creditsNumber);
-    } else if (key === "dateService" && Array.isArray(value)) {
-      value.forEach(dateStr => {
-        if (dateStr) data.append("dateService", dateStr);
-      });
-    } else if (Array.isArray(value)) {
-      value.forEach(item => data.append(key, item));
-    } else {
-      data.append(key, value);
-    }
-  });
+    if (key === "creditsProposes") return; 
+    if (key === "dateService" && Array.isArray(value)) {
+       value.forEach(d => d && data.append("dateService", d));
+  } else if (Array.isArray(value)) {
+    value.forEach(item => data.append(key, item));
+  } else {
+    data.append(key, value);
+  }
+});
+data.append("creditsProposes", creditsNumber);
+
   finalCategories.forEach(cat => data.append("categories", cat));
 
 
