@@ -174,7 +174,7 @@ const categories = [
                       onChange={() => toggleCategory(cat.nom)}
                       className="mr-2"
                     />
-                    <span>{cat}</span>
+                    <span>{cat.nom}</span>
                   </label>
                 ))}
               </div>
