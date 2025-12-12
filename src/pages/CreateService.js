@@ -411,6 +411,20 @@ data.append("creditsProposes", creditsNumber);
                   className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                 />
             </div>
+            <div className="mt-4">
+  <label className="block text-gray-700 font-medium mb-1">
+    Précisez les besoins ou informations complémentaires
+  </label>
+  <textarea
+    name="pmrDetails"
+    value={formData.pmrDetails}
+    onChange={handleChange}
+    placeholder="Ex : matériel nécessaire, conditions particulières, recommandations, etc."
+    rows={3}
+    className="w-full border border-gray-300 px-4 py-3 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  />
+</div>
+
 
             {/* Nombre de places + Crédits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -446,22 +460,6 @@ data.append("creditsProposes", creditsNumber);
 </div>
 
 {/* Champ texte conditionnel */}
-{formData.accessiblePMR && (
-  <div className="mt-2">
-    <label htmlFor="pmrDetails" className="block text-gray-700 font-medium mb-1">
-      Précisez les besoins ou informations complémentaires
-    </label>
-    <input
-      type="text"
-      id="pmrDetails"
-      name="pmrDetails"
-      value={formData.pmrDetails || ""}
-      onChange={handleChange}
-      placeholder="Ex: besoin d'une rampe, accompagnement, etc."
-      className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-    />
-  </div>
-)}
 
 
             {/* Image */}
