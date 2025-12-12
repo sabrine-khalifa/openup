@@ -306,7 +306,7 @@ try {
               <input
                   type="text"
                   name="publicCible"
-                  value={formData.publicCible}
+                  value={form.publicCible}
                   onChange={handleChange}
                   placeholder="Débutants, Professionnels,Tous niveaux"
                   className="w-full border border-gray-300 px-4 py-3 rounded-lg"
