@@ -40,6 +40,10 @@ const CompleterProfil = () => {
     typeCours: storedUser?.typeCours || '',
     publicCible: storedUser?.publicCible || '',
     liens: storedUser?.liens || '',
+siteWeb: storedUser?.siteWeb || '',
+instagram: storedUser?.instagram || '',
+linkedin: storedUser?.linkedin || '',
+
   });
 
  const domaines = [
@@ -280,10 +284,10 @@ try {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
-                  <option value="">Lieu de prestation</option>
-                  <option value="distanciel">Distanciel</option>
-                  <option value="presentiel">Présentiel</option>
-                  <option value="hybride">Hybride</option>
+                  <option value="">Type de prestation
+</option>
+                  <option value="En ligne">Distanciel</option>
+  <option value="Présentiel">Présentiel</option>
                 </select>
                 <label className="flex items-center gap-2">
                   <input type="checkbox" name="pmr" checked={form.pmr} onChange={handleChange} />
@@ -312,14 +316,37 @@ try {
                   className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                 />
             </div>
-                <input
-                  type="text"
-                  name="liens"
-                  placeholder="Liens (site, réseaux sociaux)"
-                  value={form.liens}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                />
+                <div className="space-y-3">
+  <p className="text-gray-700 font-medium">Liens</p>
+
+  <input
+    type="url"
+    name="siteWeb"
+    placeholder="Site Web"
+    value={form.siteWeb || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+
+  <input
+    type="url"
+    name="instagram"
+    placeholder="Instagram"
+    value={form.instagram || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+
+  <input
+    type="url"
+    name="linkedin"
+    placeholder="LinkedIn"
+    value={form.linkedin || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+</div>
+
               </div>
             )}
 
