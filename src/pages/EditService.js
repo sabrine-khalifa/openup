@@ -163,12 +163,23 @@ const EditService = () => {
       setIsSubmitting(false);
       return;
     }
+const creditsNumber = parseInt(formData.creditsProposes, 10);
+if (isNaN(creditsNumber) || creditsNumber <= 0) {
+  setMessage("❌ La valeur en crédits est obligatoire et doit être supérieure à 0.");
+  setIsSubmitting(false);
+  return;
+}
 
     const data = new FormData();
 
     // Ajouter tous les champs du formulaire
   
     // Construire les catégories finales
+    if (formData.dateAConvenir) {
+  formData.dateService = [];
+  formData.heure = "";
+}
+
 let finalCategories = [...formData.categories];
 
 if (finalCategories.includes("Autres") && formData.autreCategorie?.trim()) {
@@ -186,6 +197,8 @@ Object.entries(formData).forEach(([key, value]) => {
     data.append(key, value);
   }
 });
+data.append("creditsProposes", creditsNumber);
+
 
 // Ajouter les catégories finales
 finalCategories.forEach(cat => data.append("categories", cat));
@@ -345,7 +358,7 @@ finalCategories.forEach(cat => data.append("categories", cat));
             </div>
 
             {/* Lieu (si besoin) */}
-            {(formData.typePrestation === "presentiel" || formData.typePrestation === "hybride") && (
+            {formData.typePrestation === "Présentiel" && (
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Lieu</label>
                 <input
@@ -363,17 +376,19 @@ finalCategories.forEach(cat => data.append("categories", cat));
             <div>
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
               <DatePicker
-                multiple
-                value={formData.dateService.map(str => new Date(str))}
-                onChange={(dates) =>
-                  setFormData({
-                    ...formData,
-                    dateService: dates.map(d => d.format("YYYY-MM-DD")),
-                  })
-                }
-                format="DD/MM/YYYY"
-                inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
-              />
+  multiple
+  disabled={formData.dateAConvenir}
+  value={formData.dateService.map(str => new Date(str))}
+  onChange={(dates) =>
+    setFormData({
+      ...formData,
+      dateService: dates.map(d => d.format("YYYY-MM-DD")),
+    })
+  }
+  format="DD/MM/YYYY"
+  inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg"
+/>
+
             </div>
 
             {/* Heure + Durée */}
@@ -399,11 +414,26 @@ finalCategories.forEach(cat => data.append("categories", cat));
                   className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                 />
               </div>
+              {/* Date à convenir */}
+<div className="flex items-center gap-3">
+  <input
+    type="checkbox"
+    id="dateAConvenir"
+    name="dateAConvenir"
+    checked={formData.dateAConvenir}
+    onChange={handleChange}
+    className="w-5 h-5 text-green-600 border-gray-300 rounded"
+  />
+  <label htmlFor="dateAConvenir" className="text-gray-700 font-medium">
+    Date et heure à convenir ensemble
+  </label>
+</div>
             </div>
+
 
             {/* Type de cours */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Type de cours</label>
+              <label className="block text-gray-700 font-medium mb-1">Type de séance</label>
               <select
                 name="typeCours"
                 value={formData.typeCours}
@@ -411,8 +441,9 @@ finalCategories.forEach(cat => data.append("categories", cat));
                 className="w-full border border-gray-300 px-4 py-3 rounded-lg"
               >
                 <option value="">Sélectionnez</option>
-                <option value="Individuel">Individuel</option>
-                <option value="collectif">Collectif</option>
+                <option value="Individuel">Individuelle</option>
+                <option value="Collectif">Collective </option>
+                <option value="Groupe">Individuelle & Collective </option>
               </select>
             </div>
 
@@ -470,7 +501,7 @@ finalCategories.forEach(cat => data.append("categories", cat));
                 className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
               />
               <label htmlFor="pmr" className="text-gray-700 font-medium">
-                Accessible PMR
+                Accessible PMR (Personne à mobilité réduite)
               </label>
             </div>
 
