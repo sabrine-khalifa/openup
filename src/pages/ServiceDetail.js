@@ -391,7 +391,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
             <h3 className="flex items-center font-semibold mb-3">
               <FaCalendarAlt className="text-green-500 mr-2" />
-              Créneaux disponibles
+              Créneau disponibles
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between items-center border p-2 rounded">
@@ -401,7 +401,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
                   </span>
                   <span className="text-gray-500">{service.heure}</span>
                 </div>
-                <button className="text-green-600 hover:underline">Choisir</button>
+               {/* <button className="text-green-600 hover:underline">Choisir</button> */} 
               </div>
             </div>
           </div>
