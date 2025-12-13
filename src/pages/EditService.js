@@ -6,40 +6,67 @@ import DatePicker from "react-multi-date-picker";
 import { useNavigate, useParams } from "react-router-dom";
 
 const categoriesDisponibles = [
-  { nom: "Bien-Être", couleur: "#27AE60" },
-  { nom: "Sport", couleur: "#212E53" },
-  { nom: "Musique & Son", couleur: "#FFBF66" },
-  { nom: "Art", couleur: "#F27438" },
-  { nom: "Architecture", couleur: "#E3CD8B" },
-  { nom: "Développement Personnel", couleur: "#9B59B6" },
-  { nom: "Illustration & Design", couleur: "#e76f51" },
-  { nom: "Vidéo & Montage", couleur: "#585B4C" },
-  { nom: "Santé", couleur: "#AFA4CE" },
+  { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#F27438" },
+  { nom: "Arts visuels", couleur: "#F39C12" },
   { nom: "Artisanat", couleur: "#CA7C5C" },
-  { nom: "Décoration & Aménagement", couleur: "#C89F9C" },
-  { nom: "Formation, Transmission & Accompagnement", couleur: "#C8574D" },
-  { nom: "Informatique & Technologies", couleur: "#3498DB" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#e76f51" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7AA95C" },
+  { nom: "Écriture & littérature", couleur: "#C89F9C" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#427AA1" },
+  { nom: "Finances personnelles & économie", couleur: "#E8EDDF" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFAE9D" },
+  { nom: "Humanitaire & droits humains", couleur: "#7C4C53" },
+  { nom: "Inclusion & solidarité", couleur: "#FF584D" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#0FAC71" },
+  { nom: "Management & organisation", couleur: "#9281C0" },
+  { nom: "Marketing, Communication & Événementiel", couleur: "#4A919E" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#A92831" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#B7CE66" },
+  { nom: "Parentalité & famille", couleur: "#EA5863" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#585B4C" },
+  { nom: "Relations & développement social", couleur: "#E74C3C" },
+  { nom: "Santé", couleur: "#EDCDFA" },
+  { nom: "Sciences & technologies", couleur: "#62B9CB" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#5CAFE7" },
+  { nom: "Spiritualité", couleur: "#FFE361" },
+  { nom: "Stylisme & mode", couleur: "#F0A1BF" },
+  { nom: "Thérapies alternatives", couleur: "#A4BD01" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
+{ nom: "Autres", couleur: "#95a5a6" }
 ];
 
 const EditService = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // ← ID du service à modifier
 
-  const [formData, setFormData] = useState({
-    titre: "",
-    description: "",
-    typePrestation: "distanciel",
-    nombrePlaces: "",
-    creditsProposes: "",
-    dateService: [],
-    heure: "",
-    duree: "",
-    typeCours: "",
-    publicCible: "",
-    accessiblePMR: false,
-    lieu: "",
-    categories: [],
-  });
+ const [formData, setFormData] = useState({
+  titre: "",
+  description: "",
+  typePrestation: "",
+  nombrePlaces: "",
+  dateService: [],
+  heure: "",
+  duree: "",
+  typeCours: "",
+  publicCible: "",
+  prerequis: "",
+  materiel: "",
+  accessiblePMR: false,
+  pmrDetails: "",
+  lieu: "",
+  categories: [],
+  autreCategorie: "",
+  creditsProposes: "",
+  dateAConvenir: false,
+});
+
 
   const [images, setImages] = useState([]);
   const [message, setMessage] = useState("");
@@ -56,23 +83,29 @@ const EditService = () => {
         });
         const service = res.data;
 
-        setFormData({
-          titre: service.titre || "",
-          description: service.description || "",
-          typePrestation: service.typePrestation || "distanciel",
-          nombrePlaces: service.nombrePlaces || "",
-          creditsProposes: service.creditsProposes || "",
-          dateService: Array.isArray(service.dateService)
-  ? service.dateService.map(d => d.split("T")[0]) // ✅ garde uniquement la date
-  : [],
-          heure: service.heure || "",
-          duree: service.duree || "",
-          typeCours: service.typeCours || "",
-          publicCible: service.publicCible || "",
-          accessiblePMR: service.accessiblePMR || false,
-          lieu: service.lieu || "",
-          categories: Array.isArray(service.categories) ? service.categories : [],
-        });
+       setFormData({
+  titre: service.titre || "",
+  description: service.description || "",
+  typePrestation: service.typePrestation || "",
+  nombrePlaces: service.nombrePlaces || "",
+  creditsProposes: service.creditsProposes?.toString() || "",
+  dateService: Array.isArray(service.dateService)
+    ? service.dateService.map(d => d.split("T")[0])
+    : [],
+  heure: service.heure || "",
+  duree: service.duree || "",
+  typeCours: service.typeCours || "",
+  publicCible: service.publicCible || "",
+  prerequis: service.prerequis || "",
+  materiel: service.materiel || "",
+  accessiblePMR: service.accessiblePMR || false,
+  pmrDetails: service.pmrDetails || "",
+  lieu: service.lieu || "",
+  categories: service.categories || [],
+  autreCategorie: "",
+  dateAConvenir: service.dateAConvenir || false,
+});
+
       } catch (err) {
         console.error("Erreur chargement service :", err);
         setMessage("❌ Impossible de charger ce service.");
@@ -159,6 +192,14 @@ const EditService = () => {
     }
   };
 
+  let finalCategories = [...formData.categories];
+if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
+  finalCategories = finalCategories.filter(c => c !== "Autres");
+  finalCategories.push(formData.autreCategorie.trim());
+}
+
+finalCategories.forEach(cat => data.append("categories", cat));
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -226,67 +267,60 @@ const EditService = () => {
             </div>
 
             {/* Catégories */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Catégories *</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                {categoriesDisponibles.map((cat) => {
-                  const rgb = parseInt(cat.couleur.slice(1), 16);
-                  const r = (rgb >> 16) & 0xff;
-                  const g = (rgb >> 8) & 0xff;
-                  const b = rgb & 0xff;
-                  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-                  const textColor = luminance > 0.5 ? "#333" : "white";
+<div>
+  <label className="block text-gray-700 font-medium mb-2">
+    Catégories *
+  </label>
 
-                  return (
-                    <label
-                      key={cat.nom}
-                      className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer border-2 transition ${
-                        formData.categories.includes(cat.nom)
-                          ? "border-[#16A14A] scale-105"
-                          : "border-transparent"
-                      }`}
-                      style={{
-                        backgroundColor: cat.couleur,
-                        color: textColor,
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        name="categories"
-                        value={cat.nom}
-                        checked={formData.categories.includes(cat.nom)}
-                        onChange={(e) => {
-                          const categories = e.target.checked
-                            ? [...formData.categories, cat.nom]
-                            : formData.categories.filter((c) => c !== cat.nom);
-                          setFormData({ ...formData, categories });
-                        }}
-                        className="sr-only"
-                      />
-                      <span
-                        className={`inline-flex items-center justify-center w-5 h-5 border-2 rounded ${
-                          formData.categories.includes(cat.nom)
-                            ? "bg-white border-white"
-                            : "border-white"
-                        }`}
-                      >
-                        {formData.categories.includes(cat.nom) && (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </span>
-                      <span className="font-medium">{cat.nom}</span>
-                    </label>
-                  );
-                })}
-              </div>
-              {formData.categories.length === 0 && (
-                <p className="text-red-500 text-sm mt-2">
-                  Veuillez sélectionner au moins une catégorie
-                </p>
-              )}
-            </div>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    {categoriesDisponibles.map((cat, index) => {
+      const catId = `category-${index}`;
+      return (
+        <div key={cat.nom} className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id={catId}
+            value={cat.nom}
+            checked={formData.categories.includes(cat.nom)}
+            onChange={() => handleCategoryToggle(cat.nom)}
+            className="w-4 h-4 border-gray-300 rounded focus:ring-[#16A14A]"
+          />
+          <label htmlFor={catId} className="text-sm text-gray-700">
+            {cat.nom}
+          </label>
+        </div>
+      );
+    })}
+  </div>
+
+  {/* Champ texte pour "Autres" */}
+  {formData.categories.includes("Autres") && (
+    <div className="mt-2">
+      <label className="block text-gray-700 text-sm mb-1">
+        Précisez votre catégorie :
+      </label>
+      <input
+        type="text"
+        name="autreCategorie"
+        value={formData.autreCategorie || ""}
+        onChange={(e) =>
+          setFormData({ ...formData, autreCategorie: e.target.value })
+        }
+        placeholder="Entrez votre catégorie"
+        className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+      />
+    </div>
+  )}
+
+  {formData.categories.length === 0 && (
+    <p className="text-red-500 text-sm mt-1">
+      Veuillez sélectionner au moins une catégorie
+    </p>
+  )}
+</div>
+
+
+
 
             {/* Type de prestation */}
             <div>
