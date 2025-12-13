@@ -450,17 +450,45 @@ finalCategories.forEach(cat => data.append("categories", cat));
             {/* Public cible */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Public cible</label>
-              <select
-                name="publicCible"
-                value={formData.publicCible}
-                onChange={handleChange}
-                className="w-full border border-gray-300 px-4 py-3 rounded-lg"
-              >
-                <option value="">Tous niveaux</option>
-                <option value="Débutants">Débutants</option>
-                <option value="Professionnels">Professionnels</option>
-              </select>
+               <input
+                  type="text"
+                  name="publicCible"
+                  value={formData.publicCible}
+                  onChange={handleChange}
+                  placeholder="Débutants, Professionnels,Tous niveaux"
+                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
+                />
             </div>
+            {/* Prérequis */}
+<div>
+  <label className="block text-gray-700 font-medium mb-1">
+    Prérequis
+  </label>
+  <textarea
+    name="prerequis"
+    value={formData.prerequis}
+    onChange={handleChange}
+    rows={2}
+    placeholder="Ex : aucun, bases recommandées, motivation requise…"
+    className="w-full border border-gray-300 px-4 py-2 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  />
+</div>
+{/* Matériel nécessaire */}
+<div>
+  <label className="block text-gray-700 font-medium mb-1">
+    Matériel nécessaire
+  </label>
+  <textarea
+    name="materiel"
+    value={formData.materiel}
+    onChange={handleChange}
+    rows={2}
+    placeholder="Ex : ordinateur, connexion internet, carnet…"
+    className="w-full border border-gray-300 px-4 py-2 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  />
+</div>
+
+
 
             {/* Nombre de places + Crédits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
