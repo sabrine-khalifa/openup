@@ -167,13 +167,28 @@ const EditService = () => {
     const data = new FormData();
 
     // Ajouter tous les champs du formulaire
-    Object.entries(formData).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach(item => data.append(key, item));
-      } else {
-        data.append(key, value);
-      }
-    });
+  
+    // Construire les catégories finales
+let finalCategories = [...formData.categories];
+
+if (finalCategories.includes("Autres") && formData.autreCategorie?.trim()) {
+  finalCategories = finalCategories.filter(c => c !== "Autres");
+  finalCategories.push(formData.autreCategorie.trim());
+}
+
+// Ajouter les champs (SAUF categories)
+Object.entries(formData).forEach(([key, value]) => {
+  if (key === "categories" || key === "autreCategorie") return;
+
+  if (Array.isArray(value)) {
+    value.forEach(item => data.append(key, item));
+  } else {
+    data.append(key, value);
+  }
+});
+
+// Ajouter les catégories finales
+finalCategories.forEach(cat => data.append("categories", cat));
 
     // Ajouter les nouvelles images (remplaceront les anciennes côté backend)
     images.forEach(img => data.append("image", img));
@@ -192,13 +207,6 @@ const EditService = () => {
     }
   };
 
-  let finalCategories = [...formData.categories];
-if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
-  finalCategories = finalCategories.filter(c => c !== "Autres");
-  finalCategories.push(formData.autreCategorie.trim());
-}
-
-finalCategories.forEach(cat => data.append("categories", cat));
 
   if (isLoading) {
     return (
