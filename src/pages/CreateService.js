@@ -54,6 +54,9 @@ const CreateService = () => {
   duree: "",
   typeCours: "",
   publicCible: "",
+  prerequis: "",     // ✅
+  materiel: "",      // ✅
+
   accessiblePMR: false,
   lieu: "",
   categories: [],
@@ -411,20 +414,35 @@ data.append("creditsProposes", creditsNumber);
                   className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                 />
             </div>
-            <div className="mt-4">
+           
+<div>
   <label className="block text-gray-700 font-medium mb-1">
-    Précisez les besoins ou informations complémentaires
+    Prérequis
   </label>
-  <textarea
-    name="pmrDetails"
-    value={formData.pmrDetails}
+  <input
+    type="text"
+    name="prerequis"
+    value={formData.prerequis}
     onChange={handleChange}
-    placeholder="Ex : matériel nécessaire, conditions particulières, recommandations, etc."
-    rows={3}
-    className="w-full border border-gray-300 px-4 py-3 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+    placeholder="Ex : aucun, bases recommandées, motivation requise…"
+    className="w-full border border-gray-300 px-4 py-3 rounded-lg"
   />
 </div>
 
+{/* Matériel nécessaire */}
+<div>
+  <label className="block text-gray-700 font-medium mb-1">
+    Matériel nécessaire
+  </label>
+  <input
+    type="text"
+    name="materiel"
+    value={formData.materiel}
+    onChange={handleChange}
+    placeholder="Ex : ordinateur, tapis, carnet…"
+    className="w-full border border-gray-300 px-4 py-3 rounded-lg"
+  />
+</div>
 
             {/* Nombre de places + Crédits */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
