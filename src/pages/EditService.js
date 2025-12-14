@@ -202,7 +202,7 @@ const handleSubmit = async (e) => {
   data.append("accessiblePMR", safeFormData.accessiblePMR === true);
 
   finalCategories.forEach(cat => data.append("categories", cat));
-  images.forEach(img => data.append("image", img));
+  images.forEach(img => data.append("images", img));
 
   try {
     await axios.put(
