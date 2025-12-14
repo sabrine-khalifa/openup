@@ -207,7 +207,7 @@ data.append("materiel", formData.materiel);
 
 
   finalCategories.forEach(cat => data.append("categories", cat));
-  images.forEach(img => data.append("images", img));
+  images.forEach(img => data.append("image", img));
 
   try {
     await axios.put(
@@ -219,7 +219,8 @@ data.append("materiel", formData.materiel);
     setMessage("✅ Service mis à jour avec succès !");
     setTimeout(() => navigate("/dashboard"), 1500);
   } catch (err) {
-    console.error(err);
+      console.error("❌ Erreur update service :", err.response?.data || err.message);
+
     setMessage("❌ Erreur lors de la mise à jour.");
   } finally {
     setIsSubmitting(false);
