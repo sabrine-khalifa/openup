@@ -200,6 +200,11 @@ const handleSubmit = async (e) => {
 
   data.append("creditsProposes", creditsNumber);
   data.append("accessiblePMR", safeFormData.accessiblePMR === true);
+  
+  data.append("prerequis", formData.prerequis);
+data.append("materiel", formData.materiel);
+
+
 
   finalCategories.forEach(cat => data.append("categories", cat));
   images.forEach(img => data.append("images", img));
