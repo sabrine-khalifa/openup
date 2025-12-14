@@ -135,90 +135,92 @@ const EditService = () => {
     setImages([...e.target.files]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setMessage("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setMessage("");
 
-    let token = localStorage.getItem("token");
-    const refreshToken = localStorage.getItem("refreshToken");
+  let token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
 
-    if (!token) {
-      setMessage("❌ Vous devez être connecté.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Rafraîchir le token si expiré
-    try {
-      const decoded = JSON.parse(atob(token.split('.')[1]));
-      const now = Math.floor(Date.now() / 1000);
-      if (decoded.exp < now && refreshToken) {
-        const refreshRes = await axios.post("https://backend-hqhy.onrender.com/api/auth/refreshToken", { refreshToken });
-        token = refreshRes.data.accessToken;
-        localStorage.setItem("token", token);
-      }
-    } catch (err) {
-      setMessage("❌ Session expirée. Veuillez vous reconnecter.");
-      setIsSubmitting(false);
-      return;
-    }
-const creditsNumber = parseInt(formData.creditsProposes, 10);
-if (isNaN(creditsNumber) || creditsNumber <= 0) {
-  setMessage("❌ La valeur en crédits est obligatoire et doit être supérieure à 0.");
-  setIsSubmitting(false);
-  return;
-}
-
-    const data = new FormData();
-
-    // Ajouter tous les champs du formulaire
-  
-    // Construire les catégories finales
-    if (formData.dateAConvenir) {
-  formData.dateService = [];
-  formData.heure = "";
-}
-
-let finalCategories = [...formData.categories];
-
-if (finalCategories.includes("Autres") && formData.autreCategorie?.trim()) {
-  finalCategories = finalCategories.filter(c => c !== "Autres");
-  finalCategories.push(formData.autreCategorie.trim());
-}
-
-// Ajouter les champs (SAUF categories)
-Object.entries(formData).forEach(([key, value]) => {
-  if (key === "categories" || key === "autreCategorie") return;
-
-  if (Array.isArray(value)) {
-    value.forEach(item => data.append(key, item));
-  } else {
-    data.append(key, value);
+  if (!token) {
+    setMessage("❌ Vous devez être connecté.");
+    setIsSubmitting(false);
+    return;
   }
-});
-data.append("creditsProposes", creditsNumber);
 
-
-// Ajouter les catégories finales
-finalCategories.forEach(cat => data.append("categories", cat));
-
-    // Ajouter les nouvelles images (remplaceront les anciennes côté backend)
-    images.forEach(img => data.append("image", img));
-
-    try {
-      await axios.put(`https://backend-hqhy.onrender.com/api/services/${id}`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setMessage("✅ Service mis à jour avec succès !");
-      setTimeout(() => navigate("/dashboard"), 1500);
-    } catch (error) {
-      console.error("Erreur :", error);
-      setMessage("❌ Erreur lors de la mise à jour.");
-    } finally {
-      setIsSubmitting(false);
+  // Refresh token
+  try {
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    const now = Math.floor(Date.now() / 1000);
+    if (decoded.exp < now && refreshToken) {
+      const refreshRes = await axios.post(
+        "https://backend-hqhy.onrender.com/api/auth/refreshToken",
+        { refreshToken }
+      );
+      token = refreshRes.data.accessToken;
+      localStorage.setItem("token", token);
     }
+  } catch {
+    setMessage("❌ Session expirée.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  const creditsNumber = parseInt(formData.creditsProposes, 10);
+  if (isNaN(creditsNumber) || creditsNumber <= 0) {
+    setMessage("❌ Crédits invalides.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  const safeFormData = {
+    ...formData,
+    dateService: formData.dateAConvenir ? [] : formData.dateService,
+    heure: formData.dateAConvenir ? "" : formData.heure,
   };
+
+  let finalCategories = [...safeFormData.categories];
+  if (finalCategories.includes("Autres") && safeFormData.autreCategorie?.trim()) {
+    finalCategories = finalCategories.filter(c => c !== "Autres");
+    finalCategories.push(safeFormData.autreCategorie.trim());
+  }
+
+  const data = new FormData();
+
+  Object.entries(safeFormData).forEach(([key, value]) => {
+    if (["categories", "autreCategorie", "creditsProposes"].includes(key)) return;
+
+    if (Array.isArray(value)) {
+      value.forEach(v => data.append(key, v));
+    } else {
+      data.append(key, value);
+    }
+  });
+
+  data.append("creditsProposes", creditsNumber);
+  data.append("accessiblePMR", safeFormData.accessiblePMR === true);
+
+  finalCategories.forEach(cat => data.append("categories", cat));
+  images.forEach(img => data.append("image", img));
+
+  try {
+    await axios.put(
+      `https://backend-hqhy.onrender.com/api/services/${id}`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    setMessage("✅ Service mis à jour avec succès !");
+    setTimeout(() => navigate("/dashboard"), 1500);
+  } catch (err) {
+    console.error(err);
+    setMessage("❌ Erreur lors de la mise à jour.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
 
   if (isLoading) {
