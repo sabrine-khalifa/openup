@@ -393,16 +393,18 @@ data.append("materiel", formData.materiel);
             {/* Dates */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
-              <DatePicker
+ <DatePicker
   multiple
   disabled={formData.dateAConvenir}
-  value={formData.dateService.map(str => new Date(str))}
-  onChange={(dates) =>
+  value={formData.dateService} // ← garde les chaînes "YYYY-MM-DD"
+  onChange={(dates) => {
+    // dates est un tableau d'objets Date (de la lib react-multi-date-picker)
+    const formatted = dates.map(d => d.format("YYYY-MM-DD")); // ✅ OK ici car d est un objet de la lib
     setFormData({
       ...formData,
-      dateService: dates.map(d => d.format("YYYY-MM-DD")),
-    })
-  }
+      dateService: formatted,
+    });
+  }}
   format="DD/MM/YYYY"
   inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg"
 />
