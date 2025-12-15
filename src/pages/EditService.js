@@ -218,11 +218,21 @@ data.append("materiel", formData.materiel);
 
     setMessage("✅ Service mis à jour avec succès !");
     setTimeout(() => navigate("/dashboard"), 1500);
-  } catch (err) {
-      console.error("❌ Erreur update service :", err.response?.data || err.message);
+  } catch (error) {
+  console.error("❌ Erreur update service COMPLETE :", error);
 
-    setMessage("❌ Erreur lors de la mise à jour.");
-  } finally {
+  if (error.response) {
+    console.error("📩 DATA :", error.response.data);
+    console.error("📌 STATUS :", error.response.status);
+    console.error("📎 HEADERS :", error.response.headers);
+  } else if (error.request) {
+    console.error("🚫 Aucune réponse du serveur :", error.request);
+  } else {
+    console.error("⚠️ Erreur JS :", error.message);
+  }
+}
+
+   finally {
     setIsSubmitting(false);
   }
 };
