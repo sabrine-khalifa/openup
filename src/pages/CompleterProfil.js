@@ -181,7 +181,6 @@ try {
                 placeholder="Téléphone"
                 value={form.telephone}
                 onChange={handleChange}
-                required
                 className="border border-gray-300 rounded-lg px-4 py-3"
               />
             </div>
