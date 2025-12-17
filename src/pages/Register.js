@@ -31,18 +31,16 @@ const Register = () => {
     setForm({ ...form, [name]: value });
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     const res = await api.post('/api/auth/register', form);
-    console.log("Réponse du serveur :", res.data); // 👈 Ajoute cette ligne
 
-
-    // Affiche le message réel du serveur
+    // ✅ Affiche le message de succès
     alert(res.data.msg);
 
-    // Redirige vers confirmation
-    navigate('/confirmation', { state: { email: form.email } });
+    // ✅ Redirige vers la page de connexion (pas /confirmation)
+    navigate('/login');
   } catch (err) {
     alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
   }
