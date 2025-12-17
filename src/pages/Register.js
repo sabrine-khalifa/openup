@@ -32,6 +32,8 @@ const Register = () => {
   e.preventDefault();
   try {
     const res = await api.post('/api/auth/register', form);
+    console.log("Réponse du serveur :", res.data); // 👈 Ajoute cette ligne
+
 
     // Affiche le message réel du serveur
     alert(res.data.msg);
