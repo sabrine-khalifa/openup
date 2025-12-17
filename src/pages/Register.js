@@ -28,15 +28,20 @@ const Register = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await api.post('/api/auth/register', form);
-      alert('Inscription réussie !');
-navigate('/confirmation', { state: { email: form.email } });    } catch (err) {
-      alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
-    }
-  };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await api.post('/api/auth/register', form);
+
+    // Affiche le message réel du serveur
+    alert(res.data.msg);
+
+    // Redirige vers confirmation
+    navigate('/confirmation', { state: { email: form.email } });
+  } catch (err) {
+    alert(err.response?.data?.msg || 'Erreur lors de l’inscription');
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
