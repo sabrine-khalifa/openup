@@ -8,19 +8,22 @@ const Register = () => {
   const location = useLocation();
   const preselectedRole = location.state?.preselectedRole;
 
+  const [role] = useState(preselectedRole);
+
   // Si on arrive sans rôle (ex: accès direct à /register), redirige vers le choix
-  useEffect(() => {
-    if (!preselectedRole || (preselectedRole !== 'particulier' && preselectedRole !== 'createur')) {
-      navigate('/');
-    }
-  }, [preselectedRole, navigate]);
+ useEffect(() => {
+  if (!role || (role !== 'particulier' && role !== 'createur')) {
+    navigate('/');
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   const [form, setForm] = useState({
     name: '',
     prenom: '',
     email: '',
     password: '',
-    role: preselectedRole // ← rôle forcé par le bouton cliqué
+    role// ← rôle forcé par le bouton cliqué
   });
 
   const handleChange = (e) => {
