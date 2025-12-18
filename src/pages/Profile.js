@@ -301,101 +301,98 @@ const getDomaineStyle = (nomDomaine) => {
 
         {/* Contenu */}
         {activeTab === "À propos" && (
-          <div className="space-y-6">
-           {services.length > 0 && services[0] && (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {/* Bloc service (2 colonnes à gauche) */}
-    <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-      {/* Titre du service */}
-      <h3 className="text-xl font-semibold mb-2">{services[0].titre || "Sans titre"}</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+  
+  {/* Bloc gauche : service OU message */}
+  <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
+    
+    {services.length > 0 && services[0] ? (
+      <>
+        <h3 className="text-xl font-semibold mb-2">
+          {services[0].titre || "Sans titre"}
+        </h3>
 
-      {/* Description du créateur */}
-      {user.description && (
-        <p className="text-gray-700 mb-4">{user.description}</p>
-      )}
+        {user.description && (
+          <p className="text-gray-700 mb-4">{user.description}</p>
+        )}
 
-      {/* Images du service */}
-      {services[0].images && (
-        <div>
-          {/* Si c’est une chaîne (image unique) */}
-          {typeof services[0].images === "string" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {/* Images */}
+        {Array.isArray(services[0].images) && services[0].images.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {services[0].images.map((img, idx) => (
               <img
-                src={services[0].images}
-                alt={services[0].titre}
+                key={idx}
+                src={img}
+                alt={`${services[0].titre} - image ${idx + 1}`}
                 className="w-full h-64 object-cover rounded-lg"
               />
-            </div>
-          )}
-
-          {/* Si c’est un tableau (plusieurs images) */}
-          {Array.isArray(services[0].images) && services[0].images.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {services[0].images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`${services[0].titre} - image ${idx + 1}`}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-
- {/* Bloc liens (1 colonne à droite) */}
-
- {(user.siteWeb || user.instagram || user.linkedin) && (
-      <div className="bg-white p-6 rounded-lg shadow h-fit">
-        <h3 className="text-xl font-semibold mb-4">Liens</h3>
-        <ul className="space-y-2 text-gray-800">
-          {user.siteWeb && (
-            <li>
-              🌐{" "}
-              <a
-                href={user.siteWeb.startsWith("http") ? user.siteWeb : `https://${user.siteWeb}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline break-all"
-              >
-                Site web
-              </a>
-            </li>
-          )}
-          {user.instagram && (
-            <li>
-              📸{" "}
-              <a
-                href={user.instagram.startsWith("http") ? user.instagram : `https://${user.instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline break-all"
-              >
-                Instagram
-              </a>
-            </li>
-          )}
-          {user.linkedin && (
-            <li>
-              💼{" "}
-              <a
-                href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline break-all"
-              >
-                LinkedIn
-              </a>
-            </li>
-          )}
-        </ul>
-      </div>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <p className="text-gray-500 italic text-center py-10">
+        Aucun service publié pour le moment.
+      </p>
     )}
-
   </div>
-)}
+
+  {/* Bloc droite : LIENS (toujours au même endroit) */}
+  <div className="bg-white p-6 rounded-lg shadow h-fit">
+    <h3 className="text-xl font-semibold mb-4">Liens</h3>
+
+    {(user.siteWeb || user.instagram || user.linkedin) ? (
+      <ul className="space-y-2 text-gray-800">
+        {user.siteWeb && (
+          <li>
+            🌐{" "}
+            <a
+              href={user.siteWeb.startsWith("http") ? user.siteWeb : `https://${user.siteWeb}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline break-all"
+            >
+              Site web
+            </a>
+          </li>
+        )}
+
+        {user.instagram && (
+          <li>
+            📸{" "}
+            <a
+              href={user.instagram.startsWith("http") ? user.instagram : `https://${user.instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline break-all"
+            >
+              Instagram
+            </a>
+          </li>
+        )}
+
+        {user.linkedin && (
+          <li>
+            💼{" "}
+            <a
+              href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline break-all"
+            >
+              LinkedIn
+            </a>
+          </li>
+        )}
+      </ul>
+    ) : (
+      <p className="text-gray-500 italic">
+        Aucun lien renseigné.
+      </p>
+    )}
+  </div>
+
+
 
             {user.valeurs && (
               <div className="bg-white p-6 rounded-xl shadow">
