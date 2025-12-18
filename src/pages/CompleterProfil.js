@@ -8,11 +8,10 @@ const CompleterProfil = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem('user'));
-  const token = localStorage.getItem('token');
 
  // Vérifier connexion
   useEffect(() => {
-    if (!storedUser || !token) {
+    if (!storedUser) {
       alert('Veuillez vous connecter.');
       navigate('/login');
     }
