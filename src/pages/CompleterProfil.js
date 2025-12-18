@@ -17,6 +17,15 @@ const CompleterProfil = () => {
     }
   }, [navigate]);
 
+  const colors = [
+  "#f87171", "#fbbf24", "#34d399", "#60a5fa", "#a78bfa",
+  "#f472b6", "#fcd34d", "#22d3ee", "#f97316", "#10b981"
+];
+
+const getColor = (idx) => {
+  return colors[idx % colors.length];
+};
+
   const userId = storedUser?.id; // ← utilise l'ID depuis localStorage
   const [form, setForm] = useState({
     // Utiliser storedUser si disponible, sinon valeurs vides
