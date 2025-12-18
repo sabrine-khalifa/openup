@@ -135,7 +135,7 @@ try {
 
 
       // Mettre à jour localStorage avec les nouvelles données
-      const updatedUser = { ...storedUser, ...form };
+      //const updatedUser = { ...storedUser, ...form };
       localStorage.setItem('user', JSON.stringify(updatedUser));
 
       alert("Profil complété avec succès !");
