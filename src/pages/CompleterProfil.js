@@ -130,12 +130,8 @@ const handleDomaineChange = (value) => {
 
 try {
       // ✅ Ajoutez le header d'authentification !
-      await api.put(`/api/auth/${userId}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${token}` // ← crucial !
-        },
-      });
+   await api.put(`/api/auth/complete-profile/${userId}`, data);
+
 
       // Mettre à jour localStorage avec les nouvelles données
       const updatedUser = { ...storedUser, ...form };
