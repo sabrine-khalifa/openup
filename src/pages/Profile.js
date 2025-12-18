@@ -16,6 +16,9 @@ const Profile = () => {
   const [form, setForm] = useState({});
   const navigate = useNavigate();
 
+
+
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
@@ -75,6 +78,43 @@ const userId = (userData.id || userData._id || "").trim();
   }, [navigate]);
 
   if (!user) return <p className="text-center py-10">Chargement...</p>;
+
+  const categoriesDisponibles = [
+  { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#F27438" },
+  { nom: "Arts visuels", couleur: "#F39C12" },
+  { nom: "Artisanat", couleur: "#CA7C5C" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#e76f51" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7AA95C" },
+  { nom: "Écriture & littérature", couleur: "#C89F9C" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#427AA1" },
+  { nom: "Finances personnelles & économie", couleur: "#E8EDDF" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFAE9D" },
+  { nom: "Humanitaire & droits humains", couleur: "#7C4C53" },
+  { nom: "Inclusion & solidarité", couleur: "#FF584D" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#0FAC71" },
+  { nom: "Management & organisation", couleur: "#9281C0" },
+  { nom: "Marketing, Communication & Événementiel", couleur: "#4A919E" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#A92831" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#B7CE66" },
+  { nom: "Parentalité & famille", couleur: "#EA5863" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#585B4C" },
+  { nom: "Relations & développement social", couleur: "#E74C3C" },
+  { nom: "Santé", couleur: "#EDCDFA" },
+  { nom: "Sciences & technologies", couleur: "#62B9CB" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#5CAFE7" },
+  { nom: "Spiritualité", couleur: "#FFE361" },
+  { nom: "Stylisme & mode", couleur: "#F0A1BF" },
+  { nom: "Thérapies alternatives", couleur: "#A4BD01" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
+  { nom: "Autres", couleur: "#95a5a6" }
+];
 
  
 
