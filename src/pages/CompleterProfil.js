@@ -124,10 +124,10 @@ const handleDomaineChange = (value) => {
     }));
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-  
-  if (!userId) return alert("Utilisateur non connecté");
+
+  if (!userId) return;
 
   const data = new FormData();
   Object.keys(form).forEach((key) => {
@@ -138,25 +138,20 @@ const handleDomaineChange = (value) => {
     }
   });
 
-try {
-      // ✅ Ajoutez le header d'authentification !
-   await api.put(`/api/auth/complete-profile/${userId}`, data);
+  try {
+    const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
 
-
-      // Mettre à jour localStorage avec les nouvelles données
-      //const updatedUser = { ...storedUser, ...form };
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-
-      alert("Profil complété avec succès !");
-      navigate("/profile");
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.msg || "Erreur lors de la complétion du profil");
+    // ✅ stocker UNIQUEMENT la réponse backend
+    if (res?.data?.user) {
+      localStorage.setItem("user", JSON.stringify(res.data.user));
     }
-  
-  
+
+    navigate("/profile", { replace: true });
+  } catch (err) {
+    console.error(err);
+  }
 };
- 
+
   
 
   return (
