@@ -28,7 +28,7 @@ const CompleterProfil = () => {
     photo: storedUser?.photo || null,
     role: storedUser?.role || 'particulier',
     // Champs créateur
-    
+
     metier: storedUser?.metier || '',
     domaine: Array.isArray(storedUser?.domaine) ? storedUser.domaine : [],
     langues: Array.isArray(storedUser?.langues) ? storedUser.langues : [],
@@ -91,13 +91,27 @@ const handleSubmit = async (e) => {
   if (!userId) return;
 
   const data = new FormData();
-  Object.keys(form).forEach((key) => {
-    if (Array.isArray(form[key])) {
-      form[key].forEach(item => data.append(key, item));
-    } else {
-      data.append(key, form[key] ?? '');
-    }
-  });
+
+
+ Object.keys(form).forEach((key) => {
+  const value = form[key];
+
+  if (
+    value === undefined ||
+    value === null ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0)
+  ) {
+    return; // ❌ n'envoie pas
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach(item => data.append(key, item));
+  } else {
+    data.append(key, value);
+  }
+});
+
 
   try {
     const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
