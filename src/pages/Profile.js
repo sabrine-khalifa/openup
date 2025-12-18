@@ -346,36 +346,56 @@ const getDomaineStyle = (nomDomaine) => {
     </div>
 
     {/* Bloc liens (1 colonne à droite) */}
-{user.liens && (
+{(user.siteWeb || user.instagram || user.linkedin) && (
   <div className="bg-white p-6 rounded-lg shadow h-fit">
-    <h3 className="text-xl font-semibold mb-4">Lien</h3>
+    <h3 className="text-xl font-semibold mb-4">Liens</h3>
+
     <ul className="space-y-2 text-gray-800">
-      <li className="break-all">
-        <a
-          href={
-            user.liens.startsWith("http")
-              ? user.liens
-              : `https://${user.liens}` // ✅ Ajoute automatiquement https:// si absent
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
-        >
-          {user.liens.includes("facebook.com") || user.liens.includes("fb.com")
-            ? "Facebook"
-            : user.liens.includes("instagram.com")
-            ? "Instagram"
-            : user.liens.includes("linkedin.com")
-            ? "LinkedIn"
-            : user.liens.includes("http")
-            ? "Site web"
-            : "Lien"}{" "}
-          : {user.liens}
-        </a>
-      </li>
+      {user.siteWeb && (
+        <li>
+          🌐{" "}
+          <a
+            href={user.siteWeb.startsWith("http") ? user.siteWeb : `https://${user.siteWeb}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline break-all"
+          >
+            Site web
+          </a>
+        </li>
+      )}
+
+      {user.instagram && (
+        <li>
+          📸{" "}
+          <a
+            href={user.instagram.startsWith("http") ? user.instagram : `https://${user.instagram}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline break-all"
+          >
+            Instagram
+          </a>
+        </li>
+      )}
+
+      {user.linkedin && (
+        <li>
+          💼{" "}
+          <a
+            href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline break-all"
+          >
+            LinkedIn
+          </a>
+        </li>
+      )}
     </ul>
   </div>
 )}
+
 
   </div>
 )}
