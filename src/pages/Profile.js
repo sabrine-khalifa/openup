@@ -394,7 +394,7 @@ const getDomaineStyle = (nomDomaine) => {
 
 
 
-           <div className="md:col-span-2 flex flex-col space-y-4">
+           <div className="md:col-span-3 flex flex-col space-y-4">
 
   {user.valeurs && (
     <div className="bg-white p-6 rounded-xl shadow">
