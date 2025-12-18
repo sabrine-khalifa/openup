@@ -394,24 +394,34 @@ const getDomaineStyle = (nomDomaine) => {
 
 
 
-            {user.valeurs && (
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-semibold mb-3">Mes valeurs profondes</h3>
-                <p className="text-gray-700">{user.valeurs}</p>
-              </div>
-            )}
-              {user.role === "createur" && (
+           <div className="md:col-span-1 flex flex-col space-y-4">
 
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-3">Informations pratiques</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-                <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non"}</p>
-                <p><strong>Type de cours :</strong> {user.typeCours || "Non"}</p>
-                <p><strong>Public cible :</strong> {user.publicCible || "Non"}</p>
-                <p><strong>PMR :</strong> {user.pmr ? "✅ Oui" : "Non"}</p>
-              </div>
-            </div>
-            )}
+  {user.valeurs && (
+    <div className="bg-white p-6 rounded-xl shadow">
+      <h3 className="text-xl font-semibold mb-3">
+        Mes valeurs profondes
+      </h3>
+      <p className="text-gray-700">{user.valeurs}</p>
+    </div>
+  )}
+
+  {user.role === "createur" && (
+    <div className="bg-white p-6 rounded-xl shadow">
+      <h3 className="text-xl font-semibold mb-3">
+        Informations pratiques
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+        <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non"}</p>
+        <p><strong>Type de cours :</strong> {user.typeCours || "Non"}</p>
+        <p><strong>Public cible :</strong> {user.publicCible || "Non"}</p>
+        <p><strong>PMR :</strong> {user.pmr ? "✅ Oui" : "Non"}</p>
+      </div>
+    </div>
+  )}
+
+</div>
+
               {user.role === "particulier" && (
 
             <div className="bg-white p-6 rounded-xl shadow">
