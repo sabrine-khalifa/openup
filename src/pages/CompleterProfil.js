@@ -28,6 +28,7 @@ const CompleterProfil = () => {
     photo: storedUser?.photo || null,
     role: storedUser?.role || 'particulier',
     // Champs créateur
+    
     metier: storedUser?.metier || '',
     domaine: Array.isArray(storedUser?.domaine) ? storedUser.domaine : [],
     langues: Array.isArray(storedUser?.langues) ? storedUser.langues : [],

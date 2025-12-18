@@ -79,7 +79,7 @@ const userId = (userData.id || userData._id || "").trim();
 
   if (!user) return <p className="text-center py-10">Chargement...</p>;
 
-  const categoriesDisponibles = [
+  const domaines = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
   { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
   { nom: "Arts vivants", couleur: "#F27438" },
@@ -117,6 +117,16 @@ const userId = (userData.id || userData._id || "").trim();
 ];
 
  
+
+const getDomaineStyle = (nomDomaine) => {
+  const domaineTrouve = domaines.find(d => d.nom === nomDomaine);
+
+  return {
+    backgroundColor: domaineTrouve?.couleur || "#16A14A",
+    color: "#fff",
+  };
+};
+
 
   const getAvatar = () => {
     if (user.photo) return user.photo;
@@ -205,10 +215,20 @@ const userId = (userData.id || userData._id || "").trim();
             {user.metier && <p className="text-lg text-gray-600">{user.metier}</p>}
             
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">
-              {user.domaine && (
-                <span className="bg-[#16A14A] text-white px-3 py-1 rounded-full text-sm">{user.domaine}</span>
-              )}
               
+
+    {Array.isArray(user.domaine) &&
+  user.domaine.map((domaine, index) => (
+    <span
+      key={index}
+      style={getDomaineStyle(domaine)}
+      className="px-3 py-1 rounded-full text-sm font-medium"
+    >
+      {domaine}
+    </span>
+  ))}
+
+
             </div>
 
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
