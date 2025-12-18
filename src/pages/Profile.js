@@ -431,6 +431,37 @@ const getDomaineStyle = (nomDomaine) => {
             )}
           </div>
         )}
+
+        {user.liens && (
+  <div className="bg-white p-6 rounded-lg shadow h-fit">
+    <h3 className="text-xl font-semibold mb-4">Lien</h3>
+    <ul className="space-y-2 text-gray-800">
+      <li className="break-all">
+        <a
+          href={
+            user.liens.startsWith("http")
+              ? user.liens
+              : `https://${user.liens}` // ✅ Ajoute automatiquement https:// si absent
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
+          {user.liens.includes("facebook.com") || user.liens.includes("fb.com")
+            ? "Facebook"
+            : user.liens.includes("instagram.com")
+            ? "Instagram"
+            : user.liens.includes("linkedin.com")
+            ? "LinkedIn"
+            : user.liens.includes("http")
+            ? "Site web"
+            : "Lien"}{" "}
+          : {user.liens}
+        </a>
+      </li>
+    </ul>
+  </div>
+)}
          {activeTab === "services" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Vos services</h2>
