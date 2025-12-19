@@ -134,8 +134,16 @@ localStorage.setItem(
       alert("Profil mis à jour !");
       navigate("/profile");
     } catch (error) {
-      alert(error.response?.data?.msg || "Erreur");
-    }
+  if (error.response?.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+    return;
+  }
+
+  alert(error.response?.data?.msg || "Erreur");
+}
+
   };
 
   return (
