@@ -377,7 +377,7 @@ const getDomaineStyle = (nomDomaine) => {
         {user.linkedin && (
           <li>
 
-    💼 <strong>LinkedIn :</strong>{" "}
+     <strong>LinkedIn :</strong>{" "}
             <a
               href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
               target="_blank"

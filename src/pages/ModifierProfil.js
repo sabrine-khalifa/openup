@@ -27,10 +27,8 @@ const ModifierProfil = () => {
   const [userRole, setUserRole] = useState("particulier");
   const navigate = useNavigate();
 
-  const domaines = [
-    'Bien-être', 'Éducation', 'Création', 'Tech', 'Artisanat',
-    'Conseil', 'Sport', 'Musique', 'Développement personnel'
-  ];
+ const domaines = [ "Animaux & monde vivant", "Architecture & urbanisme", "Artisanat", "Arts visuels", "Arts vivants", "Bien-être", "Décoration & aménagement", "Développement personnel", "Écologie & durabilité", "Écriture & littérature", "Entrepreneuriat & innovation", "Finances personnelles & économie", "Formation, enseignement & accompagnement", "Gastronomie & art culinaire", "Humanitaire & droits humains", "Inclusion & solidarité", "Informatique & numérique", "Jeux & expériences interactives", "Management & organisation", "Marketing & communication", "Médias, journalisme & storytelling", "Musique & son", "Nature, jardinage & permaculture", "Parentalité & famille", "Politique, citoyenneté & engagement sociétal", "Relations & développement social", "Santé", "Sciences & technologies", "Sport, loisirs physiques & outdoor", "Spiritualité", "Stylisme & mode", "Thérapies alternatives", "Voyage, tourisme & interculturalité" ];
+
   const publicCibleOptions = ['Débutants', 'Professionnels', 'Tous niveaux'];
   const languesDisponibles = ['Français', 'Anglais', 'Arabe', 'Espagnol', 'Allemand'];
 
