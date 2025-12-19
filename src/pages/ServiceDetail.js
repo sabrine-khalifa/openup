@@ -317,7 +317,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
               {/* Catégories sous forme de tags */}
 {Array.isArray(service.categories) && service.categories.length > 0 && (
   <div className="flex flex-wrap gap-2 mb-4">
-    {service.categories.map((cat, index) => (
+    {[...new Set(service.categories)].map((cat, index) => (
       <span
         key={index}
         className="px-3 py-1 rounded-full text-white text-xs font-semibold"
@@ -431,7 +431,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
             <h3 className="flex items-center font-semibold mb-3">
               <FaCalendarAlt className="text-green-500 mr-2" />
-              Créneau disponibles
+              Créneau disponible
             </h3>
             <div className="space-y-2">
               <div className="flex justify-between items-center border p-2 rounded">
