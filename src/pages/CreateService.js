@@ -153,8 +153,7 @@ if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
   }
 });
 data.append("creditsProposes", creditsNumber);
-data.append("dateAConvenir", formData.dateAConvenir || false);
-
+data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
 
   finalCategories.forEach(cat => data.append("categories", cat));
 
