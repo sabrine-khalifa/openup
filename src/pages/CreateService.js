@@ -62,6 +62,7 @@ const CreateService = () => {
   categories: [],
   creditsProposes: "", 
     pmrDetails: "",
+     dateAConvenir: false, // ✅ AJOUT ICI
 
 });
   const [images, setImages] = useState([]);
@@ -336,8 +337,10 @@ data.append("dateAConvenir", formData.dateAConvenir || false);
             {/* Dates */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
-            <DatePicker
+  
+  <DatePicker
   multiple
+  disabled={formData.dateAConvenir} // ✅
   value={formData.dateService.map(str => new Date(str))}
   onChange={(dates) =>
     setFormData({
@@ -346,21 +349,24 @@ data.append("dateAConvenir", formData.dateAConvenir || false);
     })
   }
   format="DD/MM/YYYY"
-  inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg"
 />
+
             </div>
 
             {/* Heure + Durée */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Heure</label>
-                <input
-                  type="time"
-                  name="heure"
-                  value={formData.heure}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
-                />
+               <input
+  type="time"
+  name="heure"
+  disabled={formData.dateAConvenir} // ✅
+  value={formData.heure}
+  onChange={handleChange}
+  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
+/>
+
               </div>
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Durée</label>
@@ -376,13 +382,21 @@ data.append("dateAConvenir", formData.dateAConvenir || false);
             </div>
              <div className="flex items-center gap-3">
               <input
-                type="checkbox"
-                id="date-convenir"
-                name="dateAConvenir"
-                checked={formData.dateAConvenir}
-                onChange={handleChange}
-                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
-              />
+  type="checkbox"
+  id="date-convenir"
+  name="dateAConvenir"
+  checked={formData.dateAConvenir}
+  onChange={(e) => {
+    const checked = e.target.checked;
+    setFormData({
+      ...formData,
+      dateAConvenir: checked,
+      dateService: checked ? [] : formData.dateService, // ✅ vider dates
+      heure: checked ? "" : formData.heure,             // ✅ vider heure
+    });
+  }}
+/>
+
               <label htmlFor="date-convenir" className="text-gray-700 font-medium">
                 Date et heure de rdv à convenir ensemble 
               </label>
