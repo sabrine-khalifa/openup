@@ -347,42 +347,44 @@ const getDomaineStyle = (nomDomaine) => {
       <ul className="space-y-2 text-gray-800">
         {user.siteWeb && (
           <li>
-            🌐{" "}
+           <strong>Site web :</strong>{" "}
             <a
               href={user.siteWeb.startsWith("http") ? user.siteWeb : `https://${user.siteWeb}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline break-all"
             >
-              Site web
+              {user.siteWeb}
             </a>
           </li>
         )}
 
         {user.instagram && (
           <li>
-            📸{" "}
+         <strong>Instagram :</strong>{" "}
             <a
               href={user.instagram.startsWith("http") ? user.instagram : `https://${user.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline break-all"
             >
-              Instagram
-            </a>
+
+{user.instagram}      
+      </a>
           </li>
         )}
 
         {user.linkedin && (
           <li>
-            💼{" "}
+
+    💼 <strong>LinkedIn :</strong>{" "}
             <a
               href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline break-all"
             >
-              LinkedIn
+              {user.linkedin}
             </a>
           </li>
         )}
