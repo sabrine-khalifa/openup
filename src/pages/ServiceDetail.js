@@ -104,13 +104,7 @@ const getCategoryColor = (nom) => {
 useEffect(() => {
   console.log("Note actuelle :", note);
 }, [note]);
-  const categoriesDisponibles = [
-    { nom: "Musique", couleur: "#FF5733" },
-    { nom: "Peinture", couleur: "#33A1FF" },
-    { nom: "Cuisine", couleur: "#28A745" },
-    { nom: "Sport", couleur: "#FFC107" },
-    { nom: "Photographie", couleur: "#9C27B0" },
-  ];
+
 
   useEffect(() => {
     const fetchServiceAndAvis = async () => {
