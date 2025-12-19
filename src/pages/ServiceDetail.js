@@ -259,19 +259,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
             {/* Titre et catégorie */}
             <h1 className="text-2xl font-bold mb-2">{service.titre}</h1>
-            <div className="flex gap-2 mb-4">
-              {service.categorie && (
-                <span
-                  className="px-3 py-1 rounded-full text-white text-sm font-semibold"
-                  style={{
-                    backgroundColor:
-                      categoriesDisponibles.find((c) => c.nom === service.categorie)?.couleur || "#000",
-                  }}
-                >
-                  {service.categorie}
-                </span>
-              )}
-            </div>
+            
 
             {/* Créateur */}
             {service.createur && (
