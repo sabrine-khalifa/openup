@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from '../images/logo.png';
+import api from '../api';
+
 
 const ModifierProfil = () => {
   const [form, setForm] = useState({
@@ -41,7 +43,7 @@ const ModifierProfil = () => {
 
     
 
-    axios.get(`https://backend-hqhy.onrender.com/api/users/${userId}`, {
+    api.get(`/api/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => {
       const user = res.data;
@@ -114,7 +116,7 @@ const ModifierProfil = () => {
     });
 
     try {
-      const res = await axios.put(`https://backend-hqhy.onrender.com/api/auth/${userId}`, data, {
+      const res = await api.put(`/api/auth/${userId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -134,16 +136,8 @@ localStorage.setItem(
       alert("Profil mis à jour !");
       navigate("/profile");
     } catch (error) {
-  if (error.response?.status === 401) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-    return;
-  }
-
-  alert(error.response?.data?.msg || "Erreur");
-}
-
+      alert(error.response?.data?.msg || "Erreur");
+    }
   };
 
   return (
