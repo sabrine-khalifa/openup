@@ -78,6 +78,8 @@ const userId = (userData.id || userData._id || "").trim();
   }, [navigate]);
 
   if (!user) return <p className="text-center py-10">Chargement...</p>;
+  console.log("LINKS:", user.siteWeb, user.instagram, user.linkedin);
+
 
   const domaines = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
