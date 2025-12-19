@@ -114,7 +114,7 @@ const ModifierProfil = () => {
     });
 
     try {
-      const res = await axios.put(`https://backend-hqhy.onrender.com/api/users/${userId}`, data, {
+      const res = await axios.put(`https://backend-hqhy.onrender.com/api/auth/${userId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
