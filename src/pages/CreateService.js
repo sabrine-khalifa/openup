@@ -142,16 +142,19 @@ if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
 }
 
   // Ajout des champs dans FormData
-  Object.entries(formData).forEach(([key, value]) => {
-    if (key === "creditsProposes") return; 
-    if (key === "dateService" && Array.isArray(value)) {
-       value.forEach(d => d && data.append("dateService", d));
+Object.entries(formData).forEach(([key, value]) => {
+  if (key === "creditsProposes") return;
+  if (key === "dateAConvenir") return; // ✅ AJOUT ICI
+
+  if (key === "dateService" && Array.isArray(value)) {
+    value.forEach(d => d && data.append("dateService", d));
   } else if (Array.isArray(value)) {
     value.forEach(item => data.append(key, item));
   } else {
     data.append(key, value);
   }
 });
+s
 data.append("creditsProposes", creditsNumber);
 data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
 
