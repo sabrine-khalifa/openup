@@ -308,35 +308,23 @@ const getDomaineStyle = (nomDomaine) => {
   {/* Bloc gauche : service OU message */}
   <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
     
-    {services.length > 0 && services[0] ? (
-      <>
-        <h3 className="text-xl font-semibold mb-2">
-          {services[0].titre || "Sans titre"}
-        </h3>
+   {/* Vidéo : afficher uniquement si présente */}
+      {user.video && (
+        <video controls className="w-full h-64 object-cover rounded-lg mb-4">
+          <source src={user.video} type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+      )}
+      {/* Description */}
+      {user.description && (
+        <p className="text-gray-700 mb-4">{user.description}</p>
+      )}
 
-        {user.description && (
-          <p className="text-gray-700 mb-4">{user.description}</p>
-        )}
-
-        {/* Images */}
-        {Array.isArray(services[0].images) && services[0].images.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {services[0].images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`${services[0].titre} - image ${idx + 1}`}
-                className="w-full h-64 object-cover rounded-lg"
-              />
-            ))}
-          </div>
-        )}
-      </>
-    ) : (
-      <p className="text-gray-500 italic text-center py-10">
-        Aucun service publié pour le moment.
-      </p>
-    )}
+       {/* Téléphone et nationalité */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+        {user.telephone && <p><strong>Téléphone :</strong> {user.telephone}</p>}
+        {user.nationalites && <p><strong>Nationalité :</strong> {user.nationalites}</p>}
+      </div>
   </div>
 
   {/* Bloc droite : LIENS (toujours au même endroit) */}
