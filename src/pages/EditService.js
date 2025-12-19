@@ -392,7 +392,23 @@ data.append("materiel", formData.materiel);
                 />
               </div>
             )}
-
+<div>
+    <label className="block text-gray-700 font-medium mb-1">
+      Valeur en crédits  *
+    </label>
+  <input
+  type="number"
+  name="creditsProposes"  // ✅
+  value={formData.creditsProposes || ""}
+  onChange={handleChange}
+  placeholder="Ex: 50 crédits"
+  min="1"
+  step="1"
+  className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+  required
+/>
+    
+  </div>
             {/* Dates */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Dates disponibles</label>
@@ -527,18 +543,7 @@ data.append("materiel", formData.materiel);
                   required
                 />
               </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Crédits proposés</label>
-                <input
-                  type="number"
-                  name="creditsProposes"
-                  value={formData.creditsProposes}
-                  onChange={handleChange}
-                  placeholder="Ex: 50"
-                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
-                  required
-                />
-              </div>
+             
             </div>
 
             {/* PMR */}
