@@ -29,8 +29,7 @@ const ModifierProfil = () => {
 
  const domaines = [ "Animaux & monde vivant", "Architecture & urbanisme", "Artisanat", "Arts visuels", "Arts vivants", "Bien-être", "Décoration & aménagement", "Développement personnel", "Écologie & durabilité", "Écriture & littérature", "Entrepreneuriat & innovation", "Finances personnelles & économie", "Formation, enseignement & accompagnement", "Gastronomie & art culinaire", "Humanitaire & droits humains", "Inclusion & solidarité", "Informatique & numérique", "Jeux & expériences interactives", "Management & organisation", "Marketing & communication", "Médias, journalisme & storytelling", "Musique & son", "Nature, jardinage & permaculture", "Parentalité & famille", "Politique, citoyenneté & engagement sociétal", "Relations & développement social", "Santé", "Sciences & technologies", "Sport, loisirs physiques & outdoor", "Spiritualité", "Stylisme & mode", "Thérapies alternatives", "Voyage, tourisme & interculturalité" ];
 
-  const publicCibleOptions = ['Débutants', 'Professionnels', 'Tous niveaux'];
-  const languesDisponibles = ['Français', 'Anglais', 'Arabe', 'Espagnol', 'Allemand'];
+  const languesDisponibles = ['Français', 'Anglais'];
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -274,7 +273,7 @@ localStorage.setItem(
                 <input
                   type="url"
                   name="video"
-                  placeholder="Lien vidéo (optionnel)"
+                  placeholder=" Lien vidéo de présentation"
                   value={form.video}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
@@ -282,7 +281,7 @@ localStorage.setItem(
 
                 <textarea
                   name="description"
-                  placeholder="À propos de vous"
+                                    placeholder="À propos"
                   value={form.description}
                   onChange={handleChange}
                   rows="3"
@@ -291,7 +290,7 @@ localStorage.setItem(
 
                 <textarea
                   name="valeurs"
-                  placeholder="Vos valeurs (optionnel)"
+                  placeholder="Mes valeurs profondes "
                   value={form.valeurs}
                   onChange={handleChange}
                   rows="2"
@@ -317,40 +316,65 @@ localStorage.setItem(
                     checked={form.pmr}
                     onChange={handleChange}
                   />
-                  Accessible PMR
+                                    Accessible PMR (Personnes à mobilité réduite) 
+
                 </label>
 
-                <select
+                 <select
                   name="typeCours"
                   value={form.typeCours}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
-                  <option value="">Type de cours</option>
-                  <option value="individuel">Individuel</option>
-                  <option value="collectif">Collectif</option>
+                  <option value="">Type de séance</option>
+                 
+                <option value="Individuel">Individuelle</option>
+                <option value="Collectif">Collective </option>
+                <option value="Groupe">Individuelle & Collective </option>
                 </select>
 
-                <select
-                  name="publicCible"
-                  value={form.publicCible || ""}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Public cible</option>
-                  {publicCibleOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
-
-                <input
+                <div>
+              <label className="block text-gray-700 font-medium mb-1">Public cible</label>
+              <input
                   type="text"
-                  name="liens"
-                  placeholder="Liens (site, réseaux sociaux)"
-                  value={form.liens}
+                  name="publicCible"
+                  value={form.publicCible}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
+                  placeholder="Débutants, Professionnels,Tous niveaux"
+                  className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                 />
+            </div>
+
+                                <div className="space-y-3">
+  <p className="text-gray-700 font-medium">Liens</p>
+
+  <input
+    type="url"
+    name="siteWeb"
+    placeholder="Site Web"
+    value={form.siteWeb || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+
+  <input
+    type="url"
+    name="instagram"
+    placeholder="Instagram"
+    value={form.instagram || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+
+  <input
+    type="url"
+    name="linkedin"
+    placeholder="LinkedIn"
+    value={form.linkedin || ""}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3"
+  />
+</div>
               </div>
             )}
 
