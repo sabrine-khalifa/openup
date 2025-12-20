@@ -154,7 +154,7 @@ Object.entries(formData).forEach(([key, value]) => {
     data.append(key, value);
   }
 });
-s
+
 data.append("creditsProposes", creditsNumber);
 data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
 
