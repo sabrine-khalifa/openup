@@ -9,7 +9,7 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [services, setServices] = useState([]);
   const [avis, setAvis] = useState([]);
-  const [reservations, setReservations] = useState([]);
+  //const [reservations, setReservations] = useState([]);
   const [activeTab, setActiveTab] = useState("apropos");
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const UserProfile = () => {
   useEffect(() => {
     api.get(`/api/users/${id}`).then((res) => setUser(res.data));
     api.get(`/api/services/serv/user/${id}`).then((res) => setServices(res.data));
-    api.get(`/api/reservations/user/${id}`).then((res) => setReservations(res.data));
+    //api.get(`/api/reservations/user/${id}`).then((res) => setReservations(res.data));
   }, [id]);
 
   useEffect(() => {
@@ -136,18 +136,19 @@ const UserProfile = () => {
           </button>
             )}
 
-          <button
+        {/* <button
             onClick={() => setActiveTab("reserves")}
             className={`pb-2 ${activeTab === "reserves" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : ""}`}
           >
             Services réservés
           </button>
-          <button
+
+                  <button
             onClick={() => setActiveTab("portefeuille")}
             className={`pb-2 ${activeTab === "portefeuille" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : ""}`}
           >
             Portefeuille
-          </button>
+          </button> */}
           <button
             onClick={() => setActiveTab("avis")}
             className={`pb-2 ${activeTab === "avis" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : ""}`}
@@ -159,97 +160,48 @@ const UserProfile = () => {
         </div>
 
         {/* Contenu des onglets */}
-      {activeTab === "apropos" && (
+{activeTab === "apropos" && (
   <div className="space-y-6">
-    {/* Titre du service + Description + Photos */}
- {services.length > 0 && services[0] && (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {/* Bloc service (2 colonnes à gauche) */}
-    <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-      {/* Titre du service */}
-      <h3 className="text-xl font-semibold mb-2">{services[0].titre || "Sans titre"}</h3>
 
-      {/* Description du créateur */}
-      {user.description && (
-        <p className="text-gray-700 mb-4">{user.description}</p>
-      )}
+    {/* Description */}
+    {user.description && (
+      <div className="bg-white p-6 rounded-lg shadow">
+        <p className="text-gray-700">{user.description}</p>
+      </div>
+    )}
 
-      {/* Images du service */}
-      {services[0].images && (
-        <div>
-          {/* Si c’est une chaîne (image unique) */}
-          {typeof services[0].images === "string" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <img
-                src={services[0].images}
-                alt={services[0].titre}
-                className="w-full h-64 object-cover rounded-lg"
-              />
-            </div>
-          )}
-
-          {/* Si c’est un tableau (plusieurs images) */}
-          {Array.isArray(services[0].images) && services[0].images.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {services[0].images.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`${services[0].titre} - image ${idx + 1}`}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-
-    {/* Bloc liens (1 colonne à droite) */}
-{user.liens && (
-  <div className="bg-white p-6 rounded-lg shadow h-fit">
-    <h3 className="text-xl font-semibold mb-4">Lien</h3>
-    <ul className="space-y-2 text-gray-800">
-      <li className="break-all">
-        <a href={user.liens} target="_blank" rel="noopener noreferrer">
-          {user.liens.includes("facebook.com") || user.liens.includes("fb.com")
-            ? "Facebook"
-            : user.liens.includes("instagram.com")
-            ? "Instagram"
-            : user.liens.includes("linkedin.com")
-            ? "LinkedIn"
-            : user.liens.includes("http")
-            ? "Site web"
-            : "Lien"} : {user.liens}
-        </a>
-      </li>
-    </ul>
-  </div>
-)}
-  </div>
-)}
-
-
-    {/* Mes Valeurs profondes */}
+    {/* Valeurs */}
     {user.valeurs && (
       <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-xl font-semibold mb-4">Mes valeurs profondes</h3>
+        <h3 className="text-xl font-semibold mb-3">Mes valeurs</h3>
         <p className="text-gray-700">{user.valeurs}</p>
       </div>
     )}
 
-    {/* Informations pratiques */}
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-4">Informations pratiques</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
-        <p><span className="font-medium">Langues parlées : </span>{user.langues?.join(", ") || "Non renseigné"}</p>
-        <p><span className="font-medium">Type de cours : </span>{user.typeCours || "Non renseigné"}</p>
-        <p><span className="font-medium">Public cible : </span>{user.publicCible || "Non renseigné"}</p>
-        <p><span className="font-medium">Accessible PMR : </span>{user.pmr ? " Oui" : "Non"}</p>
+    {/* Infos pratiques */}
+    {(user.langues || user.typeCours || user.publicCible || user.pmr) && (
+      <div className="bg-white p-6 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-4">Informations pratiques</h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+          {user.langues?.length > 0 && (
+            <p><strong>Langues :</strong> {user.langues.join(", ")}</p>
+          )}
+          {user.typeCours && (
+            <p><strong>Type de cours :</strong> {user.typeCours}</p>
+          )}
+          {user.publicCible && (
+            <p><strong>Public cible :</strong> {user.publicCible}</p>
+          )}
+          {user.pmr && (
+            <p><strong>Accessible PMR :</strong> Oui</p>
+          )}
+        </div>
       </div>
-    </div>
+    )}
   </div>
 )}
+
 
    {activeTab === "services" && (
           <div>
@@ -317,7 +269,7 @@ const UserProfile = () => {
         )}
       
 
-       {activeTab === "reserves" && (
+    {/*   {activeTab === "reserves" && (
   <div>
     <h2 className="text-xl font-semibold mb-4">Services ou créations réservés</h2>
     {reservations.length === 0 ? (
@@ -397,6 +349,7 @@ const UserProfile = () => {
             </div>
           </div>
         )}
+        */}
 
         {activeTab === "avis" && (
           <div>
