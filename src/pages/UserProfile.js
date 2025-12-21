@@ -160,47 +160,6 @@ const UserProfile = () => {
         </div>
 
         {/* Contenu des onglets */}
-{activeTab === "apropos" && (
-  <div className="space-y-6">
-
-    {/* Description */}
-    {user.description && (
-      <div className="bg-white p-6 rounded-lg shadow">
-        <p className="text-gray-700">{user.description}</p>
-      </div>
-    )}
-
-    {/* Valeurs */}
-    {user.valeurs && (
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-xl font-semibold mb-3">Mes valeurs</h3>
-        <p className="text-gray-700">{user.valeurs}</p>
-      </div>
-    )}
-
-    {/* Infos pratiques */}
-    {(user.langues || user.typeCours || user.publicCible || user.pmr) && (
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-xl font-semibold mb-4">Informations pratiques</h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-          {user.langues?.length > 0 && (
-            <p><strong>Langues :</strong> {user.langues.join(", ")}</p>
-          )}
-          {user.typeCours && (
-            <p><strong>Type de cours :</strong> {user.typeCours}</p>
-          )}
-          {user.publicCible && (
-            <p><strong>Public cible :</strong> {user.publicCible}</p>
-          )}
-          {user.pmr && (
-            <p><strong>Accessible PMR :</strong> Oui</p>
-          )}
-        </div>
-      </div>
-    )}
-  </div>
-)}
 
 
    {activeTab === "services" && (

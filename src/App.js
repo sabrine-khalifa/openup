@@ -97,7 +97,7 @@ function App() {
         />
 
                 <Route path="/ChooseRole" element={<ChooseRole />} />
-                                <Route path="/UserProfile/:id" element={<UserProfile />} />
+                                <Route path="/users/:id" element={<UserProfile />} />
 
 
 
