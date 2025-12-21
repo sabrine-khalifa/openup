@@ -274,6 +274,8 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
   }
   alt={`${service.createur?.name} ${service.createur?.prenom}`}
   className="w-10 h-10 rounded-full object-cover"
+    onClick={() => navigate(`/profile/${service.createur._id}`)}
+
 />
                 <div>
                   <div className="font-medium">
