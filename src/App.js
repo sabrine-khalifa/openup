@@ -98,7 +98,6 @@ function App() {
 
                 <Route path="/ChooseRole" element={<ChooseRole />} />
                                 <Route path="/UserProfile/:id" element={<UserProfile />} />
-                                <Route path="/profile/:id" element={<P />} />
 
 
 
