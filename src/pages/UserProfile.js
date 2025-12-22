@@ -85,10 +85,7 @@ const getDomaineStyle = (nomDomaine) => {
   const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
   const nombreAvis = avis.length;
 
-  const getCouleurCategorie = (nom) => {
-    const cat = categoriesDisponibles.find(c => c.nom === nom);
-    return cat ? cat.couleur : "#6b7280";
-  };
+
 
   const getAuteurPhoto = (auteur) => {
   if (auteur?.photo) {
