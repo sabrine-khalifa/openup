@@ -117,9 +117,6 @@ const userId = (userData.id || userData._id || "").trim();
   { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
   { nom: "Autres", couleur: "#95a5a6" }
 ];
-
- 
-
 const getDomaineStyle = (nomDomaine) => {
   const domaineTrouve = domaines.find(d => d.nom === nomDomaine);
 

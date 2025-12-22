@@ -13,20 +13,51 @@ const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("apropos");
   const navigate = useNavigate();
 
-  const categoriesDisponibles = [
-    { nom: "Sport", couleur: "#212E53" },
-    { nom: "Musique & Son", couleur: "#FFBF66" },
-    { nom: "Art", couleur: "#F27438" },
-    { nom: "Architecture", couleur: "#E3CD8B" },
-    { nom: "Développement Personnel", couleur: "#9B59B6" },
-    { nom: "Illustration & Design", couleur: "#e76f51" },
-    { nom: "Vidéo & Montage", couleur: "#585B4C" },
-    { nom: "Santé", couleur: "#AFA4CE" },
-    { nom: "Artisanat", couleur: "#CA7C5C" },
-    { nom: "Décoration & Aménagement", couleur: "#C89F9C" },
-    { nom: "Formation, Transmission & Accompagnement", couleur: "#C8574D" },
-    { nom: "Informatique & Technologies", couleur: "#3498DB" },
-  ];
+ 
+  const domaines = [
+  { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#F27438" },
+  { nom: "Arts visuels", couleur: "#F39C12" },
+  { nom: "Artisanat", couleur: "#CA7C5C" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#e76f51" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7AA95C" },
+  { nom: "Écriture & littérature", couleur: "#C89F9C" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#427AA1" },
+  { nom: "Finances personnelles & économie", couleur: "#E8EDDF" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFAE9D" },
+  { nom: "Humanitaire & droits humains", couleur: "#7C4C53" },
+  { nom: "Inclusion & solidarité", couleur: "#FF584D" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#0FAC71" },
+  { nom: "Management & organisation", couleur: "#9281C0" },
+  { nom: "Marketing, Communication & Événementiel", couleur: "#4A919E" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#A92831" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#B7CE66" },
+  { nom: "Parentalité & famille", couleur: "#EA5863" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#585B4C" },
+  { nom: "Relations & développement social", couleur: "#E74C3C" },
+  { nom: "Santé", couleur: "#EDCDFA" },
+  { nom: "Sciences & technologies", couleur: "#62B9CB" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#5CAFE7" },
+  { nom: "Spiritualité", couleur: "#FFE361" },
+  { nom: "Stylisme & mode", couleur: "#F0A1BF" },
+  { nom: "Thérapies alternatives", couleur: "#A4BD01" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
+  { nom: "Autres", couleur: "#95a5a6" }
+];
+const getDomaineStyle = (nomDomaine) => {
+  const domaineTrouve = domaines.find(d => d.nom === nomDomaine);
+
+  return {
+    backgroundColor: domaineTrouve?.couleur || "#16A14A",
+    color: "#fff",
+  };
+};
 
   useEffect(() => {
     api.get(`/api/users/${id}`).then((res) => setUser(res.data));
@@ -92,14 +123,19 @@ const UserProfile = () => {
           <div className="flex-1">
             <h1 className="text-3xl font-bold text-gray-800">{user.name} {user.prenom}</h1>
             {user.metier && <p className="text-lg text-gray-600 mt-1">{user.metier}</p>}
-            {user.domaine && (
-              <span
-                style={{ backgroundColor: getCouleurCategorie(user.domaine), color: "white" }}
-                className="px-3 py-1 rounded-full text-sm font-medium inline-block mt-2"
-              >
-                {user.domaine}
-              </span>
-            )}
+            
+
+              {Array.isArray(user.domaine) &&
+  user.domaine.map((domaine, index) => (
+    <span
+      key={index}
+      style={getDomaineStyle(domaine)}
+      className="px-3 py-1 rounded-full text-sm font-medium"
+    >
+      {domaine}
+    </span>
+  ))}
+
             {nombreAvis > 0 && (
               <div className="flex items-center gap-1 mt-3">
                 <span className="text-yellow-500">⭐</span>
