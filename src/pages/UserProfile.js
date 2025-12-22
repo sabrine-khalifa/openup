@@ -503,7 +503,7 @@ const getDomaineStyle = (nomDomaine) => {
                         <div className="flex justify-between items-center">
                           <div>
                           <p className="font-medium">
-                            {a.auteur?.name} {a.auteur?.prenom}
+                              {a.auteur?.prenom} {a.auteur?.name} 
                           </p>
                            {a.note && (
                           <div className="flex items-center gap-1 text-yellow-500 text-sm">

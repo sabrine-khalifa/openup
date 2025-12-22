@@ -278,11 +278,10 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
 />
                 <div>
-                  <div className="font-medium">
-                    <h3>
-                      {service.createur.name} {service.createur.prenom}
+                    <h3  className="font-medium text-gray-800 hover:underline">
+                       {service.createur.prenom}  {service.createur.name}
                     </h3>
-                  </div>
+                  
                  {avis.length > 0 ? (
         noteMoyenne ? (
           <p className="text-yellow-500 text-sm flex items-center gap-1">
