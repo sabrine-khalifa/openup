@@ -193,8 +193,8 @@ const getDomaineStyle = (nomDomaine) => {
         </div>
 
         {/* Contenu des onglets */}
+{activeTab === "apropos" && (
 
-{activeTab === "À propos" && (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
   
   {/* Bloc gauche : service OU message */}
