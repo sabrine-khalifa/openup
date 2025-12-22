@@ -118,7 +118,7 @@ const getDomaineStyle = (nomDomaine) => {
 
           {/* Infos */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-gray-800">{user.name} {user.prenom}</h1>
+            <h1 className="text-3xl font-bold text-gray-800"> {user.prenom} {user.name} </h1>
             {user.metier && <p className="text-lg text-gray-600 mt-1">{user.metier}</p>}
             
 
@@ -133,12 +133,29 @@ const getDomaineStyle = (nomDomaine) => {
     </span>
   ))}
 
-            {nombreAvis > 0 && (
+ <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
+              {user.role === "createur" && (
+                <>
+                  <div className="flex items-center gap-1">🌍 <span>{user.langues?.join(", ") || "Non renseigné"}</span></div>
+                  <div className="flex items-center gap-1">📍 <span>{user.lieuPrestation || "Non renseigné"}</span></div>
+                </>
+              )}
+              {user.note && (
+                <div className="flex items-center gap-1">⭐ <span>{user.note} ({user.nombreAvis} avis)</span></div>
+              )}
+            </div>
+
+         {/*    {nombreAvis > 0 && (
               <div className="flex items-center gap-1 mt-3">
                 <span className="text-yellow-500">⭐</span>
                 <span className="text-sm text-gray-600">{noteAffichee} ({nombreAvis} avis)</span>
               </div>
             )}
+
+             */} 
+
+              
+
           </div>
 
           {/* Bouton contacter */}
