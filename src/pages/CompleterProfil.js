@@ -118,15 +118,15 @@ const CompleterProfil = () => {
 
     if (!userId) return;
 
-    const data = new FormData();
+    const data = new Form();
 
-    let finalCategories = [...formData.categories];
+    let finalCategories = [...form.categories];
     if (
-      formData.categories.includes("Autres") &&
-      formData.autreCategorie?.trim()
+      form.categories.includes("Autres") &&
+      form.autreCategorie?.trim()
     ) {
       finalCategories = finalCategories.filter((c) => c !== "Autres"); // retire "Autres"
-      finalCategories.push(formData.autreCategorie.trim()); // ajoute la vraie valeur
+      finalCategories.push(form.autreCategorie.trim()); // ajoute la vraie valeur
     }
 
     Object.keys(form).forEach((key) => {
@@ -245,7 +245,7 @@ const CompleterProfil = () => {
                       </label>
                     ))}{" "}
                   </div>{" "}
-                    {formData.categories.includes("Autres") && (
+                    {form.categories.includes("Autres") && (
     <div className="mt-2">
       <label className="block text-gray-700 text-sm mb-1">
         Précisez votre catégorie :
@@ -253,9 +253,9 @@ const CompleterProfil = () => {
       <input
         type="text"
         name="autreCategorie"
-        value={formData.autreCategorie || ""}
+        value={form.autreCategorie || ""}
         onChange={(e) =>
-          setFormData({ ...formData, autreCategorie: e.target.value })
+          setForm({ ...form, autreCategorie: e.target.value })
         }
         placeholder="Entrez votre catégorie"
         className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
@@ -264,7 +264,7 @@ const CompleterProfil = () => {
   )}
 
   {/* Message d'erreur si aucune catégorie sélectionnée */}
-  {formData.categories.length === 0 && (
+  {form.categories.length === 0 && (
     <p className="text-red-500 text-sm mt-1">
       Veuillez sélectionner au moins une catégorie
     </p>
