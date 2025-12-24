@@ -118,7 +118,7 @@ const CompleterProfil = () => {
 
     if (!userId) return;
 
-    const data = new Form();
+    const data = new form();
 
     let finalCategories = [...form.categories];
     if (
@@ -131,6 +131,7 @@ const CompleterProfil = () => {
 
     Object.keys(form).forEach((key) => {
       const value = form[key];
+  
 
       if (
         value === undefined ||
