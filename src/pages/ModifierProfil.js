@@ -25,6 +25,10 @@ const ModifierProfil = () => {
     typeCours: "",
     publicCible: "",
     liens: "",
+    siteWeb:"",
+    instagram:"",
+    linkedin:""
+
   });
   const [userRole, setUserRole] = useState("particulier");
   const navigate = useNavigate();
@@ -67,7 +71,12 @@ const ModifierProfil = () => {
        // pmr: user.pmr || false,
         typeCours: user.typeCours || "",
         publicCible: user.publicCible || "",
-        liens: user.liens || "",
+        liens: user.liens || "", 
+        siteWeb: user.siteWeb || "",
+        instagram: user.instagram || "",
+        linkedin: user.linkedin || "",
+
+
       });
     }).catch(() => {
       alert("Erreur de chargement du profil");
@@ -283,7 +292,7 @@ localStorage.setItem(
 
                 <textarea
                   name="description"
-                                    placeholder="À propos"
+                  placeholder="À propos"
                   value={form.description}
                   onChange={handleChange}
                   rows="3"
