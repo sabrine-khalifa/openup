@@ -404,7 +404,7 @@ const getDomaineStyle = (nomDomaine) => {
         <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non renseigné"}</p>
         <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
         <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
-        <p><strong>Telephone :</strong> {user.telephone || "Non renseigné"}</p>
+        <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
       </div>
     </div>
   )}

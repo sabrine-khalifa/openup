@@ -313,10 +313,10 @@ const getDomaineStyle = (nomDomaine) => {
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non"}</p>
-        <p><strong>Type de cours :</strong> {user.typeCours || "Non"}</p>
-        <p><strong>Public cible :</strong> {user.publicCible || "Non"}</p>
-        <p><strong>PMR :</strong> {user.pmr ? "✅ Oui" : "Non"}</p>
+        <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non renseigné"}</p>
+        <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
+        <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
+        <p><strong>Téléphone :</strong> {user.telephone ? "✅ Oui" : "Non renseigné"}</p>
       </div>
     </div>
   )}
