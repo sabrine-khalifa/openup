@@ -118,7 +118,7 @@ const CompleterProfil = () => {
 
     if (!userId) return;
 
-    const data = new form();
+    const data = new FormData();
 
     let finalCategories = [...form.categories];
     if (
