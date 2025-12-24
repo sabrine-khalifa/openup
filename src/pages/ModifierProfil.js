@@ -21,7 +21,7 @@ const ModifierProfil = () => {
     description: "",
     valeurs: "",
     lieuPrestation: "",
-    pmr: false,
+   // pmr: false,
     typeCours: "",
     publicCible: "",
     liens: "",
@@ -64,7 +64,7 @@ const ModifierProfil = () => {
         description: user.description || "",
         valeurs: user.valeurs || "",
         lieuPrestation: user.lieuPrestation || "",
-        pmr: user.pmr || false,
+       // pmr: user.pmr || false,
         typeCours: user.typeCours || "",
         publicCible: user.publicCible || "",
         liens: user.liens || "",
@@ -311,7 +311,7 @@ localStorage.setItem(
                   <option value="hybride">Hybride</option>
                 </select>
 
-                <label className="flex items-center gap-2">
+             {/*   <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     name="pmr"
@@ -320,7 +320,7 @@ localStorage.setItem(
                   />
                                     Accessible PMR (Personnes à mobilité réduite) 
 
-                </label>
+                </label>   */}  
 
                  <select
                   name="typeCours"

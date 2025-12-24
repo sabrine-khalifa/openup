@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
@@ -12,6 +13,7 @@ import {
   FaClipboardList,
   FaCalendarAlt,
 } from "react-icons/fa";
+
 
 const categoriesDisponibles = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
@@ -329,6 +331,8 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
     ))}
   </div>
 )}
+
+
 
 
               <br />
