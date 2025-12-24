@@ -308,7 +308,7 @@ localStorage.setItem(
                   <option value="">Lieu de prestation</option>
                   <option value="distanciel">Distanciel</option>
                   <option value="presentiel">Présentiel</option>
-                  <option value="hybride">Hybride</option>
+                  <option value="Distanciel & Présentiel">Distanciel & Présentiel</option>
                 </select>
 
              {/*   <label className="flex items-center gap-2">
@@ -332,7 +332,7 @@ localStorage.setItem(
                  
                 <option value="Individuel">Individuelle</option>
                 <option value="Collectif">Collective </option>
-                <option value="Groupe">Individuelle & Collective </option>
+                <option value="Individuelle & Collective ">Individuelle & Collective </option>
                 </select>
 
                 <div>

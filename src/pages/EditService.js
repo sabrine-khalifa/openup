@@ -375,6 +375,8 @@ data.append("materiel", formData.materiel);
               >
                 <option value="En ligne">Distanciel</option>
                 <option value="Présentiel">Présentiel</option>
+                <option value="Distanciel & Présentiel">Distanciel & Présentiel</option>
+
               </select>
             </div>
 
@@ -482,7 +484,7 @@ data.append("materiel", formData.materiel);
                 <option value="">Sélectionnez</option>
                 <option value="Individuel">Individuelle</option>
                 <option value="Collectif">Collective </option>
-                <option value="Groupe">Individuelle & Collective </option>
+                <option value="Individuelle & Collective ">Individuelle & Collective </option>
               </select>
             </div>
 

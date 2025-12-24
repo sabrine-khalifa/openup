@@ -330,6 +330,8 @@ const CompleterProfil = () => {
                   <option value="">Type de prestation</option>
                   <option value="En ligne">Distanciel</option>
                   <option value="Présentiel">Présentiel</option>
+                  <option value="Distanciel & Présentiel">Distanciel & Présentiel</option>
+
                 </select>
              {/*    <label className="flex items-center gap-2">
                   <input
@@ -350,7 +352,7 @@ const CompleterProfil = () => {
 
                   <option value="Individuel">Individuelle</option>
                   <option value="Collectif">Collective </option>
-                  <option value="Groupe">Individuelle & Collective </option>
+                  <option value="Individuelle & Collective ">Individuelle & Collective </option>
                 </select>
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">
