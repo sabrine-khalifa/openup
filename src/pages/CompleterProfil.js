@@ -131,6 +131,9 @@ const CompleterProfil = () => {
 
     Object.keys(form).forEach((key) => {
       const value = form[key];
+        if (key === "domaine") {
+    value = finalDomaine;
+  }
   
 
       if (
