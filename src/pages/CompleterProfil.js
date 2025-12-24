@@ -120,13 +120,13 @@ const CompleterProfil = () => {
 
     const data = new FormData();
 
-    let finalCategories = [...form.categories];
+    let finalDomaine = [...form.domaine];
     if (
-      form.categories.includes("Autres") &&
-      form.autreCategorie?.trim()
+      form.domaine.includes("Autres") &&
+      form.autreDomaine?.trim()
     ) {
-      finalCategories = finalCategories.filter((c) => c !== "Autres"); // retire "Autres"
-      finalCategories.push(form.autreCategorie.trim()); // ajoute la vraie valeur
+      finalDomaine = finalDomaine.filter((c) => c !== "Autres"); // retire "Autres"
+      finalDomaine.push(form.autreDomaine.trim()); // ajoute la vraie valeur
     }
 
     Object.keys(form).forEach((key) => {
@@ -246,17 +246,17 @@ const CompleterProfil = () => {
                       </label>
                     ))}{" "}
                   </div>{" "}
-                    {form.categories.includes("Autres") && (
+                    {form.domaine.includes("Autres") && (
     <div className="mt-2">
       <label className="block text-gray-700 text-sm mb-1">
         Précisez votre catégorie :
       </label>
       <input
         type="text"
-        name="autreCategorie"
-        value={form.autreCategorie || ""}
+        name="autreDomaine"
+        value={form.autreDomaine || ""}
         onChange={(e) =>
-          setForm({ ...form, autreCategorie: e.target.value })
+          setForm({ ...form, autreDomaine: e.target.value })
         }
         placeholder="Entrez votre catégorie"
         className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
@@ -265,7 +265,7 @@ const CompleterProfil = () => {
   )}
 
   {/* Message d'erreur si aucune catégorie sélectionnée */}
-  {form.categories.length === 0 && (
+  {form.domaine.length === 0 && (
     <p className="text-red-500 text-sm mt-1">
       Veuillez sélectionner au moins une catégorie
     </p>
