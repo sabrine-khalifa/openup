@@ -171,7 +171,7 @@ const CompleterProfil = () => {
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Bonjour {form.name} 👋 Complétez votre profil
+            Bonjour {form.prenom}  {form.name}   👋 Complétez votre profil
           </h2>
           <p className="text-gray-600 mb-6">
             Veuillez compléter les informations suivantes pour finaliser votre
@@ -203,7 +203,7 @@ const CompleterProfil = () => {
                 />
               </label>
               {form.photo && (
-                <p className="text-sm text-gray-500">{form.photo.prenom} {form.photo.name}</p>
+                <p className="text-sm text-gray-500">{form.photo.name}</p>
               )}
             </div>
 
