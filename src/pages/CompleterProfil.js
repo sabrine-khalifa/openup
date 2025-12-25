@@ -129,28 +129,19 @@ const CompleterProfil = () => {
       finalDomaine.push(form.autreDomaine.trim()); // ajoute la vraie valeur
     }
 
-    Object.keys(form).forEach((key) => {
-      const value = form[key];
-        if (key === "domaine") {
+Object.keys(form).forEach((key) => {
+  let value = form[key];
+
+  if (key === "domaine") {
     value = finalDomaine;
   }
-  
 
-      if (
-        value === undefined ||
-        value === null ||
-        value === "" ||
-        (Array.isArray(value) && value.length === 0)
-      ) {
-        return; // ❌ n'envoie pas
-      }
-
-      if (Array.isArray(value)) {
-        value.forEach((item) => data.append(key, item));
-      } else {
-        data.append(key, value);
-      }
-    });
+  if (Array.isArray(value)) {
+    data.append(key, JSON.stringify(value));
+  } else if (value !== undefined && value !== null) {
+    data.append(key, value);
+  }
+});
 
     try {
       const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
