@@ -40,7 +40,7 @@ const CompleterProfil = () => {
     typeCours: storedUser?.typeCours || "",
     publicCible: storedUser?.publicCible || "",
     liens: storedUser?.liens || "",
-    siteWeb: storedUser?.siteWeb || "",
+    siteWeb: storedUser?.siteWeb || "", 
     instagram: storedUser?.instagram || "",
     linkedin: storedUser?.linkedin || "",
   });

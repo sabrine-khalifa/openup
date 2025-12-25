@@ -81,6 +81,29 @@ const userId = (userData.id || userData._id || "").trim();
   console.log("LINKS:", user.siteWeb, user.instagram, user.linkedin);
 
 
+  const getEmbedVideoUrl = (url) => {
+  if (!url) return null;
+
+  // YouTube
+  if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    const videoId =
+      url.includes("youtu.be")
+        ? url.split("/").pop()
+        : new URL(url).searchParams.get("v");
+
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // Vimeo
+  if (url.includes("vimeo.com")) {
+    const videoId = url.split("/").pop();
+    return `https://player.vimeo.com/video/${videoId}`;
+  }
+
+  // Sinon → lien direct mp4
+  return url;
+};
+
   const domaines = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
   { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
@@ -307,11 +330,25 @@ const getDomaineStyle = (nomDomaine) => {
     
    {/* Vidéo : afficher uniquement si présente */}
       {user.video && (
-        <video controls className="w-full h-64 object-cover rounded-lg mb-4">
-          <source src={user.video} type="video/mp4" />
-          Votre navigateur ne supporte pas la lecture vidéo.
-        </video>
-      )}
+  <div className="w-full h-64 rounded-lg overflow-hidden mb-4">
+    {user.video.includes("youtube") || user.video.includes("vimeo") ? (
+      <iframe
+        src={getEmbedVideoUrl(user.video)}
+        title="Vidéo de présentation"
+        className="w-full h-full"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    ) : (
+      <video controls className="w-full h-full object-cover">
+        <source src={user.video} type="video/mp4" />
+      </video>
+    )}
+  </div>
+)}
+
+
       {/* Description */}
       {user.description && (
         <p className="text-gray-700 mb-4">{user.description}</p>
