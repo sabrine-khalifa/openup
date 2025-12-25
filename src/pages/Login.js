@@ -1,6 +1,6 @@
 // pages/Login.jsx
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
 
@@ -16,7 +16,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://backend-hqhy.onrender.com/api/auth/login', form);
+      const res = await api.post('/api/auth/login', form);
       localStorage.setItem('token', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
