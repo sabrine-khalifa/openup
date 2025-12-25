@@ -438,17 +438,38 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
               <FaCalendarAlt className="text-green-500 mr-2" />
               Créneau disponible
             </h3>
+            
             <div className="space-y-2">
-              <div className="flex justify-between items-center border p-2 rounded">
-                <div className="flex flex-col">
-                  <span className="text-black">
-                    {new Date(service.dateService).toLocaleDateString("fr-FR")}
-                  </span>
-                  <span className="text-gray-500">{service.heure}</span>
-                </div>
-               {/* <button className="text-green-600 hover:underline">Choisir</button> */} 
-              </div>
-            </div>
+  {service.dateAConvenir ? (
+    <div className="flex items-center gap-2 border p-3 rounded bg-gray-50">
+      <FaCalendarAlt className="text-green-600" />
+      <span className="font-medium text-gray-800">
+        Date et heure de rdv à convenir ensemble
+      </span>
+    </div>
+  ) : Array.isArray(service.dateService) && service.dateService.length > 0 ? (
+    service.dateService.map((date, index) => (
+      <div
+        key={index}
+        className="flex justify-between items-center border p-2 rounded"
+      >
+        <div className="flex flex-col">
+          <span className="text-black">
+            {new Date(date).toLocaleDateString("fr-FR")}
+          </span>
+          <span className="text-gray-500">
+            {service.heure || "Heure à préciser"}
+          </span>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-gray-500 italic">
+      Aucun créneau renseigné
+    </p>
+  )}
+</div>
+
           </div>
         </div>
       </div>

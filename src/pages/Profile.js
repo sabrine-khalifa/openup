@@ -143,8 +143,8 @@ const userId = (userData.id || userData._id || "").trim();
 const getDomaineStyle = (nomDomaine) => {
   const domaineTrouve = domaines.find(d => d.nom === nomDomaine);
 
-  return {
-    backgroundColor: domaineTrouve?.couleur || "#16A14A",
+    return {
+    backgroundColor: domaineTrouve ? domaineTrouve.couleur : "#6B7280",
     color: "#fff",
   };
 };
