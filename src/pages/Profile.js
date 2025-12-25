@@ -319,7 +319,6 @@ const getDomaineStyle = (nomDomaine) => {
 
        {/* Téléphone et nationalité */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        {user.telephone && <p><strong>Téléphone :</strong> {user.telephone}</p>}
         {user.nationalites && <p><strong>Nationalité :</strong> {user.nationalites}</p>}
       </div>
   </div>

@@ -35,7 +35,7 @@ const CompleterProfil = () => {
     video: storedUser?.video || "",
     description: storedUser?.description || "",
     valeurs: storedUser?.valeurs || "",
-    lieuPrestation: storedUser?.lieuPrestation || "",
+    lieuPrestation: storedUser?.lieuPrestation || "",    
    // pmr: storedUser?.pmr || false,
     typeCours: storedUser?.typeCours || "",
     publicCible: storedUser?.publicCible || "",
