@@ -457,3 +457,5 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 };
 
 export default ServiceDetail;
+
+

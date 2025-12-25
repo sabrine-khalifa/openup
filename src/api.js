@@ -41,7 +41,9 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // Si 401 ET pas déjà relancé
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if ( error.response?.status === 401 &&
+  error.response?.data?.erreur === "Token expiré" &&
+  !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
