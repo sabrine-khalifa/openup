@@ -140,14 +140,38 @@ const userId = (userData.id || userData._id || "").trim();
   { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
   { nom: "Autres", couleur: "#95a5a6" }
 ];
-const getDomaineStyle = (nomDomaine) => {
-  const domaineTrouve = domaines.find(d => d.nom === nomDomaine);
+// Toujours convertir en tableau
+const toArray = (value) => {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return [];
+    }
+  }
+  return [];
+};
 
-    return {
-    backgroundColor: domaineTrouve ? domaineTrouve.couleur : "#6B7280",
+// Normalisation pour matcher les couleurs
+const normalize = (str = "") =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+
+const getDomaineStyle = (nomDomaine) => {
+  const domaineTrouve = domaines.find(
+    d => normalize(d.nom) === normalize(nomDomaine)
+  );
+
+  return {
+    backgroundColor: domaineTrouve ? domaineTrouve.couleur : "#6B7280", // gris si "Autres"
     color: "#fff",
   };
 };
+
 
 
   const getAvatar = () => {
@@ -237,10 +261,7 @@ const getDomaineStyle = (nomDomaine) => {
             {user.metier && <p className="text-lg text-gray-600">{user.metier}</p>}
             
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">
-              
-
-    {Array.isArray(user.domaine) &&
-  user.domaine.map((domaine, index) => (
+  {toArray(user.domaine).map((domaine, index) => (
     <span
       key={index}
       style={getDomaineStyle(domaine)}
@@ -249,9 +270,8 @@ const getDomaineStyle = (nomDomaine) => {
       {domaine}
     </span>
   ))}
+</div>
 
-
-            </div>
 
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
               {user.role === "createur" && (
