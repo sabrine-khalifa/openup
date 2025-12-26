@@ -241,8 +241,7 @@ const categories = [
 />
                     <div>
                       <span className="font-medium text-sm">
-                      {service.createur.name} {service.createur.prenom}
-
+                       {service.createur.prenom} {service.createur.name} 
                       </span>
 
                       {/* ✅ Note (si existe) */}

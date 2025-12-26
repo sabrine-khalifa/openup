@@ -30,7 +30,12 @@ const CompleterProfil = () => {
 
     metier: storedUser?.metier || "",
     domaine: Array.isArray(storedUser?.domaine) ? storedUser.domaine : [],
-    langues: Array.isArray(storedUser?.langues) ? storedUser.langues : [],
+    langues: Array.isArray(storedUser?.langues)
+  ? storedUser.langues
+  : storedUser?.langues
+  ? JSON.parse(storedUser.langues)
+  : [],
+
     nationalites: storedUser?.nationalites || "",
     video: storedUser?.video || "",
     description: storedUser?.description || "",

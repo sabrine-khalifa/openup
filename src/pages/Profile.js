@@ -256,7 +256,7 @@ const getDomaineStyle = (nomDomaine) => {
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
               {user.role === "createur" && (
                 <>
-                  <div className="flex items-center gap-1">🌍 <span>{user.langues?.join(", ") || "Non renseigné"}</span></div>
+                  <div className="flex items-center gap-1">🌍 <span>{Array.isArray(user.langues) ? user.langues.join(", ") : user.langues}</span></div>
                   <div className="flex items-center gap-1">📍 <span>{user.lieuPrestation || "Non renseigné"}</span></div>
                 </>
               )}
@@ -437,7 +437,7 @@ const getDomaineStyle = (nomDomaine) => {
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        <p><strong>Langues :</strong> {user.langues?.join(", ") || "Non renseigné"}</p>
+        <p><strong>Langues :</strong> {Array.isArray(user.langues) ? user.langues.join(", ") : user.langues}</p>
         <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
         <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
         <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
