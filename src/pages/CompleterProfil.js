@@ -29,12 +29,9 @@ const CompleterProfil = () => {
     // Champs créateur
 
     metier: storedUser?.metier || "",
-    domaine: Array.isArray(storedUser?.domaine) ? storedUser.domaine : [],
-    langues: Array.isArray(storedUser?.langues)
-  ? storedUser.langues
-  : storedUser?.langues
-  ? JSON.parse(storedUser.langues)
-  : [],
+    domaine: toArray(storedUser?.domaine),
+  langues: toArray(storedUser?.langues),
+  
 
     nationalites: storedUser?.nationalites || "",
     video: storedUser?.video || "",
@@ -49,10 +46,9 @@ const CompleterProfil = () => {
     instagram: storedUser?.instagram || "",
     linkedin: storedUser?.linkedin || "",
   });
-  const toArray = (value) => {
+const toArray = (value) => {
   if (!value) return [];
 
-  // si c'est déjà un tableau
   if (Array.isArray(value)) {
     return value.flatMap(v => {
       if (typeof v === "string") {
@@ -67,7 +63,6 @@ const CompleterProfil = () => {
     });
   }
 
-  // si c'est une string JSON
   if (typeof value === "string") {
     try {
       const parsed = JSON.parse(value);
@@ -125,8 +120,7 @@ const CompleterProfil = () => {
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
-      langues: toArray(user.langues),
-  domaine: toArray(user.domaine),
+    
     });
   };
   const handleDomaineChange = (value) => {
