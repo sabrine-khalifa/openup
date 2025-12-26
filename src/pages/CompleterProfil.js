@@ -9,6 +9,35 @@ const CompleterProfil = () => {
   const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
+  const toArray = (value) => {
+  if (!value) return [];
+
+  if (Array.isArray(value)) {
+    return value.flatMap(v => {
+      if (typeof v === "string") {
+        try {
+          const parsed = JSON.parse(v);
+          return Array.isArray(parsed) ? parsed : [v];
+        } catch {
+          return [v];
+        }
+      }
+      return v;
+    });
+  }
+
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [value];
+    } catch {
+      return [value];
+    }
+  }
+
+  return [];
+};
+
   // Vérifier connexion
   useEffect(() => {
     if (!storedUser) {
@@ -46,34 +75,6 @@ const CompleterProfil = () => {
     instagram: storedUser?.instagram || "",
     linkedin: storedUser?.linkedin || "",
   });
-const toArray = (value) => {
-  if (!value) return [];
-
-  if (Array.isArray(value)) {
-    return value.flatMap(v => {
-      if (typeof v === "string") {
-        try {
-          const parsed = JSON.parse(v);
-          return Array.isArray(parsed) ? parsed : [v];
-        } catch {
-          return [v];
-        }
-      }
-      return v;
-    });
-  }
-
-  if (typeof value === "string") {
-    try {
-      const parsed = JSON.parse(value);
-      return Array.isArray(parsed) ? parsed : [value];
-    } catch {
-      return [value];
-    }
-  }
-
-  return [];
-};
 
 
   const domaines = [
@@ -169,10 +170,11 @@ Object.keys(form).forEach((key) => {
   }
 
   if (Array.isArray(value)) {
-    data.append(key, JSON.stringify(value));
-  } else if (value !== undefined && value !== null) {
-    data.append(key, value);
-  }
+  value.forEach(v => data.append(key, v));
+} else if (value !== undefined && value !== null) {
+  data.append(key, value);
+}
+
 });
 
     try {
