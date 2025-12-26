@@ -276,19 +276,30 @@ const getDomaineStyle = (nomDomaine) => {
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 flex flex-col md:flex-row items-center gap-8">
           <img src={getAvatar()} alt={user.name} className="w-32 h-32 rounded-full object-cover border-4 border-[#16A14A]" />
           
-          <div className="text-center md:text-left flex-1">
+        {/* <div className="text-center md:text-left flex-1"> */} 
+        <div className="text-center md:text-left flex-1 min-w-0">
+
             <h1 className="text-3xl font-bold text-gray-800">{user.prenom} {user.name} </h1>
             {user.metier && <p className="text-lg text-gray-600">{user.metier}</p>}
             
             <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">
   {toArray(user.domaine).map((domaine, index) => (
     <span
-      key={index}
-      style={getDomaineStyle(domaine)}
-      className="px-3 py-1 rounded-full text-sm font-medium"
-    >
-      {domaine}
-    </span>
+  key={index}
+  style={getDomaineStyle(domaine)}
+  className="
+    px-3 py-1
+    rounded-full
+    text-sm
+    font-medium
+    break-words
+    max-w-full
+    whitespace-normal
+  "
+>
+  {domaine}
+</span>
+
   ))}
 </div>
 
