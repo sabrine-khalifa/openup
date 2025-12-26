@@ -144,7 +144,6 @@ const userId = (userData.id || userData._id || "").trim();
 const toArray = (value) => {
   if (!value) return [];
 
-  // si c'est déjà un tableau
   if (Array.isArray(value)) {
     return value.flatMap(v => {
       if (typeof v === "string") {
@@ -159,7 +158,6 @@ const toArray = (value) => {
     });
   }
 
-  // si c'est une string JSON
   if (typeof value === "string") {
     try {
       const parsed = JSON.parse(value);
@@ -221,6 +219,8 @@ const getDomaineStyle = (nomDomaine) => {
     const { name, value, type, checked } = e.target;
     setForm({
       ...form,
+      langues: toArray(user.langues),
+  domaine: toArray(user.domaine),
       [name]: type === 'checkbox' ? checked : value
     });
   };
