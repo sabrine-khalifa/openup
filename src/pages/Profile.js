@@ -142,16 +142,36 @@ const userId = (userData.id || userData._id || "").trim();
 ];
 // Toujours convertir en tableau
 const toArray = (value) => {
-  if (Array.isArray(value)) return value;
+  if (!value) return [];
+
+  // si c'est déjà un tableau
+  if (Array.isArray(value)) {
+    return value.flatMap(v => {
+      if (typeof v === "string") {
+        try {
+          const parsed = JSON.parse(v);
+          return Array.isArray(parsed) ? parsed : [v];
+        } catch {
+          return [v];
+        }
+      }
+      return v;
+    });
+  }
+
+  // si c'est une string JSON
   if (typeof value === "string") {
     try {
-      return JSON.parse(value);
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [value];
     } catch {
-      return [];
+      return [value];
     }
   }
+
   return [];
 };
+
 
 // Normalisation pour matcher les couleurs
 const normalize = (str = "") =>
@@ -276,7 +296,9 @@ const getDomaineStyle = (nomDomaine) => {
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
               {user.role === "createur" && (
                 <>
-                  <div className="flex items-center gap-1">🌍 <span>{Array.isArray(user.langues) ? user.langues.join(", ") : user.langues}</span></div>
+                  <div className="flex items-center gap-1">🌍 <span> {toArray(user.langues).length > 0
+    ? toArray(user.langues).join(", ")
+    : "Non renseigné"}</span></div>
                   <div className="flex items-center gap-1">📍 <span>{user.lieuPrestation || "Non renseigné"}</span></div>
                 </>
               )}
@@ -457,7 +479,9 @@ const getDomaineStyle = (nomDomaine) => {
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        <p><strong>Langues :</strong> {Array.isArray(user.langues) ? user.langues.join(", ") : user.langues}</p>
+        <p><strong>Langues :</strong>  {toArray(user.langues).length > 0
+    ? toArray(user.langues).join(", ")
+    : "Non renseigné"}</p>
         <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
         <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
         <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
