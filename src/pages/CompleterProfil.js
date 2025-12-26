@@ -49,6 +49,37 @@ const CompleterProfil = () => {
     instagram: storedUser?.instagram || "",
     linkedin: storedUser?.linkedin || "",
   });
+  const toArray = (value) => {
+  if (!value) return [];
+
+  // si c'est déjà un tableau
+  if (Array.isArray(value)) {
+    return value.flatMap(v => {
+      if (typeof v === "string") {
+        try {
+          const parsed = JSON.parse(v);
+          return Array.isArray(parsed) ? parsed : [v];
+        } catch {
+          return [v];
+        }
+      }
+      return v;
+    });
+  }
+
+  // si c'est une string JSON
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [value];
+    } catch {
+      return [value];
+    }
+  }
+
+  return [];
+};
+
 
   const domaines = [
     "Animaux & monde vivant",
@@ -94,6 +125,8 @@ const CompleterProfil = () => {
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
+      langues: toArray(user.langues),
+  domaine: toArray(user.domaine),
     });
   };
   const handleDomaineChange = (value) => {
