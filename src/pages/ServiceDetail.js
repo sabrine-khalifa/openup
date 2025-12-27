@@ -113,7 +113,11 @@ useEffect(() => {
       try {
         // Charger le service
         const resService = await api.get(`/api/services/${id}`);
-        setService(resService.data);
+        setService(prev => ({
+  ...res.data.service,
+  createur: prev.createur, // on garde le créateur
+}));
+
 
         // Charger les avis du service ✅
         const resAvis = await api.get(`/api/avis/service/${id}`);
@@ -162,31 +166,37 @@ useEffect(() => {
 };
 
   // Réserver un service
-  const handleReservation = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setMessage("⚠️ Vous devez être connecté pour réserver.");
-        setShowMsg(true);
-        return;
-      }
+const handleReservation = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-      const res = await api.post(
-        `/api/services/${service._id}/reserver`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const res = await api.post(
+      `/api/services/${service._id}/reserver`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-      setMessage("Réservation confirmée !");
-      setShowMsg(true);
-      setTimeout(() => setShowMsg(false), 3000);
-      setService(res.data.service);
-    } catch (err) {
-      setMessage(err.response?.data?.msg || "Erreur lors de la réservation");
-      setShowMsg(true);
-      setTimeout(() => setShowMsg(false), 3000);
-    }
-  };
+    // ✅ METTRE À JOUR LE LOCALSTORAGE
+    const user = JSON.parse(localStorage.getItem("user"));
+    const updatedUser = {
+      ...user,
+      credits: res.data.credits,
+    };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    // 🔁 Forcer le Header à se recharger
+    window.dispatchEvent(new Event("storage"));
+
+    setService(res.data.service);
+    setMessage("Réservation confirmée !");
+    setShowMsg(true);
+  } catch (err) {
+    setMessage(err.response?.data?.msg || "Erreur lors de la réservation");
+    setShowMsg(true);
+  }
+};
+
 
   // Calcul de la note moyenne du service
 // ✅ Filtrer les avis qui ont une note

@@ -7,13 +7,25 @@ import profilImg from '../images/profil.png';
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const credits = userData?.credits || 0;
+  const [credits, setCredits] = useState(0);
   const token = localStorage.getItem("token");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const dropdownRef = useRef(null); // Ref pour le dropdown
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+  useEffect(() => {
+  const updateCredits = () => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    setCredits(userData?.credits || 0);
+  };
+
+  updateCredits();
+
+  window.addEventListener("storage", updateCredits);
+  return () => window.removeEventListener("storage", updateCredits);
+}, []);
 
   const handleLogout = () => {
     localStorage.clear();
