@@ -113,7 +113,7 @@ useEffect(() => {
       try {
         // Charger le service
         const resService = await api.get(`/api/services/${id}`);
-     
+        setService(resService.data);
 
 
         // Charger les avis du service ✅
