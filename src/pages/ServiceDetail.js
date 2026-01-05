@@ -113,10 +113,7 @@ useEffect(() => {
       try {
         // Charger le service
         const resService = await api.get(`/api/services/${id}`);
-        setService(prev => ({
-  ...res.data.service,
-  createur: prev.createur, // on garde le créateur
-}));
+     
 
 
         // Charger les avis du service ✅
@@ -186,7 +183,11 @@ const handleReservation = async () => {
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
     // 🔁 Forcer le Header à se recharger
-    window.dispatchEvent(new Event("storage"));
+window.dispatchEvent(
+  new CustomEvent("creditsUpdated", {
+    detail: res.data.credits,
+  })
+);
 
     setService(res.data.service);
     setMessage("Réservation confirmée !");
