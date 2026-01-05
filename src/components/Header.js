@@ -15,17 +15,23 @@ const Header = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  useEffect(() => {
-  const updateCredits = () => {
+ useEffect(() => {
+  const updateCredits = (e) => {
     const userData = JSON.parse(localStorage.getItem("user"));
     setCredits(userData?.credits || 0);
   };
 
+  // initial
   updateCredits();
 
-  window.addEventListener("storage", updateCredits);
-  return () => window.removeEventListener("storage", updateCredits);
+  // 🔥 écouter l’événement custom
+  window.addEventListener("creditsUpdated", updateCredits);
+
+  return () => {
+    window.removeEventListener("creditsUpdated", updateCredits);
+  };
 }, []);
+
 
   const handleLogout = () => {
     localStorage.clear();
