@@ -175,19 +175,22 @@ const handleReservation = async () => {
     );
 
     // ✅ METTRE À JOUR LE LOCALSTORAGE
-    const user = JSON.parse(localStorage.getItem("user"));
-    const updatedUser = {
-      ...user,
-      credits: res.data.credits,
-    };
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+  const updatedUser = res.data.user;
 
-    // 🔁 Forcer le Header à se recharger
+// 🔐 Sécurité
+if (!updatedUser || typeof updatedUser.credits !== "number") {
+  console.error("Utilisateur invalide retourné par le backend", res.data);
+  return;
+}
+
+localStorage.setItem("user", JSON.stringify(updatedUser));
+
 window.dispatchEvent(
   new CustomEvent("creditsUpdated", {
-    detail: res.data.credits,
+    detail: updatedUser.credits,
   })
 );
+
 
     setService(res.data.service);
     setMessage("Réservation confirmée !");
