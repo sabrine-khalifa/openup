@@ -376,148 +376,48 @@ const getDomaineStyle = (nomDomaine) => {
 
         {/* Contenu */}
         {activeTab === "À propos" && (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-  
-  {/* Bloc gauche : service OU message */}
-  <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-    
-   {/* Vidéo : afficher uniquement si présente */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    {/* Bloc gauche : vidéo et description */}
+    <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
       {user.video && (
-  <div className="w-full h-64 rounded-lg overflow-hidden mb-4">
-    {user.video.includes("youtube") || user.video.includes("vimeo") ? (
-      <iframe
-        src={getEmbedVideoUrl(user.video)}
-        title="Vidéo de présentation"
-        className="w-full h-full"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
-    ) : (
-      <video controls className="w-full h-full object-cover">
-        <source src={user.video} type="video/mp4" />
-      </video>
-    )}
-  </div>
-)}
+        <div className="w-full h-64 rounded-lg overflow-hidden mb-4">
+          {user.video.includes("youtube") || user.video.includes("vimeo") ? (
+            <iframe
+              src={getEmbedVideoUrl(user.video)}
+              title="Vidéo de présentation"
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video controls className="w-full h-full object-cover">
+              <source src={user.video} type="video/mp4" />
+            </video>
+          )}
+        </div>
+      )}
 
-
-      {/* Description */}
       {user.description && (
         <p className="text-gray-700 mb-4">{user.description}</p>
       )}
+    </div>
 
-       {/* Téléphone et nationalité */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        {user.nationalites && <p><strong>Nationalité :</strong> {user.nationalites}</p>}
+    {/* Bloc droite : infos personnelles pour particulier */}
+    {user.role === "particulier" && (
+      <div className="bg-white p-6 rounded-lg shadow h-fit">
+        <h3 className="text-xl font-semibold mb-4">À propos</h3>
+        <div className="grid grid-cols-1 gap-4 text-gray-700">
+          <p><strong>Email :</strong> {user.email || "Non renseigné"}</p>
+          <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
+        </div>
       </div>
-  </div>
-
-  {/* Bloc droite : LIENS (toujours au même endroit) */}
-  {user.role === "createur" && (
-
-  <div className="bg-white p-6 rounded-lg shadow h-fit">
-    <h3 className="text-xl font-semibold mb-4">Liens</h3>
-
-    {(user.siteWeb || user.instagram || user.linkedin) ? (
-      <ul className="space-y-2 text-gray-800">
-        {user.siteWeb && (
-          <li>
-           <strong>Site web :</strong>{" "}
-            <a
-              href={user.siteWeb.startsWith("http") ? user.siteWeb : `https://${user.siteWeb}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline break-all"
-            >
-              {user.siteWeb}
-            </a>
-          </li>
-        )}
-
-        {user.instagram && (
-          <li>
-         <strong>Instagram :</strong>{" "}
-            <a
-              href={user.instagram.startsWith("http") ? user.instagram : `https://${user.instagram}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline break-all"
-            >
-
-{user.instagram}      
-      </a>
-          </li>
-        )}
-
-        {user.linkedin && (
-          <li>
-
-     <strong>LinkedIn :</strong>{" "}
-            <a
-              href={user.linkedin.startsWith("http") ? user.linkedin : `https://${user.linkedin}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline break-all"
-            >
-              {user.linkedin}
-            </a>
-          </li>
-        )}
-      </ul>
-    ) : (
-      <p className="text-gray-500 italic">
-        Aucun lien renseigné.
-      </p>
     )}
-  </div>
 
+  </div>
 )}
 
-
-           <div className="md:col-span-3 flex flex-col space-y-4">
-
-  {user.valeurs && (
-    <div className="bg-white p-6 rounded-xl shadow">
-      <h3 className="text-xl font-semibold mb-3">
-        Mes valeurs profondes
-      </h3>
-      <p className="text-gray-700">{user.valeurs}</p>
-    </div>
-  )}
-
-  {user.role === "createur" && (
-    <div className="bg-white p-6 rounded-xl shadow">
-      <h3 className="text-xl font-semibold mb-3">
-        Informations pratiques
-      </h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-        <p><strong>Langues :</strong>  {toArray(user.langues).length > 0
-    ? toArray(user.langues).join(", ")
-    : "Non renseigné"}</p>
-        <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
-        <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
-        <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
-      </div>
-    </div>
-  )}
-
-</div>
-
-              {user.role === "particulier" && (
-
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-3">À propos</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-                <p><strong>email :</strong> {user.email }</p>
-                <p><strong> telephone:</strong> {user.telephone || "Non"}</p>
-              
-              </div>
-            </div>
-            )}
-          </div>
-        )}
          {activeTab === "services" && (
           <div>
             <h2 className="text-xl font-semibold mb-4">Vos services</h2>
