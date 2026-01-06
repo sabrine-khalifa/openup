@@ -364,13 +364,14 @@ const getDomaineStyle = (nomDomaine) => {
             Portefeuille
           </button>
 
-          <button
-            onClick={() => { setActiveTab("avis"); setEditMode(false); }}
-            className={`pb-2 font-medium transition ${activeTab === "avis" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : "text-gray-600 hover:text-[#16A14A]"}`
-          } >
-            Avis
-          </button>
-
+          {user.role === "createur" && (
+    <button
+      onClick={() => { setActiveTab("avis"); setEditMode(false); }}
+      className={`pb-2 font-medium transition ${activeTab === "avis" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : "text-gray-600 hover:text-[#16A14A]"}`}
+    >
+      Avis
+    </button>
+  )}
            
         </div>
 
@@ -414,6 +415,8 @@ const getDomaineStyle = (nomDomaine) => {
   </div>
 
   {/* Bloc droite : LIENS (toujours au même endroit) */}
+  {user.role === "createur" && (
+
   <div className="bg-white p-6 rounded-lg shadow h-fit">
     <h3 className="text-xl font-semibold mb-4">Liens</h3>
 
@@ -470,6 +473,7 @@ const getDomaineStyle = (nomDomaine) => {
     )}
   </div>
 
+)}
 
 
            <div className="md:col-span-3 flex flex-col space-y-4">
