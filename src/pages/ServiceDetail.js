@@ -216,7 +216,6 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Header />
 
       {showMsg && (
         <div
