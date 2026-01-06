@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
-import DatePicker from "react-multi-date-picker";
+import DatePicker,  { DateObject }from "react-multi-date-picker";
 import { useNavigate, useParams } from "react-router-dom";
 
 const categoriesDisponibles = [
@@ -90,8 +90,9 @@ const EditService = () => {
   nombrePlaces: service.nombrePlaces || "",
   creditsProposes: service.creditsProposes?.toString() || "",
   dateService: Array.isArray(service.dateService)
-    ? service.dateService.map(d => d.split("T")[0])
-    : [],
+  ? service.dateService.map(d => new DateObject({ date: d.split("T")[0], format: "YYYY-MM-DD" }))
+  : [],
+
   heure: service.heure || "",
   duree: service.duree || "",
   typeCours: service.typeCours || "",
@@ -417,18 +418,14 @@ data.append("materiel", formData.materiel);
  <DatePicker
   multiple
   disabled={formData.dateAConvenir}
-  value={formData.dateService} // ← garde les chaînes "YYYY-MM-DD"
+  value={formData.dateService.map(d => new DateObject({ date: d, format: "YYYY-MM-DD" }))}
   onChange={(dates) => {
-    // dates est un tableau d'objets Date (de la lib react-multi-date-picker)
-    const formatted = dates.map(d => d.format("YYYY-MM-DD")); // ✅ OK ici car d est un objet de la lib
-    setFormData({
-      ...formData,
-      dateService: formatted,
-    });
+    const formatted = dates.map(d => d.format("YYYY-MM-DD"));
+    setFormData({ ...formData, dateService: formatted });
   }}
   format="DD/MM/YYYY"
-  inputClass="w-full border border-gray-300 px-4 py-3 rounded-lg"
 />
+
 
             </div>
 
