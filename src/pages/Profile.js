@@ -234,48 +234,31 @@ const getDomaineStyle = (nomDomaine) => {
     }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const data = new FormData();
-
-  Object.keys(form).forEach((key) => {
-    const value = form[key];
-
-    // ❌ ne pas envoyer les champs vides
-    if (value === "" || value === null || value === undefined) return;
-
-    // ❌ ne pas envoyer les champs créateur si particulier
-    if (user.role === "particulier" && ["lieuPrestation", "typeCours"].includes(key)) {
-      return;
-    }
-
-    if (Array.isArray(value)) {
-      value.forEach(v => data.append(key, v));
-    } else {
-      data.append(key, value);
-    }
-  });
-
-  try {
-    await axios.put(
-      `https://backend-hqhy.onrender.com/api/users/${user.id}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    Object.keys(form).forEach(key => {
+      if (Array.isArray(form[key])) {
+        form[key].forEach(item => data.append(key, item));
+      } else {
+        data.append(key, form[key] ?? '');
       }
-    );
+    });
 
-    setUser(prev => ({ ...prev, ...form }));
-    setEditMode(false);
-    alert("Profil mis à jour avec succès !");
-  } catch (err) {
-    console.error(err);
-    alert(err.response?.data?.msg || "Erreur lors de la mise à jour");
-  }
-};
+    try {
+      await axios.put(`/api/users/${user.id}`, data, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      setUser(prev => ({ ...prev, ...form }));
+      setEditMode(false);
+      alert('Profil mis à jour avec succès !');
+    } catch (err) {
+      alert(err.response?.data?.msg || 'Erreur lors de la mise à jour');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">

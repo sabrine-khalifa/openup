@@ -162,20 +162,49 @@ const CompleterProfil = () => {
       finalDomaine.push(form.autreDomaine.trim()); // ajoute la vraie valeur
     }
 
-Object.keys(form).forEach((key) => {
+
+    Object.keys(form).forEach((key) => {
   let value = form[key];
 
+  // ❌ ne pas envoyer champs créateur pour particulier
+  if (
+    form.role === "particulier" &&
+    [
+      "metier",
+      "domaine",
+      "langues",
+      "nationalites",
+      "video",
+      "description",
+      "valeurs",
+      "lieuPrestation",
+      "typeCours",
+      "publicCible",
+      "liens",
+      "siteWeb",
+      "instagram",
+      "linkedin",
+      "autreDomaine",
+    ].includes(key)
+  ) {
+    return;
+  }
+
+  // domaine final
   if (key === "domaine") {
     value = finalDomaine;
   }
 
-  if (Array.isArray(value)) {
-  value.forEach(v => data.append(key, v));
-} else if (value !== undefined && value !== null) {
-  data.append(key, value);
-}
+  // ❌ ne pas envoyer vide
+  if (value === "" || value === null || value === undefined) return;
 
+  if (Array.isArray(value)) {
+    value.forEach((v) => data.append(key, v));
+  } else {
+    data.append(key, value);
+  }
 });
+
 
     try {
       const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
