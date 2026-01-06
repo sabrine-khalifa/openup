@@ -7,7 +7,11 @@ import profilImg from '../images/profil.png';
 
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const [credits, setCredits] = useState(0);
+  const [credits, setCredits] = useState(() => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return user?.credits ?? 0;
+});
+
   const token = localStorage.getItem("token");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -15,29 +19,23 @@ const Header = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
- useEffect(() => {
- const updateCredits = (e) => {
-  // priorité à l’événement
-  if (e?.detail !== undefined) {
-    setCredits(e.detail);
-    return;
-  }
+useEffect(() => {
+  const updateCredits = (e) => {
+    if (e?.detail !== undefined) {
+      setCredits(e.detail);
+    } else {
+      const user = JSON.parse(localStorage.getItem("user"));
+      setCredits(user?.credits ?? 0);
+    }
+  };
 
-  // fallback localStorage
-  const userData = JSON.parse(localStorage.getItem("user"));
-  setCredits(userData?.credits || 0);
-};
-
-  // initial
-  updateCredits();
-
-  // 🔥 écouter l’événement custom
   window.addEventListener("creditsUpdated", updateCredits);
 
   return () => {
     window.removeEventListener("creditsUpdated", updateCredits);
   };
 }, []);
+
 
 
   const handleLogout = () => {
