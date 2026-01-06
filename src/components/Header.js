@@ -16,10 +16,17 @@ const Header = () => {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
  useEffect(() => {
-  const updateCredits = (e) => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    setCredits(userData?.credits || 0);
-  };
+ const updateCredits = (e) => {
+  // priorité à l’événement
+  if (e?.detail !== undefined) {
+    setCredits(e.detail);
+    return;
+  }
+
+  // fallback localStorage
+  const userData = JSON.parse(localStorage.getItem("user"));
+  setCredits(userData?.credits || 0);
+};
 
   // initial
   updateCredits();
