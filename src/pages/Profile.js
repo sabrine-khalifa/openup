@@ -332,14 +332,13 @@ const getDomaineStyle = (nomDomaine) => {
 
         {/* Onglets */}
         <div className="flex flex-wrap gap-6 border-b mb-6">
-          {user.role === "createur" && (
             <button
               onClick={() => { setActiveTab("À propos"); setEditMode(false); }}
               className={`pb-2 font-medium transition ${activeTab === "À propos" ? "border-b-2 border-[#16A14A] text-[#16A14A]" : "text-gray-600 hover:text-[#16A14A]"}`}
             >
               À propos
             </button>
-          )}
+          
 
           {user.role === "createur" && (
             <button
