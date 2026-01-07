@@ -147,62 +147,79 @@ const CompleterProfil = () => {
     }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!userId) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const data = new FormData();
+    if (!userId) return;
 
-  let finalDomaine = [...form.domaine];
-  if (form.domaine.includes("Autres") && form.autreDomaine?.trim()) {
-    finalDomaine = finalDomaine.filter((c) => c !== "Autres");
-    finalDomaine.push(form.autreDomaine.trim());
-  }
+    const data = new FormData();
 
-  Object.keys(form).forEach((key) => {
-    let value = form[key];
-
+    let finalDomaine = [...form.domaine];
     if (
-      form.role === "particulier" &&
-      [
-        "metier","domaine","langues","nationalites","video",
-        "description","valeurs","lieuPrestation","typeCours",
-        "publicCible","liens","siteWeb","instagram","linkedin","autreDomaine",
-      ].includes(key)
-    ) return;
-
-    if (key === "domaine") value = finalDomaine;
-
-    if (value === "" || value === null || value === undefined) return;
-
-    if (Array.isArray(value)) {
-      value.forEach((v) => data.append(key, v));
-    } else {
-      data.append(key, value);
-    }
-  });
-
-  try {
-    // Tenter la requête
-    const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
-
-    if (res?.data?.user) {
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      form.domaine.includes("Autres") &&
+      form.autreDomaine?.trim()
+    ) {
+      finalDomaine = finalDomaine.filter((c) => c !== "Autres"); // retire "Autres"
+      finalDomaine.push(form.autreDomaine.trim()); // ajoute la vraie valeur
     }
 
-    navigate("/profile", { replace: true });
-  } catch (err) {
-    // 💡 Gestion plus complète de l'erreur
-    if (err.response?.status === 401) {
-      alert("Session expirée, veuillez vous reconnecter.");
-      localStorage.clear();
-      navigate("/login");
-    } else {
-      console.error(err);
-      alert("Une erreur est survenue. Veuillez réessayer.");
-    }
+
+    Object.keys(form).forEach((key) => {
+  let value = form[key];
+
+  // ❌ ne pas envoyer champs créateur pour particulier
+  if (
+    form.role === "particulier" &&
+    [
+      "metier",
+      "domaine",
+      "langues",
+      "nationalites",
+      "video",
+      "description",
+      "valeurs",
+      "lieuPrestation",
+      "typeCours",
+      "publicCible",
+      "liens",
+      "siteWeb",
+      "instagram",
+      "linkedin",
+      "autreDomaine",
+    ].includes(key)
+  ) {
+    return;
   }
-};
+
+  // domaine final
+  if (key === "domaine") {
+    value = finalDomaine;
+  }
+
+  // ❌ ne pas envoyer vide
+  if (value === "" || value === null || value === undefined) return;
+
+  if (Array.isArray(value)) {
+    value.forEach((v) => data.append(key, v));
+  } else {
+    data.append(key, value);
+  }
+});
+
+
+    try {
+      const res = await api.put(`/api/auth/complete-profile/${userId}`, data);
+
+      // ✅ stocker UNIQUEMENT la réponse backend
+      if (res?.data?.user) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
+
+      navigate("/profile", { replace: true });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">

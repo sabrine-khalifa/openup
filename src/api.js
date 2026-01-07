@@ -40,23 +40,19 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // ⛔ Ne jamais intercepter le refreshToken
-    if (originalRequest.url.includes("/refreshToken")) {
-      return Promise.reject(error);
-    }
-
+    // Si 401 ET pas déjà relancé
     if (
-      error.response?.status === 401 &&
-      error.response?.data?.erreur === "Token expiré" &&
-      !originalRequest._retry
-    ) {
+  error.response?.status === 401 &&
+  !originalRequest._retry
+) {
       originalRequest._retry = true;
 
       try {
         const newToken = await refreshAccessToken();
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return api(originalRequest);
+        return api(originalRequest); // Réessaie la requête
       } catch (refreshError) {
+        // Si le refreshToken échoue → déconnexion
         localStorage.clear();
         window.location.href = "/login";
         return Promise.reject(refreshError);
