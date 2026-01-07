@@ -12,7 +12,12 @@ const refreshAccessToken = async () => {
 
   const newToken = response.data.accessToken;
   localStorage.setItem("token", newToken);
-  return newToken;
+
+// 🔥 METTRE À JOUR AXIOS GLOBAL
+api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
+
+return newToken;
+
 };
 
 // Création d'une instance Axios
