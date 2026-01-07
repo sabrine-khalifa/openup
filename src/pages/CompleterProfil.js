@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import { useNavigate, useLocation } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 
 import logo from "../images/logo.png";
 
@@ -10,19 +9,6 @@ const CompleterProfil = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem("user"));
-
-  const isTokenExpired = () => {
-  const token = localStorage.getItem("token");
-  if (!token) return true;
-
-  try {
-    const { exp } = jwtDecode(token);
-    return Date.now() >= exp * 1000;
-  } catch (e) {
-    return true;
-  }
-};
-
 
   const toArray = (value) => {
   if (!value) return [];
@@ -163,11 +149,6 @@ const CompleterProfil = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     if (isTokenExpired()) {
-    alert("Votre session a expiré, veuillez vous reconnecter.");
-    navigate("/login");
-    return;
-  }
 
     if (!userId) return;
 
