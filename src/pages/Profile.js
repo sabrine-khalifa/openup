@@ -505,17 +505,26 @@ const getDomaineStyle = (nomDomaine) => {
 
 </div>
 
-              {user.role === "particulier" && (
+{user.role === "particulier" && (
+  <div className="mt-4">
+    <h3 className="text-lg font-semibold mb-2">Coordonnées</h3>
 
-            <div className="bg-white p-6 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-3">À propos</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-                <p><strong>email :</strong> {user.email }</p>
-                <p><strong> telephone:</strong> {user.telephone || "Non"}</p>
-              
-              </div>
-            </div>
-            )}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+      <p>
+        <strong>Email :</strong>{" "}
+        <span className="break-all">
+          {user.email || "Non renseigné"}
+        </span>
+      </p>
+
+      <p>
+        <strong>Téléphone :</strong>{" "}
+        {user.telephone || "Non renseigné"}
+      </p>
+    </div>
+  </div>
+)}
+
           </div>
         )}
          {activeTab === "services" && (
