@@ -410,7 +410,7 @@ const CompleterProfil = () => {
 
                   <option value="Individuel">Individuelle</option>
                   <option value="Collectif">Collective </option>
-                  <option value="Individuelle & Collective ">Individuelle & Collective </option>
+                  <option value="Individuelle & Collective">Individuelle & Collective </option>
                 </select>
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">

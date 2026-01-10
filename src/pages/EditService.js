@@ -481,7 +481,7 @@ data.append("materiel", formData.materiel);
                 <option value="">Sélectionnez</option>
                 <option value="Individuel">Individuelle</option>
                 <option value="Collectif">Collective </option>
-                <option value="Individuelle & Collective ">Individuelle & Collective </option>
+                <option value="Individuelle & Collective">Individuelle & Collective </option>
               </select>
             </div>
 
