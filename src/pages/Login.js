@@ -20,7 +20,7 @@ const Login = () => {
       localStorage.setItem('token', res.data.accessToken);
       localStorage.setItem('refreshToken', res.data.refreshToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/dashboard');
+      window.location.href('/dashboard');
     } catch (error) {
       alert(error?.response?.data?.msg || "Erreur de connexion");
     }
