@@ -421,7 +421,7 @@ const CompleterProfil = () => {
                     name="publicCible"
                     value={form.publicCible}
                     onChange={handleChange}
-                    placeholder="Débutants, Professionnels,Tous niveaux"
+                    placeholder="Débutants, Professionnels, Tous niveaux"
                     className="w-full border border-gray-300 px-4 py-3 rounded-lg"
                   />
                 </div>
