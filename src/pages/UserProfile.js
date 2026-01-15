@@ -123,7 +123,7 @@ const getDomaineStyle = (nomDomaine) => {
             
 
     {Array.isArray(user.domaine) && (
-  <div className="flex flex-wrap gap-2 mt-2">
+  <div className="flex flex-wrap gap-3 mt-2">
     {user.domaine.map((domaine, index) => (
       <span
         key={index}
