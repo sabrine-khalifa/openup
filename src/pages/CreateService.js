@@ -540,6 +540,8 @@ data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
               className="w-full bg-[#16A14A] hover:bg-[#1a9d53] disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition"
             >
               {isSubmitting ? "Publication..." : "🎯 Publier le service"}
+
+        
             </button>
           </form>
         </div>
