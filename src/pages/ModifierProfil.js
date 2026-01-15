@@ -149,10 +149,10 @@ const categoriesDisponibles = [
     }
 
     // Ajouter "autreCategorie" au tableau des catégories si nécessaire
-let finalCategories = [...formData.categories];
-if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
+let finalCategories = [...form.categories];
+if (form.categories.includes("Autres") && form.autreCategorie?.trim()) {
   finalCategories = finalCategories.filter(c => c !== "Autres"); // retire "Autres"
-  finalCategories.push(formData.autreCategorie.trim()); // ajoute la vraie valeur
+  finalCategories.push(form.autreCategorie.trim()); // ajoute la vraie valeur
 }
     const data = new FormData();
     Object.keys(form).forEach((key) => {
