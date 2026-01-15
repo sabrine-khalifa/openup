@@ -122,16 +122,20 @@ const getDomaineStyle = (nomDomaine) => {
             {user.metier && <p className="text-lg text-gray-600 mt-1">{user.metier}</p>}
             
 
-              {Array.isArray(user.domaine) &&
-  user.domaine.map((domaine, index) => (
-    <span
-      key={index}
-      style={getDomaineStyle(domaine)}
-      className="px-3 py-1 rounded-full text-sm font-medium"
-    >
-      {domaine}
-    </span>
-  ))}
+    {Array.isArray(user.domaine) && (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {user.domaine.map((domaine, index) => (
+      <span
+        key={index}
+        style={getDomaineStyle(domaine)}
+        className="px-3 py-1 rounded-full text-sm font-medium"
+      >
+        {domaine}
+      </span>
+    ))}
+  </div>
+)}
+
 
  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mt-4 text-sm text-gray-600">
               {user.role === "createur" && (
