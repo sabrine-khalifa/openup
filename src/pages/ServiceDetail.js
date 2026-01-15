@@ -365,9 +365,17 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
+  <FaUser className="text-green-600" />
+  <span>
+    <strong>Type de séance :</strong>{" "}
+    {service.typeCours || "Non renseigné"}
+  </span>
+</div>
+
+                <div className="flex items-center gap-2">
                   <FaUser className="text-green-600" />
                   <span>
-                    <strong>Type :</strong> {service.typePrestation || "Non renseigné"}
+                    <strong>Type de prestation:</strong> {service.typePrestation || "Non renseigné"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
