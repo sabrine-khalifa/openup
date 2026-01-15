@@ -495,6 +495,23 @@ data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
     Accessible PMR (Personne à mobilité réduite)
   </label>
 </div>
+{/* Champ texte conditionnel PMR */}
+{formData.accessiblePMR && (
+  <div className="mt-3">
+    <label className="block text-gray-700 font-medium mb-1">
+      Information Complémentaire
+    </label>
+    <input
+      type="text"
+      name="pmrDetails"
+      value={formData.pmrDetails}
+      onChange={handleChange}
+      placeholder="Ex : rampe d’accès, ascenseur, toilettes adaptées…"
+      className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16A14A]"
+    />
+  </div>
+)}
+
 
 {/* Champ texte conditionnel */}
 
