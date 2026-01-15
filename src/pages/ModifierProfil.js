@@ -13,7 +13,7 @@ const ModifierProfil = () => {
     password: "",
     photo: null,
     metier: "",
-    domaine: "",
+    categories: [],
     telephone: "",
     langues: [],
     nationalites: "",
@@ -33,8 +33,42 @@ const ModifierProfil = () => {
   const [userRole, setUserRole] = useState("particulier");
   const navigate = useNavigate();
 
- const domaines = [ "Animaux & monde vivant", "Architecture & urbanisme", "Artisanat", "Arts visuels", "Arts vivants", "Bien-être", "Décoration & aménagement", "Développement personnel", "Écologie & durabilité", "Écriture & littérature", "Entrepreneuriat & innovation", "Finances personnelles & économie", "Formation, enseignement & accompagnement", "Gastronomie & art culinaire", "Humanitaire & droits humains", "Inclusion & solidarité", "Informatique & numérique", "Jeux & expériences interactives", "Management & organisation", "Marketing & communication", "Médias, journalisme & storytelling", "Musique & son", "Nature, jardinage & permaculture", "Parentalité & famille", "Politique, citoyenneté & engagement sociétal", "Relations & développement social", "Santé", "Sciences & technologies", "Sport, loisirs physiques & outdoor", "Spiritualité", "Stylisme & mode", "Thérapies alternatives", "Voyage, tourisme & interculturalité" ];
-
+const categoriesDisponibles = [
+  { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
+  { nom: "Architecture & urbanisme", couleur: "#E3CD8B" },
+  { nom: "Arts vivants", couleur: "#F27438" },
+  { nom: "Arts visuels", couleur: "#F39C12" },
+  { nom: "Artisanat", couleur: "#CA7C5C" },
+  { nom: "Bien-être", couleur: "#27AE60" },
+  { nom: "Décoration & aménagement", couleur: "#e76f51" },
+  { nom: "Développement personnel", couleur: "#9B59B6" },
+  { nom: "Écologie & durabilité", couleur: "#7AA95C" },
+  { nom: "Écriture & littérature", couleur: "#C89F9C" },
+  { nom: "Entrepreneuriat & innovation", couleur: "#427AA1" },
+  { nom: "Finances personnelles & économie", couleur: "#E8EDDF" },
+  { nom: "Formation, enseignement & accompagnement", couleur: "#C8574D" },
+  { nom: "Gastronomie & art culinaire", couleur: "#FFAE9D" },
+  { nom: "Humanitaire & droits humains", couleur: "#7C4C53" },
+  { nom: "Inclusion & solidarité", couleur: "#FF584D" },
+  { nom: "Informatique & numérique", couleur: "#3498DB" },
+  { nom: "Jeux & expériences interactives", couleur: "#0FAC71" },
+  { nom: "Management & organisation", couleur: "#9281C0" },
+  { nom: "Marketing, Communication & Événementiel", couleur: "#4A919E" },
+  { nom: "Médias, journalisme & storytelling", couleur: "#A92831" },
+  { nom: "Musique & son", couleur: "#FFBF66" },
+  { nom: "Nature, jardinage & permaculture", couleur: "#B7CE66" },
+  { nom: "Parentalité & famille", couleur: "#EA5863" },
+  { nom: "Politique, citoyenneté & engagement sociétal", couleur: "#585B4C" },
+  { nom: "Relations & développement social", couleur: "#E74C3C" },
+  { nom: "Santé", couleur: "#EDCDFA" },
+  { nom: "Sciences & technologies", couleur: "#62B9CB" },
+  { nom: "Sport, loisirs physiques & outdoor", couleur: "#5CAFE7" },
+  { nom: "Spiritualité", couleur: "#FFE361" },
+  { nom: "Stylisme & mode", couleur: "#F0A1BF" },
+  { nom: "Thérapies alternatives", couleur: "#A4BD01" },
+  { nom: "Voyage, tourisme & interculturalité", couleur: "#7DC2A5" },
+{ nom: "Autres", couleur: "#95a5a6" }
+];
   const languesDisponibles = ['Français', 'Anglais'];
 
   useEffect(() => {
@@ -114,6 +148,12 @@ const ModifierProfil = () => {
       return navigate("/login");
     }
 
+    // Ajouter "autreCategorie" au tableau des catégories si nécessaire
+let finalCategories = [...formData.categories];
+if (formData.categories.includes("Autres") && formData.autreCategorie?.trim()) {
+  finalCategories = finalCategories.filter(c => c !== "Autres"); // retire "Autres"
+  finalCategories.push(formData.autreCategorie.trim()); // ajoute la vraie valeur
+}
     const data = new FormData();
     Object.keys(form).forEach((key) => {
       if (key === "photo" && !form.photo) return;
@@ -243,7 +283,7 @@ localStorage.setItem(
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
                   <option value="">Domaine d’activité</option>
-                  {domaines.map(d => (
+                  {categoriesDisponibles.map(d => (
                     <option key={d} value={d}>{d}</option>
                   ))}
                 </select>
