@@ -497,7 +497,7 @@ const getDomaineStyle = (nomDomaine) => {
         <p><strong>Langues :</strong>  {toArray(user.langues).length > 0
     ? toArray(user.langues).join(", ")
     : "Non renseigné"}</p>
-        <p><strong>Type de cours :</strong> {user.typeCours || "Non renseigné"}</p>
+        <p><strong>Type de séance :</strong> {user.typeCours || "Non renseigné"}</p>
         <p><strong>Public cible :</strong> {user.publicCible || "Non renseigné"}</p>
         <p><strong>Téléphone :</strong> {user.telephone || "Non renseigné"}</p>
       </div>
