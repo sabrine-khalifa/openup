@@ -373,7 +373,8 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
                 <div className="flex items-center gap-2">
                   <FaWheelchair className="text-green-600" />
                   <span>
-                    <strong>Accessibilité PMR :</strong> {service.accessibilite || "Non"}
+                    <strong>Accessibilité PMR :</strong> {service.accessiblePMR ? "Oui" : "Non"}
+
                   </span>
                 </div>
               </div>
