@@ -65,14 +65,14 @@ const categories = [
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
-  useEffect(() => {
+useEffect(() => {
   const u = JSON.parse(localStorage.getItem("user"));
   setUser(u);
 
-  const handleCreditsUpdate = () => {
-    const updatedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(updatedUser);
+  const handleCreditsUpdate = (e) => {
+    if (e?.detail) {
+      setUser(e.detail); // ✅ utilisateur complet
+    }
   };
 
   window.addEventListener("creditsUpdated", handleCreditsUpdate);
@@ -81,6 +81,7 @@ const categories = [
     window.removeEventListener("creditsUpdated", handleCreditsUpdate);
   };
 }, []);
+
 
 
   // Charger services, notes, user... (inchangé)

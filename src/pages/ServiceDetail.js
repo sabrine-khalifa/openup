@@ -176,21 +176,22 @@ const handleReservation = async () => {
     );
 
     // ✅ METTRE À JOUR LE LOCALSTORAGE
-  const updatedUser = res.data.user;
+ const oldUser = JSON.parse(localStorage.getItem("user"));
 
-// 🔐 Sécurité
-if (!updatedUser || typeof updatedUser.credits !== "number") {
-  console.error("Utilisateur invalide retourné par le backend", res.data);
-  return;
-}
+const updatedUser = {
+  ...oldUser,                  // ✅ garde role, id, email, etc.
+  credits: res.data.user.credits // ✅ met à jour seulement les crédits
+};
 
 localStorage.setItem("user", JSON.stringify(updatedUser));
 
 window.dispatchEvent(
   new CustomEvent("creditsUpdated", {
-    detail: updatedUser.credits,
+    detail: updatedUser, // ✅ utilisateur COMPLET
   })
 );
+
+
 
 
     setService(res.data.service);
