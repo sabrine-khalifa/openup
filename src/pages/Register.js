@@ -1,7 +1,7 @@
 // pages/Register.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { publicApi } from "../api";
+import api from '../api';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Register = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await publicApi.post('/api/auth/register', form);
+    const res = await api.post('/api/auth/register', form);
 
     // ✅ Affiche le message de succès
     alert(res.data.msg);

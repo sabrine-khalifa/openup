@@ -1,13 +1,16 @@
 // pages/Login.jsx
 import { useState } from 'react';
-import { publicApi } from "../api";
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
+import { AuthContext } from "../context/AuthContext";
+
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+    const { login } = useContext(AuthContext); // 🔹 utilise le context
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,11 +19,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await publicApi.post('/api/auth/login', form);
-      localStorage.setItem('token', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/dashboard');
+      const res = await api.post('/api/auth/login', form);
+     
+      login(res.data); // ⚡ met à jour le state global et localStorage
+      navigate("/dashboard"); 
     } catch (error) {
       alert(error?.response?.data?.msg || "Erreur de connexion");
     }
