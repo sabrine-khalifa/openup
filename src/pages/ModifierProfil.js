@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from '../api';
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 
 
 const ModifierProfil = () => {
+
+  const { user, loading } = useContext(AuthContext);
+    const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     prenom: "",
@@ -30,7 +37,13 @@ const ModifierProfil = () => {
 
   });
   const [userRole, setUserRole] = useState("particulier");
-  const navigate = useNavigate();
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Chargement...
+      </div>
+    );
+  }
 
 const categoriesDisponibles = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
@@ -70,52 +83,39 @@ const categoriesDisponibles = [
 ];
   const languesDisponibles = ['Français', 'Anglais'];
 
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const token = localStorage.getItem("token");
+useEffect(() => {
+  if (loading) return;
 
-    if (!userData || !token) return navigate("/login");
-    const userId = userData.id || userData._id;
+  if (!user) {
+    navigate("/login");
+    return;
+  }
 
+  const userId = user.id || user._id;
 
-    
+  api.get(`/api/users/${userId}`)
+    .then((res) => {
+      const userData = res.data;
+      setUserRole(userData.role || "particulier");
 
-    api.get(`/api/users/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
-      const user = res.data;
-      setUserRole(user.role || "particulier");
-
-      setForm({
-        name: user.name || "",
-        prenom: user.prenom || "",
-        email: user.email || "",
-        password: "",
-        photo: null,
-        metier: user.metier || "",
-        domaine: user.domaine || "",
-        telephone: user.telephone || "",
-        langues: Array.isArray(user.langues) ? user.langues : [],
-        nationalites: user.nationalites || "",
-        video: user.video || "",
-        description: user.description || "",
-        valeurs: user.valeurs || "",
-        lieuPrestation: user.lieuPrestation || "",
-       // pmr: user.pmr || false,
-        typeCours: user.typeCours || "",
-        publicCible: user.publicCible || "",
-        liens: user.liens || "", 
-        siteWeb: user.siteWeb || "",
-        instagram: user.instagram || "",
-        linkedin: user.linkedin || "",
-
-
-      });
-    }).catch(() => {
-      alert("Erreur de chargement du profil");
+      setForm((prev) => ({
+        ...prev,
+        name: userData.name || "",
+        prenom: userData.prenom || "",
+        email: userData.email || "",
+        metier: userData.metier || "",
+        domaine: userData.domaine || "",
+        langues: Array.isArray(userData.langues) ? userData.langues : [],
+        telephone: userData.telephone || "",
+        description: userData.description || "",
+      }));
+    })
+    .catch(() => {
       navigate("/dashboard");
     });
-  }, [navigate]);
+}, [user, loading, navigate]);
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
