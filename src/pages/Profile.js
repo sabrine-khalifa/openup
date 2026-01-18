@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import logo from '../images/logo.png';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -43,7 +42,7 @@ const userId = (userData.id || userData._id || "").trim();
       // Charger les avis
       axios.get(`https://backend-hqhy.onrender.com/api/avis/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })   .then((resAvis) => {
+      }).then((resAvis) => {
     const avis = resAvis.data;
     setAvis(avis);
 
