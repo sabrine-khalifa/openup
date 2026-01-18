@@ -1,12 +1,24 @@
 // src/api.js
 import axios from "axios";
 
-// Fonction pour rafraîchir le token
+// Axios public (sans token)
+const publicApi = axios.create({
+  baseURL: "https://backend-hqhy.onrender.com",
+});
+
+// Axios privé (avec token)
+const api = axios.create({
+  baseURL: "https://backend-hqhy.onrender.com",
+});
+
+// =======================
+// REFRESH TOKEN
+// =======================
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
-  if (!refreshToken) throw new Error("Pas de refreshToken");
+  if (!refreshToken) throw new Error("No refresh token");
 
-  const response = await axios.post("https://backend-hqhy.onrender.com/api/auth/refreshToken", {
+  const response = await publicApi.post("/api/auth/refreshToken", {
     refreshToken,
   });
 
@@ -15,47 +27,52 @@ const refreshAccessToken = async () => {
   return newToken;
 };
 
-// Création d'une instance Axios
-const api = axios.create({
-  baseURL: "https://backend-hqhy.onrender.com",
-});
-
-// Intercepteur de requête : ajoute le token
+// =======================
+// REQUEST INTERCEPTOR
+// =======================
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      delete config.headers.Authorization;
     }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Intercepteur de réponse : gère les 401
+// =======================
+// RESPONSE INTERCEPTOR
+// =======================
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Si 401 ET pas déjà relancé
+    // ❌ NE PAS refresh sur login / register
     if (
-  error.response?.status === 401 &&
-  !originalRequest._retry
-) {
+      originalRequest?.url?.includes("/api/auth/login") ||
+      originalRequest?.url?.includes("/api/auth/register")
+    ) {
+      return Promise.reject(error);
+    }
+
+    // 🔁 Refresh si 401
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
         const newToken = await refreshAccessToken();
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return api(originalRequest); // Réessaie la requête
-      } catch (refreshError) {
-        // Si le refreshToken échoue → déconnexion
+        return api(originalRequest);
+      } catch (err) {
         localStorage.clear();
         window.location.href = "/login";
-        return Promise.reject(refreshError);
+        return Promise.reject(err);
       }
     }
 
@@ -63,4 +80,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export { api, publicApi };
