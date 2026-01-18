@@ -3,6 +3,8 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
 import { AuthContext } from "../context/AuthContext";
+import api from '../api';
+
 
 
 const Login = () => {
