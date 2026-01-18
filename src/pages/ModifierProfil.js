@@ -11,6 +11,7 @@ const ModifierProfil = () => {
     password: "",
     photo: null,
     metier: "",
+    domaine: "", 
     categories: [],
     telephone: "",
     langues: [],
@@ -281,9 +282,12 @@ localStorage.setItem(
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
                   <option value="">Domaine d’activité</option>
-                  {categoriesDisponibles.map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
+                  {categoriesDisponibles.map(cat => (
+  <option key={cat.nom} value={cat.nom}>
+    {cat.nom}
+  </option>
+))}
+
                 </select>
 
                 <div>

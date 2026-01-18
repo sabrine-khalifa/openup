@@ -1,6 +1,6 @@
 // components/Footer.jsx
 import React from 'react';
-import logo from '../images/logo.png'; // ou le bon chemin
+//import logo from '../images/logo.png'; // ou le bon chemin
 
 const Footer = () => {
   return (
