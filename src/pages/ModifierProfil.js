@@ -36,7 +36,6 @@ const ModifierProfil = () => {
     linkedin:""
 
   });
-  const [userRole, setUserRole] = useState("particulier");
   
 
 const categoriesDisponibles = [
@@ -91,7 +90,6 @@ useEffect(() => {
     .then((res) => {
       const userData = res.data;
 
-      setUserRole(userData.role || "particulier");
 
       setForm((prev) => ({
         ...prev,
@@ -139,8 +137,8 @@ domaine: Array.isArray(userData.domaine)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-   const userId = user?.id || user?._id;
-
+   const userId = JSON.parse(localStorage.getItem("user"))?.id 
+            || JSON.parse(localStorage.getItem("user"))?._id;
 
 
     if (!token || !userId) {
@@ -197,9 +195,19 @@ localStorage.setItem(
   );
 }
 
+if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      Chargement...
+    </div>
+  );
+}
+
 if (!user) {
+  navigate("/login");
   return null;
 }
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -275,7 +283,8 @@ if (!user) {
             </div>
 
             {/* Champs Créateur */}
-            {userRole === "createur" && (
+             {user?.role === "createur" && (
+
               <div className="bg-gray-50 p-6 rounded-xl space-y-5">
                 <h2 className="text-xl font-semibold text-gray-800">Informations Créateur</h2>
 
