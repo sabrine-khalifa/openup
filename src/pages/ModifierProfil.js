@@ -54,7 +54,12 @@ const extractValidLangues = (rawLangues) => {
     photo: null,
     metier: "",
     domaine: "", 
-    categories: [],
+categories: Array.isArray(userData.categories)
+  ? userData.categories.map(cat =>
+      typeof cat === "string" ? cat : cat.nom
+    )
+  : [],
+
     telephone: "",
     langues: [],
     nationalites: "",
@@ -146,7 +151,12 @@ langues: extractValidLangues(userData.langues),
         siteWeb: userData.siteWeb || "",
         instagram: userData.instagram || "",
         linkedin: userData.linkedin || "",
-        categories: [],
+
+categories: Array.isArray(userData.categories)
+  ? userData.categories.map(cat =>
+      typeof cat === "string" ? cat : cat.nom
+    )
+  : [],
       });
     })
     .catch((err) => {
