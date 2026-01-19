@@ -99,7 +99,9 @@ useEffect(() => {
         prenom: userData.prenom || "",
         email: userData.email || "",
         metier: userData.metier || "",
-        domaine: userData.domaine || "",
+        domaine: Array.isArray(userData.domaine)
+    ? userData.domaine[0] || ""
+    : userData.domaine || "",
         langues: Array.isArray(userData.langues) ? userData.langues : [],
         telephone: userData.telephone || "",
         description: userData.description || "",
