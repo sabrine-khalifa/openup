@@ -82,8 +82,8 @@ const getDomaineStyle = (nomDomaine) => {
         .reduce((acc, n) => acc + n, 0) / avisAvecNote.length
     : null;
 
-  const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
-  const nombreAvis = avis.length;
+ // const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
+  //const nombreAvis = avis.length;
 
 
 
@@ -349,7 +349,7 @@ const getDomaineStyle = (nomDomaine) => {
               <div className="grid grid-cols-3 sm:grid-cols-3 gap-6">
                 {services.map((service) => {
 
-                  const avisDuService = avis.filter(a => a.service?._id === service._id);
+              //    const avisDuService = avis.filter(a => a.service?._id === service._id);
                     
 
                   return (

@@ -8,7 +8,7 @@ const ServiceList = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [customCategory, setCustomCategory] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [notes, setNotes] = useState({});
+ // const [notes, setNotes] = useState({});
   const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -263,7 +263,7 @@ useEffect(() => {
                        {service.createur.prenom} {service.createur.name} 
                       </span>
 
-                      {/* ✅ Note (si existe) */}
+                      {/*  
                       {notes[service._id] && (
                         <div className="flex items-center text-yellow-500 text-xs mt-1">
                           <span>⭐</span>
@@ -272,6 +272,7 @@ useEffect(() => {
                           </span>
                         </div>
                       )}
+                        */}
                     </div>
                   </div>
 

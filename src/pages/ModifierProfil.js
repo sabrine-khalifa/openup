@@ -92,19 +92,29 @@ useEffect(() => {
 
 
       setForm((prev) => ({
-        ...prev,
-        name: userData.name || "",
-        prenom: userData.prenom || "",
-        email: userData.email || "",
-        metier: userData.metier || "",
-domaine: Array.isArray(userData.domaine)
+  ...prev,
+  name: userData.name || "",
+  prenom: userData.prenom || "",
+  email: userData.email || "",
+  metier: userData.metier || "",
+  domaine: Array.isArray(userData.domaine)
     ? userData.domaine[0] || ""
     : userData.domaine || "",
+  langues: Array.isArray(userData.langues) ? userData.langues : [],
+  telephone: userData.telephone || "",
+  description: userData.description || "",
+  publicCible: userData.publicCible || "",
+  lieuPrestation: userData.lieuPrestation || "",
+  typeCours: userData.typeCours || "",
+  siteWeb: userData.siteWeb || "",
+  instagram: userData.instagram || "",
+  linkedin: userData.linkedin || "",
+  video: userData.video || "",
+  valeurs: userData.valeurs || "",
+  nationalites: userData.nationalites || "",
+  categories: Array.isArray(userData.categories) ? userData.categories : [],
+}));
 
-        langues: Array.isArray(userData.langues) ? userData.langues : [],
-        telephone: userData.telephone || "",
-        description: userData.description || "",
-      }));
     })
      .catch((err) => {
     // ✅ Ajoute le log pour voir l'erreur en console
@@ -195,18 +205,6 @@ localStorage.setItem(
   );
 }
 
-if (loading) {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      Chargement...
-    </div>
-  );
-}
-
-if (!user) {
-  navigate("/login");
-  return null;
-}
 
 
   return (
