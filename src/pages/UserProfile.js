@@ -72,15 +72,15 @@ const getDomaineStyle = (nomDomaine) => {
   if (!user) return <p className="text-center py-10">Chargement...</p>;
 
   // Calcul note moyenne
-  const avisAvecNote = avis.filter(a => {
-    const n = typeof a.note === 'string' ? parseFloat(a.note) : a.note;
-    return typeof n === 'number' && !isNaN(n) && n >= 1 && n <= 5;
-  });
+ // const avisAvecNote = avis.filter(a => {
+  //  const n = typeof a.note === 'string' ? parseFloat(a.note) : a.note;
+   // return typeof n === 'number' && !isNaN(n) && n >= 1 && n <= 5;
+ // });
 
-const noteMoyenne = avisAvecNote.length > 0
-    ? avisAvecNote.map(a => typeof a.note === 'string' ? parseFloat(a.note) : a.note)
-        .reduce((acc, n) => acc + n, 0) / avisAvecNote.length
-    : null;
+//const noteMoyenne = avisAvecNote.length > 0
+   // ? avisAvecNote.map(a => typeof a.note === 'string' ? parseFloat(a.note) : a.note)
+   //     .reduce((acc, n) => acc + n, 0) / avisAvecNote.length
+//    : null;
 
  // const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
   //const nombreAvis = avis.length;

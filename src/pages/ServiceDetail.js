@@ -60,54 +60,22 @@ const ServiceDetail = () => {
   const [avis, setAvis] = useState([]); 
   const [message, setMessage] = useState("");
   const [showMsg, setShowMsg] = useState(false);
-  const [newAvis, setNewAvis] = useState("");
-  const [loadingAvis, setLoadingAvis] = useState(false);
-  const [note, setNote] = useState(null); // Ajoute cet état
+ // const [newAvis, setNewAvis] = useState("");
+  //const [loadingAvis, setLoadingAvis] = useState(false);
+ // const [note, setNote] = useState(null); // Ajoute cet état
 
-
- const renderStarRating = () => (
-  <div 
-    className="flex mb-3" 
-    key={`star-rating-${note}`} // 🔁 Force le re-render quand note change
-  >
-    {[1, 2, 3, 4, 5].map((star) => (
-      <span
-        key={star}
-        role="button"
-        tabIndex={0}
-        onClick={() => {
-          setNote(star);
-          console.log("Note sélectionnée :", star); // ✅ Debug
-        }}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            setNote(star);
-            console.log("Note via clavier :", star);
-          }
-        }}
-        style={{
-          cursor: "pointer",
-          fontSize: "1.5rem",
-          color: star <= (note || 0) ? "#FFD700" : "#ccc",
-        }}
-        aria-label={`Noter ${star} étoile${star > 1 ? 's' : ''}`}
-      >
-        ⭐
-      </span>
-    ))}
-  </div>
-);
 
 const getCategoryColor = (nom) => {
   return (
     categoriesDisponibles.find((c) => c.nom === nom)?.couleur || "#6B7280"
   );
 };
+/*
 useEffect(() => {
   console.log("Note actuelle :", note);
 }, [note]);
 
-
+*/
 
   useEffect(() => {
     const fetchServiceAndAvis = async () => {
@@ -128,7 +96,7 @@ useEffect(() => {
   }, [id]);
 
   if (!service) return <p className="text-center py-10">Chargement...</p>;
-
+/*
   // Poster un avis
  const handleSubmitAvis = async (e) => {
   e.preventDefault();
@@ -162,7 +130,7 @@ useEffect(() => {
     setLoadingAvis(false);
   }
 };
-
+*/
   // Réserver un service
 const handleReservation = async () => {
   try {

@@ -203,7 +203,7 @@ const getDomaineStyle = (nomDomaine) => {
     if (auteur?.photo) return auteur.photo;
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(auteur?.name || "User")}&background=6b7280&color=fff&size=64`;
   };
-
+/*
   const getNoteForService = (serviceId) => {
     const avisDuService = avis.filter(a => a.service?._id === serviceId);
     if (avisDuService.length === 0) return null;
@@ -233,7 +233,7 @@ const getDomaineStyle = (nomDomaine) => {
         : [...prev.langues, langue],
     }));
   };
-
+*/
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();

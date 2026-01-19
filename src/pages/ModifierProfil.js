@@ -10,7 +10,42 @@ const ModifierProfil = () => {
 
   const { user, loading } = useContext(AuthContext);
     const navigate = useNavigate();
+// Fonction pour nettoyer les langues corrompues
+const extractValidLangues = (rawLangues) => {
+  if (!Array.isArray(rawLangues)) return [];
+  
+  const validLangues = [];
+  const allowed = ['Français', 'Anglais'];
 
+  for (let item of rawLangues) {
+    // Tente de parser jusqu'à obtenir une chaîne simple
+    while (typeof item === 'string' && (item.startsWith('[') || item.startsWith('"'))) {
+      try {
+        const parsed = JSON.parse(item);
+        if (typeof parsed === 'string') {
+          item = parsed;
+        } else if (Array.isArray(parsed) && parsed.length > 0) {
+          item = parsed[0]; // prends le premier si c'est un tableau
+        } else {
+          break;
+        }
+      } catch (e) {
+        break;
+      }
+    }
+
+    // Vérifie que c'est une langue valide
+    if (typeof item === 'string') {
+      const clean = item.trim();
+      if (allowed.includes(clean)) {
+        validLangues.push(clean);
+      }
+    }
+  }
+
+  // Supprime les doublons
+  return [...new Set(validLangues)];
+};
   const [form, setForm] = useState({
     name: "",
     prenom: "",
@@ -99,8 +134,8 @@ useEffect(() => {
         domaine: Array.isArray(userData.domaine)
           ? userData.domaine[0] || ""
           : userData.domaine || "",
-        langues: Array.isArray(userData.langues) ? userData.langues : [],
-        telephone: userData.telephone || "",
+langues: extractValidLangues(userData.langues),
+          telephone: userData.telephone || "",
         description: userData.description || "",
         valeurs: userData.valeurs || "",
         nationalites: userData.nationalites || "",
