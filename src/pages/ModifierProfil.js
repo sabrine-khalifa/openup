@@ -99,9 +99,10 @@ useEffect(() => {
         prenom: userData.prenom || "",
         email: userData.email || "",
         metier: userData.metier || "",
-        domaine: Array.isArray(userData.domaine)
+domaine: Array.isArray(userData.domaine)
     ? userData.domaine[0] || ""
     : userData.domaine || "",
+
         langues: Array.isArray(userData.langues) ? userData.langues : [],
         telephone: userData.telephone || "",
         description: userData.description || "",
@@ -138,8 +139,8 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-   const userId = JSON.parse(localStorage.getItem("user"))?.id 
-            || JSON.parse(localStorage.getItem("user"))?._id;
+   const userId = user?.id || user?._id;
+
 
 
     if (!token || !userId) {
