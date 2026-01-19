@@ -5,7 +5,6 @@ import creditsImg from '../images/credit.png';
 import messagerieImg from '../images/messagerie.png';
 import profilImg from '../images/profil.png';
 
-
 const Header = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
   const [credits, setCredits] = useState(() => {

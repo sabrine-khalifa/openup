@@ -37,17 +37,7 @@ const ModifierProfil = () => {
 
   });
   const [userRole, setUserRole] = useState("particulier");
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Chargement...
-      </div>
-    );
-  }
-   if (!user) {
-    navigate("/login");
-    return null;
-  }
+  
 
 const categoriesDisponibles = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
@@ -100,6 +90,7 @@ useEffect(() => {
   api.get(`/api/users/${userId}`)
     .then((res) => {
       const userData = res.data;
+
       setUserRole(userData.role || "particulier");
 
       setForm((prev) => ({
@@ -118,6 +109,7 @@ useEffect(() => {
       navigate("/dashboard");
     });
 }, [user, loading, navigate]);
+
 
 
 
@@ -191,6 +183,18 @@ localStorage.setItem(
       alert(error.response?.data?.msg || "Erreur");
     }
   };
+
+  if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      Chargement...
+    </div>
+  );
+}
+
+if (!user) {
+  return null;
+}
 
   return (
     <div className="min-h-screen bg-gray-50">
