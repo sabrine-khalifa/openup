@@ -105,9 +105,11 @@ useEffect(() => {
         description: userData.description || "",
       }));
     })
-    .catch(() => {
-      navigate("/dashboard");
-    });
+     .catch((err) => {
+    // ✅ Ajoute le log pour voir l'erreur en console
+    console.error("Erreur lors du chargement du profil :", err);
+    navigate("/dashboard");
+  });
 }, [user, loading, navigate]);
 
 
