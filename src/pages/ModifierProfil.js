@@ -54,12 +54,7 @@ const extractValidLangues = (rawLangues) => {
     photo: null,
     metier: "",
     domaine: "", 
-categories: Array.isArray(userData.categories)
-  ? userData.categories.map(cat =>
-      typeof cat === "string" ? cat : cat.nom
-    )
-  : [],
-
+    categories: [],
     telephone: "",
     langues: [],
     nationalites: "",
