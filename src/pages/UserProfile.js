@@ -77,7 +77,7 @@ const getDomaineStyle = (nomDomaine) => {
     return typeof n === 'number' && !isNaN(n) && n >= 1 && n <= 5;
   });
 
-  const noteMoyenne = avisAvecNote.length > 0
+const noteMoyenne = avisAvecNote.length > 0
     ? avisAvecNote.map(a => typeof a.note === 'string' ? parseFloat(a.note) : a.note)
         .reduce((acc, n) => acc + n, 0) / avisAvecNote.length
     : null;

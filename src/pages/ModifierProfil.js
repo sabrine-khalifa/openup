@@ -79,8 +79,8 @@ const categoriesDisponibles = [
 useEffect(() => {
   if (loading) return;
 
-  if (!user) {
-    navigate("/login");
+  if (!user || (!user.id && !user._id)) {
+    navigate("/login", { replace: true });
     return;
   }
 
@@ -89,41 +89,36 @@ useEffect(() => {
   api.get(`/api/users/${userId}`)
     .then((res) => {
       const userData = res.data;
-
-
-      setForm((prev) => ({
-  ...prev,
-  name: userData.name || "",
-  prenom: userData.prenom || "",
-  email: userData.email || "",
-  metier: userData.metier || "",
-  domaine: Array.isArray(userData.domaine)
-    ? userData.domaine[0] || ""
-    : userData.domaine || "",
-  langues: Array.isArray(userData.langues) ? userData.langues : [],
-  telephone: userData.telephone || "",
-  description: userData.description || "",
-  publicCible: userData.publicCible || "",
-  lieuPrestation: userData.lieuPrestation || "",
-  typeCours: userData.typeCours || "",
-  siteWeb: userData.siteWeb || "",
-  instagram: userData.instagram || "",
-  linkedin: userData.linkedin || "",
-  video: userData.video || "",
-  valeurs: userData.valeurs || "",
-  nationalites: userData.nationalites || "",
-  categories: Array.isArray(userData.categories) ? userData.categories : [],
-}));
-
+      setForm({
+        name: userData.name || "",
+        prenom: userData.prenom || "",
+        email: userData.email || "",
+        password: "",
+        photo: null,
+        metier: userData.metier || "",
+        domaine: Array.isArray(userData.domaine)
+          ? userData.domaine[0] || ""
+          : userData.domaine || "",
+        langues: Array.isArray(userData.langues) ? userData.langues : [],
+        telephone: userData.telephone || "",
+        description: userData.description || "",
+        valeurs: userData.valeurs || "",
+        nationalites: userData.nationalites || "",
+        video: userData.video || "",
+        lieuPrestation: userData.lieuPrestation || "",
+        typeCours: userData.typeCours || "",
+        publicCible: userData.publicCible || "",
+        siteWeb: userData.siteWeb || "",
+        instagram: userData.instagram || "",
+        linkedin: userData.linkedin || "",
+        categories: [],
+      });
     })
-     .catch((err) => {
-    // ✅ Ajoute le log pour voir l'erreur en console
-    console.error("Erreur lors du chargement du profil :", err);
-    navigate("/dashboard");
-  });
+    .catch((err) => {
+      console.error("Erreur chargement profil :", err);
+      navigate("/dashboard", { replace: true });
+    });
 }, [user, loading, navigate]);
-
-
 
 
   const handleChange = (e) => {
