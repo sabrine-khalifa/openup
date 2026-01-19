@@ -44,6 +44,10 @@ const ModifierProfil = () => {
       </div>
     );
   }
+   if (!user) {
+    navigate("/login");
+    return null;
+  }
 
 const categoriesDisponibles = [
   { nom: "Animaux & monde vivant", couleur: "#B36A5E" },
