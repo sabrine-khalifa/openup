@@ -53,7 +53,7 @@ const extractValidLangues = (rawLangues) => {
     password: "",
     photo: null,
     metier: "",
-    domaine: "", 
+    domaine: [], 
     categories: [],
     telephone: "",
     langues: [],
@@ -132,8 +132,11 @@ useEffect(() => {
         photo: null,
         metier: userData.metier || "",
         domaine: Array.isArray(userData.domaine)
-          ? userData.domaine[0] || ""
-          : userData.domaine || "",
+  ? userData.domaine
+  : userData.domaine
+  ? [userData.domaine]
+  : [],
+
 langues: extractValidLangues(userData.langues),
           telephone: userData.telephone || "",
         description: userData.description || "",
@@ -165,6 +168,15 @@ categories: Array.isArray(userData.categories)
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
+  const handleDomaineChange = (value) => {
+  setForm((prev) => ({
+    ...prev,
+    domaine: prev.domaine.includes(value)
+      ? prev.domaine.filter((d) => d !== value)
+      : [...prev.domaine, value],
+  }));
+};
+
 
   const handleLangueChange = (langue) => {
     setForm((prev) => ({
@@ -330,20 +342,53 @@ localStorage.setItem(
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 />
 
-                <select
-                  name="domaine"
-                  value={form.domaine}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3"
-                >
-                  <option value="">Domaine d’activité</option>
-                  {categoriesDisponibles.map(cat => (
-  <option key={cat.nom} value={cat.nom}>
-    {cat.nom}
-  </option>
-))}
+                <div>
+  <p className="text-gray-700 font-medium">
+    Domaines d’activité :
+  </p>
 
-                </select>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+    {categoriesDisponibles.map((cat) => (
+      <label
+        key={cat.nom}
+        className="flex items-center gap-2 text-gray-700"
+      >
+        <input
+          type="checkbox"
+          checked={form.domaine.includes(cat.nom)}
+          onChange={() => handleDomaineChange(cat.nom)}
+        />
+        {cat.nom}
+      </label>
+    ))}
+  </div>
+
+  {/* Champ Autres */}
+  {form.domaine.includes("Autres") && (
+    <div className="mt-2">
+      <label className="block text-gray-700 text-sm mb-1">
+        Précisez votre catégorie :
+      </label>
+      <input
+        type="text"
+        name="autreDomaine"
+        value={form.autreDomaine || ""}
+        onChange={(e) =>
+          setForm({ ...form, autreDomaine: e.target.value })
+        }
+        className="w-full border border-gray-300 px-3 py-2 rounded-lg"
+      />
+    </div>
+  )}
+
+  {/* Erreur si vide */}
+  {form.domaine.length === 0 && (
+    <p className="text-red-500 text-sm mt-1">
+      Veuillez sélectionner au moins une catégorie
+    </p>
+  )}
+</div>
+
 
                 <div>
                   <p className="text-gray-700 font-medium">Langues parlées :</p>
