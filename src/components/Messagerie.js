@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
-import logo from '../images/logo.png';
+//import logo from '../images/logo.png';
 
 const Messagerie = ({ currentUserId }) => {
   const { otherId } = useParams();

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import logo from '../images/logo.png';
+//import logo from '../images/logo.png';
 
 const MessagerieList = ({ currentUserId }) => {
   const [conversations, setConversations] = useState([]);

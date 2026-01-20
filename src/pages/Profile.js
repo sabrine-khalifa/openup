@@ -13,7 +13,7 @@ const Profile = () => {
   const [avis, setAvis] = useState([]);
   const [activeTab, setActiveTab] = useState("À propos");
   const [editMode, setEditMode] = useState(false); // Mode édition
-  const [form, setForm] = useState({});
+ // const [form, setForm] = useState({});
   const navigate = useNavigate();
 
 
@@ -234,6 +234,7 @@ const getDomaineStyle = (nomDomaine) => {
     }));
   };
 */
+/*
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -259,7 +260,7 @@ const getDomaineStyle = (nomDomaine) => {
       alert(err.response?.data?.msg || 'Erreur lors de la mise à jour');
     }
   };
-
+*/
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}

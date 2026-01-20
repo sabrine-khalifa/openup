@@ -26,22 +26,27 @@ import ChooseRole from "./pages/ChooseRole";
 
 function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
-  const [token, setToken] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
 
 
-   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  const userStr = localStorage.getItem("user");
 
-    const userId = storedUser ? JSON.parse(storedUser).id : null;
-
-    if (storedToken && userId) {
-      setCurrentUserId(userId);
+  let userId = null;
+  if (userStr) {
+    try {
+      const user = JSON.parse(userStr);
+      userId = user?.id || user?._id || null;
+    } catch (e) {
+      console.warn("Invalid user in localStorage", e);
     }
-    setIsLoading(false); // Fin du chargement
-  }, []);
+  }
 
+  if (token && userId) {
+    setCurrentUserId(userId);
+  }
+
+}, []); // ✅ Pas de dépendance nécessaire
 
 
   // Fonction pour vérifier si l'utilisateur est connecté

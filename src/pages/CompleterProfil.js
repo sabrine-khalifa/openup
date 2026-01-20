@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import logo from "../images/logo.png";
+//import logo from "../images/logo.png";
 
 const CompleterProfil = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+ // const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const toArray = (value) => {
@@ -40,12 +40,13 @@ const CompleterProfil = () => {
 };
 
   // Vérifier connexion
-  useEffect(() => {
-    if (!storedUser) {
-      alert("Veuillez vous connecter.");
-      navigate("/login");
-    }
-  }, [navigate]);
+ useEffect(() => {
+  if (!storedUser) {
+    alert("Veuillez vous connecter.");
+    navigate("/login");
+  }
+}, [storedUser, navigate]);
+
 
   const userId = storedUser?.id; // ← utilise l'ID depuis localStorage
   const [form, setForm] = useState({
