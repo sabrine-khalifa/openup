@@ -1,12 +1,13 @@
 // pages/CompleterProfil.jsx
 import { useState, useEffect } from "react";
 import api from "../api";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //import logo from "../images/logo.png";
 
 const CompleterProfil = () => {
   const navigate = useNavigate();
+  
  // const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem("user"));
 

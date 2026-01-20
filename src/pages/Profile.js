@@ -12,7 +12,8 @@ const Profile = () => {
   const [reservations, setReservations] = useState([]);
   const [avis, setAvis] = useState([]);
   const [activeTab, setActiveTab] = useState("À propos");
-  const [editMode, setEditMode] = useState(false); // Mode édition
+  const [, setEditMode] = useState(false);
+// Mode édition
  // const [form, setForm] = useState({});
   const navigate = useNavigate();
 
