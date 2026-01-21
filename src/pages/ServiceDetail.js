@@ -351,15 +351,13 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
                 <div className="flex items-center gap-2">
                   <FaWheelchair className="text-green-600" />
                   <span>
-                    <strong>Accessibilité PMR :</strong> {service.accessiblePMR ? "Oui" : "Non"}
-                    {service.accessiblePMR && service.pmrDetails && (
-  <div className="flex items-start gap-2 mt-2">
-    <FaWheelchair className="text-green-600 mt-1" />
-    <p>
-      <strong>Détails PMR :</strong> {service.pmrDetails}
-    </p>
-  </div>
+<strong>Accessibilité PMR :</strong>{" "}
+{service.accessiblePMR ? "Oui" : "Non"}
+
+{service.accessiblePMR && service.pmrDetails && (
+  <span> ({service.pmrDetails})</span>
 )}
+            
 
 
                   </span>
@@ -441,16 +439,15 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
               Créneau disponible
             </h3>
             
-            <div className="space-y-2">
+ <div className="space-y-2">
   {service.dateAConvenir === true || service.dateAConvenir === "true" ? (
-
     <div className="flex items-center gap-2 border p-3 rounded bg-gray-50">
       <FaCalendarAlt className="text-green-600" />
       <span className="font-medium text-gray-800">
         Date et heure de rdv à convenir ensemble
       </span>
     </div>
-  ) : Array.isArray(service.dateService) && service.dateService.length > 0 ? (
+  ) : service.dateService && service.dateService.length > 0 ? (
     service.dateService.map((date, index) => (
       <div
         key={index}
@@ -467,11 +464,15 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
       </div>
     ))
   ) : (
-    <p className="text-gray-500 italic">
-      Aucun créneau renseigné
-    </p>
+    <div className="flex items-center gap-2 border p-3 rounded bg-gray-50">
+      <FaCalendarAlt className="text-gray-400" />
+      <span className="italic text-gray-500">
+        Aucun créneau renseigné
+      </span>
+    </div>
   )}
 </div>
+
 
           </div>
         </div>

@@ -389,7 +389,7 @@ const getDomaineStyle = (nomDomaine) => {
     </svg>
 
 
-    {service.typeCours || "Individuel"}
+    {service.typeCours || "Individuelle"}
   </span>
 </div>
 

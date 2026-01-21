@@ -555,14 +555,21 @@ data.append("materiel", formData.materiel);
 
             {/* PMR */}
             <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id="pmr"
-                name="accessiblePMR"
-                checked={formData.accessiblePMR}
-                onChange={handleChange}
-                className="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
-              />
+             <input
+  type="checkbox"
+  id="pmr"
+  name="accessiblePMR"
+  checked={formData.accessiblePMR}
+  onChange={(e) => {
+    const checked = e.target.checked;
+    setFormData({
+      ...formData,
+      accessiblePMR: checked,
+      pmrDetails: checked ? formData.pmrDetails : "", // ✅ VIDER
+    });
+  }}
+/>
+
               <label htmlFor="pmr" className="text-gray-700 font-medium">
                 Accessible PMR (Personne à mobilité réduite)
               </label>
