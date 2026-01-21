@@ -202,7 +202,7 @@ const handleSubmit = async (e) => {
   data.append("creditsProposes", creditsNumber);
   data.append("accessiblePMR", safeFormData.accessiblePMR === true);
   // Après avoir créé `data`
-data.append("dateAConvenir", safeFormData.dateAConvenir ? "true" : "false");
+data.append("dateAConvenir", safeFormData.dateAConvenir);
   
   data.append("prerequis", formData.prerequis);
 data.append("materiel", formData.materiel);

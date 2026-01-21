@@ -442,7 +442,8 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
             </h3>
             
             <div className="space-y-2">
-  {service.dateAConvenir ? (
+  {service.dateAConvenir === true || service.dateAConvenir === "true" ? (
+
     <div className="flex items-center gap-2 border p-3 rounded bg-gray-50">
       <FaCalendarAlt className="text-green-600" />
       <span className="font-medium text-gray-800">
