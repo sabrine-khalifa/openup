@@ -454,18 +454,26 @@ data.append("materiel", formData.materiel);
               </div>
               {/* Date à convenir */}
 <div className="flex items-center gap-3">
-  <input
-    type="checkbox"
-    id="dateAConvenir"
-    name="dateAConvenir"
-    checked={formData.dateAConvenir}
-    onChange={handleChange}
-    className="w-5 h-5 text-green-600 border-gray-300 rounded"
-  />
-  <label htmlFor="dateAConvenir" className="text-gray-700 font-medium">
-    Date et heure à convenir ensemble
-  </label>
-</div>
+              <input
+  type="checkbox"
+  id="date-convenir"
+  name="dateAConvenir"
+  checked={formData.dateAConvenir}
+  onChange={(e) => {
+    const checked = e.target.checked;
+    setFormData({
+      ...formData,
+      dateAConvenir: checked,
+      dateService: checked ? [] : formData.dateService, // ✅ vider dates
+      heure: checked ? "" : formData.heure,             // ✅ vider heure
+    });
+  }}
+/>
+
+              <label htmlFor="date-convenir" className="text-gray-700 font-medium">
+                Date et heure de rdv à convenir ensemble 
+              </label>
+            </div>
             </div>
 
 
