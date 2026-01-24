@@ -457,8 +457,8 @@ localStorage.setItem(
                   className="w-full border border-gray-300 rounded-lg px-4 py-3"
                 >
                   <option value="">Lieu de prestation</option>
-                  <option value="distanciel">Distanciel</option>
-                  <option value="presentiel">Présentiel</option>
+                  <option value="En ligne">Distanciel</option>
+                  <option value="Présentiel">Présentiel</option>
                   <option value="Distanciel & Présentiel">Distanciel & Présentiel</option>
                 </select>
 
@@ -481,9 +481,11 @@ localStorage.setItem(
                 >
                   <option value="">Type de séance</option>
                  
-                <option value="Individuel">Individuelle</option>
-                <option value="Collectif">Collective </option>
-                <option value="Individuelle & Collective">Individuelle & Collective </option>
+                <option value="Individuelle">Individuelle</option>
+<option value="Collective">Collective</option>
+<option value="Individuelle & Collective">
+  Individuelle & Collective
+</option>
                 </select>
 
                 <div>

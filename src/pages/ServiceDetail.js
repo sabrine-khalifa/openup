@@ -440,14 +440,14 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
             </h3>
             
  <div className="space-y-2">
-  {service.dateAConvenir === true || service.dateAConvenir === "true" ? (
+  {service.dateAConvenir ? (
     <div className="flex items-center gap-2 border p-3 rounded bg-gray-50">
       <FaCalendarAlt className="text-green-600" />
       <span className="font-medium text-gray-800">
         Date et heure de rdv à convenir ensemble
       </span>
     </div>
-  ) : service.dateService && service.dateService.length > 0 ? (
+  ) : service.dateService?.length > 0 ? (
     service.dateService.map((date, index) => (
       <div
         key={index}
@@ -472,6 +472,7 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
     </div>
   )}
 </div>
+
 
 
           </div>
