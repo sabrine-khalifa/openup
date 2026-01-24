@@ -132,10 +132,16 @@ useEffect(() => {
 };
 */
   // Réserver un service
+  
 const handleReservation = async () => {
   try {
     const token = localStorage.getItem("token");
-    if (!token) return;
+    if (!token) {
+      setMessage("Veuillez vous connecter pour réserver.");
+      setShowMsg(true);
+      setTimeout(() => setShowMsg(false), 3000);
+      return;
+    }
 
     const res = await api.post(
       `/api/services/${service._id}/reserver`,
@@ -143,31 +149,34 @@ const handleReservation = async () => {
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    // ✅ METTRE À JOUR LE LOCALSTORAGE
- const oldUser = JSON.parse(localStorage.getItem("user"));
+    // ✅ Mettre à jour le localStorage avec les nouveaux crédits
+    const oldUser = JSON.parse(localStorage.getItem("user"));
+    const updatedUser = {
+      ...oldUser,
+      credits: res.data.user.credits,
+    };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
 
-const updatedUser = {
-  ...oldUser,                  // ✅ garde role, id, email, etc.
-  credits: res.data.user.credits // ✅ met à jour seulement les crédits
-};
+    // Déclencher l'événement global pour les crédits
+    window.dispatchEvent(new CustomEvent("creditsUpdated", { detail: updatedUser }));
 
-localStorage.setItem("user", JSON.stringify(updatedUser));
-
-window.dispatchEvent(
-  new CustomEvent("creditsUpdated", {
-    detail: updatedUser, // ✅ utilisateur COMPLET
-  })
-);
-
-
-
-
-    setService(res.data.service);
+    // ✅ Afficher le message de succès
     setMessage("Réservation confirmée !");
     setShowMsg(true);
+
+    // ⏳ Optionnel : rediriger ou désactiver le bouton après succès
+    // Par exemple, vous pouvez aussi mettre à jour localement le nombre de places :
+    setService(prev => prev ? { ...prev, nombrePlaces: prev.nombrePlaces - 1 } : null);
+
+    // Masquer le message après 3 secondes
+    setTimeout(() => setShowMsg(false), 3000);
+
   } catch (err) {
-    setMessage(err.response?.data?.msg || "Erreur lors de la réservation");
+    console.error("Erreur réservation :", err);
+    const errorMsg = err.response?.data?.msg || "Erreur lors de la réservation";
+    setMessage(errorMsg);
     setShowMsg(true);
+    setTimeout(() => setShowMsg(false), 4000);
   }
 };
 
