@@ -139,42 +139,35 @@ const handleReservation = async () => {
     if (!token) {
       setMessage("Veuillez vous connecter pour réserver.");
       setShowMsg(true);
-      setTimeout(() => setShowMsg(false), 3000);
       return;
     }
 
-    // ⚠️ Ne PAS remplacer `service` par res.data.service (risque de données incomplètes)
     const res = await api.post(
       `/api/services/${service._id}/reserver`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    // ✅ Mettre à jour les crédits dans localStorage
-    const oldUser = JSON.parse(localStorage.getItem("user"));
-    const updatedUser = {
-      ...oldUser,
-      credits: res.data.user.credits,
-    };
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && res.data.user) {
+      const oldUser = JSON.parse(storedUser);
+      const updatedUser = {
+        ...oldUser,
+        credits: res.data.user.credits,
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      window.dispatchEvent(
+        new CustomEvent("creditsUpdated", { detail: updatedUser })
+      );
+    }
 
-    // Déclencher mise à jour globale des crédits (si utilisé ailleurs)
-    window.dispatchEvent(new CustomEvent("creditsUpdated", { detail: updatedUser }));
-
-    // ✅ Message de succès
     setMessage("Réservation confirmée !");
     setShowMsg(true);
-    setTimeout(() => setShowMsg(false), 3000);
-
-    // Optionnel : mettre à jour localement le nombre de places
-    setService(prev => prev ? { ...prev, nombrePlaces: prev.nombrePlaces - 1 } : null);
 
   } catch (err) {
     console.error("Erreur réservation :", err);
-    const errorMsg = err.response?.data?.msg || "Erreur lors de la réservation";
-    setMessage(errorMsg);
+    setMessage(err.response?.data?.msg || "Erreur lors de la réservation");
     setShowMsg(true);
-    setTimeout(() => setShowMsg(false), 4000);
   }
 };
 
