@@ -143,13 +143,14 @@ const handleReservation = async () => {
       return;
     }
 
+    // ⚠️ Ne PAS remplacer `service` par res.data.service (risque de données incomplètes)
     const res = await api.post(
       `/api/services/${service._id}/reserver`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    // ✅ Mettre à jour le localStorage avec les nouveaux crédits
+    // ✅ Mettre à jour les crédits dans localStorage
     const oldUser = JSON.parse(localStorage.getItem("user"));
     const updatedUser = {
       ...oldUser,
@@ -157,19 +158,16 @@ const handleReservation = async () => {
     };
     localStorage.setItem("user", JSON.stringify(updatedUser));
 
-    // Déclencher l'événement global pour les crédits
+    // Déclencher mise à jour globale des crédits (si utilisé ailleurs)
     window.dispatchEvent(new CustomEvent("creditsUpdated", { detail: updatedUser }));
 
-    // ✅ Afficher le message de succès
+    // ✅ Message de succès
     setMessage("Réservation confirmée !");
     setShowMsg(true);
-
-    // ⏳ Optionnel : rediriger ou désactiver le bouton après succès
-    // Par exemple, vous pouvez aussi mettre à jour localement le nombre de places :
-    setService(prev => prev ? { ...prev, nombrePlaces: prev.nombrePlaces - 1 } : null);
-
-    // Masquer le message après 3 secondes
     setTimeout(() => setShowMsg(false), 3000);
+
+    // Optionnel : mettre à jour localement le nombre de places
+    setService(prev => prev ? { ...prev, nombrePlaces: prev.nombrePlaces - 1 } : null);
 
   } catch (err) {
     console.error("Erreur réservation :", err);
@@ -253,11 +251,11 @@ const noteAffichee = noteMoyenne ? noteMoyenne.toFixed(1) : "Non noté";
             )}
 
             {/* Titre et catégorie */}
-            <h1 className="text-2xl font-bold mb-2">{service.titre}</h1>
+            <h1 className="text-2xl font-bold mb-2">{service?.titre || "Chargement..."}</h1>
             
 
             {/* Créateur */}
-            {service.createur && (
+            {service?.createur && (
               <div className="flex items-center gap-2 mb-4">
                <img
   src={
