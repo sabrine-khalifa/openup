@@ -20,14 +20,14 @@ const Header = () => {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
 useEffect(() => {
-  const updateCredits = (e) => {
-    if (e?.detail !== undefined) {
-      setCredits(e.detail);
-    } else {
-      const user = JSON.parse(localStorage.getItem("user"));
-      setCredits(user?.credits ?? 0);
-    }
-  };
+ const updateCredits = (e) => {
+  if (e?.detail?.credits !== undefined) {
+    setCredits(e.detail.credits); // ✅ on prend UNIQUEMENT le nombre
+  } else {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setCredits(user?.credits ?? 0);
+  }
+};
 
   window.addEventListener("creditsUpdated", updateCredits);
 
