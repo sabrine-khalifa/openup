@@ -6,6 +6,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -26,6 +28,8 @@ import ChooseRole from "./pages/ChooseRole";
 
 function App() {
   const [currentUserId, setCurrentUserId] = useState(null);
+
+const { user, loading } = useContext(AuthContext);
 
 
   useEffect(() => {
@@ -53,21 +57,16 @@ function App() {
   const isAuthenticated = () => {
     return !!localStorage.getItem("token");
   };
+if (loading) return <div>Chargement...</div>;
 
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated() ? (
-              <Navigate to="/dashboard" />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route path="/login" element={<Login />} />
+       <Route
+path="/"
+element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />}
+/>
+<Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/register" element={<Register />} />
                 <Route path="/completer-profil" element={<CompleterProfil />} />
 

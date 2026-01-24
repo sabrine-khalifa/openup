@@ -9,12 +9,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
-
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-
-    setLoading(false); // ✅ auth prête
+    if (savedUser) setUser(JSON.parse(savedUser));
+    setLoading(false);
   }, []);
 
   const login = (data) => {
@@ -27,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.clear();
     setUser(null);
-    window.location.href = "/login";
+    // on navigue avec react-router, pas besoin de reload
   };
 
   return (
