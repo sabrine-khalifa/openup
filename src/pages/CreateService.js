@@ -415,8 +415,8 @@ data.append("dateAConvenir", formData.dateAConvenir ? "true" : "false");
                 className="w-full border border-gray-300 px-4 py-3 rounded-lg"
               >
                 <option value="">Sélectionnez</option>
-                <option value="Individuel">Individuelle</option>
-                <option value="Collectif">Collective </option>
+                <option value="Individuelle">Individuelle</option>
+                <option value="Collective">Collective </option>
                 <option value="Individuelle & Collective">Individuelle & Collective </option>
               </select>
             </div>
