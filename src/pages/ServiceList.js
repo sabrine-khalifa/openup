@@ -259,9 +259,11 @@ useEffect(() => {
   className="rounded-full w-9 h-9 mr-2"
 />
                     <div>
-                      <span className="font-medium text-sm">
-                       {service.createur.prenom} {service.createur.name} 
-                      </span>
+                     <span className="font-medium text-sm">
+  {service.createur
+    ? `${service.createur.prenom ?? ""} ${service.createur.name ?? ""}`
+    : "Créateur inconnu"}
+</span>
 
                       {/*  
                       {notes[service._id] && (
